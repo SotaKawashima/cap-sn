@@ -1,0 +1,22 @@
+misinfo = { uniform = [0.6, 0.7] }
+#misinfo = { uniform = [0.6, 0.9] }
+# misinfo = { single = 1.0 }
+correction = { uniform = [0.7, 1.0] }
+obserbation = { uniform = [0.3, 0.7] }
+inhibition = { uniform = [0.0, 1.0] }
+# misinfo = { array = [0.1,0.2,0.3,0.4] }
+# correction  = { array = [0.7,0.8,0.9,1.0] }
+# obserbation = { array = [0.3,0.4,0.5,0.6,0.7] }
+# inhibition  = { array = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9] }
+
+# misinfo     = [0.25,0.5,0.75,0.1]
+# misinfo     = [0.1,0.2,0.3,0.4,0.5,0.6,0.7]
+# misinfo     = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
+# correction  = [0.4,0.5,0.6,0.7,0.8,0.9]
+# correction  = [0.4,0.5,0.6,0.7,0.8]
+# correction  = [0.8,0.85,0.9,0.95,1.0]
+# correction = [0.7,0.75,0.8,0.85,0.9,0.95]
+# obserbation = [0.7,0.75,0.8,0.85,0.9,0.95]
+# inhibition  = [0.1,0.2]
+# inhibition  = [0.9,1.0]
+# inhibition  = [0.4,0.5,0.6,0.7,0.8,0.9,1.0]

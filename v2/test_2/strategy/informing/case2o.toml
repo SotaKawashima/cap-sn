@@ -1,0 +1,31 @@
+max_pop_misinfo = 0.2
+misinfo = [
+    { step = 0, pop_agents = 0.01 },
+    # { step = 1, pop_agents = 0.01 },
+    # { step = 2, pop_agents = 0.01 },
+    # { step = 3, pop_agents = 0.01 },
+    # { step = 4, pop_agents = 0.01 },
+    # { step = 5, pop_agents = 0.01 },
+]
+max_pop_correction = 0.2
+correction = [
+    { step = 1, pop_agents = 0.01 },
+    { step = 2, pop_agents = 0.01 },
+    { step = 3, pop_agents = 0.01 },
+    # { step = 4, pop_agents = 0.01 },
+    # { step = 5, pop_agents = 0.01 },
+    # { step = 6, pop_agents = 0.01 },
+    # { step = 7, pop_agents = 0.01 },
+    # { step = 8, pop_agents = 0.01 },
+    # { step = 9, pop_agents = 0.01 },
+]
+max_pop_inhibition = { Middle = 0.2 }
+inhibition = [
+    { step = 1, pop_agents = 0.01 },
+    { step = 2, pop_agents = 0.01 },
+    { step = 3, pop_agents = 0.01 },
+    # { step = 4, pop_agents = 0.01 },
+]
+max_pop_observation = 0.2
+max_step_pop_observation = 0.01
+prob_post_observation = 0.1

@@ -1,0 +1,5 @@
+path = "./wiki-vote/"
+graph = "wiki-Vote.txt"
+directed = true
+transposed = true
+community = "comm.csv"

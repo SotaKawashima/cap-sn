@@ -1,0 +1,7 @@
+probabilities  = "./probabilities/probs-plural-2.toml"
+sharer_trust   = "./sharer_trust/trust.toml"
+prospect       = "./prospect/x[4-8_33]-ym3.csv"
+cpt            = "./cpt/cpt.csv"
+initial_states = "./initial_states/initial_states.toml"
+condition      = "./condition/risk3.toml"
+uncertainty    = "./uncertainty/uncertainty.toml"

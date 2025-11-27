@@ -1,0 +1,7 @@
+informing = "C:/Users/sota4/cap-sn/v2/test_2/strategy/informing/case2o.toml"
+
+[information]
+misinfo = "C:/Users/sota4/cap-sn/v2/test_2/strategy/information_opinion/a75_50.csv"
+correction = "C:/Users/sota4/cap-sn/v2/test_2/strategy/information_opinion/n95_95.csv"
+observation = "C:/Users/sota4/cap-sn/v2/test_2/strategy/information_opinion/a75_80.csv"
+inhibition = "C:/Users/sota4/cap-sn/temp_test_2_experiment/csv/inhibition_best.csv"

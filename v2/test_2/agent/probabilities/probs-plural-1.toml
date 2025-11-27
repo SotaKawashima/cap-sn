@@ -1,0 +1,6 @@
+viewing = { single = 0.5 }
+viewing_friend = { single = 0.1 }
+viewing_social = { single = 0.1 }
+arrival_friend = { single = 0.5 }
+plural_ignore_friend = { single = 0.03 }
+plural_ignore_social = { single = 0.05 }

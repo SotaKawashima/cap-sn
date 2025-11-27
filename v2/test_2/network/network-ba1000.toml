@@ -1,0 +1,5 @@
+path = "./ba/ba1000/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"

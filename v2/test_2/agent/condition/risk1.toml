@@ -1,0 +1,28 @@
+o_b = { generate = [
+    [{b=[0,{single=0.95}]},{b=[1,{single=0.0}]}],
+    [{b=[0,{uniform=[0.0,0.20]}]},{u={single=0.20}}],
+] }
+a_fh = { generate = [
+    [{b=[0,{single=0.95}]},{b=[1,{single=0.0}]}],
+    [{b=[0,{uniform=[0.10,0.30]}]},{u={single=0.10}}],
+] }
+b_kh = { generate = [
+    [{b=[0,{single=0.95}]},{b=[1,{single=0.0}]}],
+    [{b=[0,{uniform=[0.10,0.30]}]},{u={single=0.10}}],
+] }
+theta_h = { generate = [
+    [{b=[0,{single=0.95}]},{b=[1,{single=0.0}]}],
+    [{b=[0,{uniform=[0.20,0.40]}]},{u={single=0.40}}],
+] }
+thetad_h = { generate = [
+    [{b=[0,{single=0.95}]},{b=[1,{single=0.0}]}],
+    [{b=[0,{uniform=[0.50,0.70]}]},{u={single=0.10}}],
+] }
+h_psi_if_phi0 = { generate = [
+    [{b=[0,{single=0.0}]},{b=[1,{single=0.0}]}],
+    [{b=[0,{uniform=[0.50,0.70]}]},{u={single=0.25}}],
+] }
+h_b_if_phi0 = { generate = [
+    [{u={single=0.40}},{b=[1,{single=0.0}]}],
+    [{b=[0,{single=0.15}]},{u={single=0.20}}],
+] }
