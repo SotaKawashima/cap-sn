@@ -1,5 +1,5 @@
-misinfo = { uniform = [0.6, 0.7] }
-#misinfo = { uniform = [0.6, 0.9] }
+#misinfo = { uniform = [0.6, 0.7] }
+misinfo = { uniform = [0.6, 0.9] }
 # misinfo = { single = 1.0 }
 correction = { uniform = [0.7, 1.0] }
 obserbation = { uniform = [0.3, 0.7] }

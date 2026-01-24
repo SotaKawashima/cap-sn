@@ -1,1 +1,5 @@
 /target
+# データベースファイルは無視（これを追加）
+*.db
+test_2_opt_gpr.db
+*.sqlite3
