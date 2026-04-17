@@ -16,7 +16,8 @@ TEMP_DIR = Path("./temp_test_2_experiment")
 RESULT_DIR = TEMP_DIR / "result"
 CSV_DIR = TEMP_DIR / "csv"
 
-RUST_BIN = Path("./target/release/v2.exe")
+#RUST_BIN = Path("./target/release/v2.exe")
+RUST_BIN = Path("./target/release/v2.exe" if os.name == "nt" else "./target/release/v2")
 RUNTIME_CONF = ENV_ROOT / "runtime.toml"
 NETWORK_CONF = ENV_ROOT / "network/network-ba1000.toml"
 AGENT_CONF   = ENV_ROOT / "agent/agent-type6.toml" # ファイル実在確認必須
