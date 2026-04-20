@@ -7,6 +7,7 @@ import os
 import time
 import json
 import warnings
+import argparse
 from pathlib import Path
 from optuna.integration import BoTorchSampler
 from tqdm import tqdm
@@ -18,16 +19,43 @@ warnings.filterwarnings("ignore", category=OptimizationWarning)
 
 
 # ==========================================
-# 1. 設定 & 定数
+# 1. 引数処理
+# ==========================================
+def parse_args():
+    parser = argparse.ArgumentParser(description="Run optimization experiment.")
+    parser.add_argument(
+        "--method",
+        type=str,
+        default="GPR",
+        choices=["GPR", "CMAES", "GA", "RANDOM"],
+        help="Optimization method"
+    )
+    parser.add_argument(
+        "--network",
+        type=str,
+        default="ba_1000",
+        choices=["ba_1000", "facebook", "wiki-vote"],
+        help="Network setting"
+    )
+    parser.add_argument(
+        "--trials",
+        type=int,
+        default=100,
+        help="Number of optimization trials"
+    )
+    return parser.parse_args()
+
+
+args = parse_args()
+
+
+# ==========================================
+# 2. 設定 & 定数
 # ==========================================
 
-# ---- 手法名を設定 ----
-# 例: "GPR", "CMAES", "GA", "RANDOM"
-METHOD_NAME = "GPR"
-
-# ---- ネットワーク名を設定 ----
-# "ba_1000", "facebook", "wiki-vote" のいずれか
-NETWORK_NAME = "ba_1000"
+METHOD_NAME = args.method
+NETWORK_NAME = args.network
+N_TRIALS = args.trials
 
 BASE_DIR = Path(__file__).resolve().parent
 ENV_ROOT = BASE_DIR / "v2" / "test_2"
@@ -65,10 +93,10 @@ STRATEGY_TEMPLATE = ENV_ROOT / "strategy" / "strategy-config.toml"
 
 TOTAL_AGENTS = 1000
 N_STARTUP_TRIALS = 10
-N_TRIALS = 100
+
 
 # ==========================================
-# 2. ヘルパー関数
+# 3. ヘルパー関数
 # ==========================================
 
 def setup_directories():
@@ -246,8 +274,9 @@ def create_sampler(method_name: str):
     else:
         raise ValueError(f"Unsupported METHOD_NAME: {method_name}")
 
+
 # ==========================================
-# 3. 最適化プロセス
+# 4. 最適化プロセス
 # ==========================================
 def objective(trial):
     identifier = f"trial_{trial.number}"
@@ -287,8 +316,9 @@ def objective(trial):
 
         cleanup_files(identifier)
 
+
 # ==========================================
-# 4. メイン実行
+# 5. メイン実行
 # ==========================================
 if __name__ == "__main__":
     if not RUST_BIN.exists():

@@ -14,6 +14,7 @@ botorch==0.9.5
 certifi==2026.2.25
 cffi==2.0.0
 charset-normalizer==3.4.7
+cmaes==0.13.0
 colorlog==6.10.1
 comm==0.2.3
 debugpy==1.8.20
