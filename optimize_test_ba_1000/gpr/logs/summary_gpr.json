@@ -1,0 +1,16 @@
+{
+  "method": "GPR",
+  "network": "ba_1000",
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 2001.7768461249943,
+  "mean_trial_sec": 20.005803355837415,
+  "mean_simulation_sec": 19.899636152899184,
+  "mean_score_sec": 0.004416948379948735,
+  "best_score": 1e-05,
+  "best_params": {
+    "certainty": 0.8659969709057025,
+    "effectiveness": 0.7993292420985183
+  },
+  "timing_csv": "/Users/sota/projects/cap-sn/optimize_test_ba_1000/gpr/logs/timing_gpr.csv"
+}

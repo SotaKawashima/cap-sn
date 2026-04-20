@@ -1,0 +1,7 @@
+informing = "/Users/sota/projects/cap-sn/v2/test_2/strategy/informing/case2o.toml"
+
+[information]
+misinfo = "/Users/sota/projects/cap-sn/v2/test_2/strategy/information_opinion/a75_50.csv"
+correction = "/Users/sota/projects/cap-sn/v2/test_2/strategy/information_opinion/n95_95.csv"
+observation = "/Users/sota/projects/cap-sn/v2/test_2/strategy/information_opinion/a75_80.csv"
+inhibition = "/Users/sota/projects/cap-sn/optimize_test_ba_1000/gpr/csv/inhibition_trial_best.csv"
