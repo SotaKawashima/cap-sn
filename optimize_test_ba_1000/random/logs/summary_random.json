@@ -1,0 +1,16 @@
+{
+  "method": "RANDOM",
+  "network": "ba_1000",
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 556.4676442170166,
+  "mean_trial_sec": 5.539025636580191,
+  "mean_simulation_sec": 5.529798367741169,
+  "mean_score_sec": 0.003413729441235773,
+  "best_score": 0.0,
+  "best_params": {
+    "certainty": 0.5465513839029497,
+    "effectiveness": 0.9486078789766634
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_ba_1000/random/logs/timing_random.csv"
+}

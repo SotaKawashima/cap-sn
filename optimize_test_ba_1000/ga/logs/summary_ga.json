@@ -1,0 +1,16 @@
+{
+  "method": "GA",
+  "network": "ba_1000",
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 557.858955557982,
+  "mean_trial_sec": 5.552995589907514,
+  "mean_simulation_sec": 5.535375536099309,
+  "mean_score_sec": 0.0032594916882226245,
+  "best_score": 1e-05,
+  "best_params": {
+    "certainty": 0.8659969709057025,
+    "effectiveness": 0.7993292420985183
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_ba_1000/ga/logs/timing_ga.csv"
+}

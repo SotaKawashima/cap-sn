@@ -1,0 +1,16 @@
+{
+  "method": "CMAES",
+  "network": "ba_1000",
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 540.1730405499693,
+  "mean_trial_sec": 5.3759431948594285,
+  "mean_simulation_sec": 5.358466759396252,
+  "mean_score_sec": 0.003593398020020686,
+  "best_score": 1e-05,
+  "best_params": {
+    "certainty": 0.97562918915332,
+    "effectiveness": 0.5181274621747493
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_ba_1000/cmaes/logs/timing_cmaes.csv"
+}
