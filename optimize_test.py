@@ -43,6 +43,12 @@ def parse_args():
         default=100,
         help="Number of optimization trials"
     )
+    parser.add_argument(
+        "--agents",
+        type=int,
+        default=None,
+        help="Override total number of agents for score normalization"
+    )
     return parser.parse_args()
 
 
@@ -66,8 +72,24 @@ NETWORK_CONF_MAP = {
     "wiki-vote": ENV_ROOT / "network" / "network-wiki-vote.toml",
 }
 
+# ネットワークごとの総エージェント数
+NETWORK_AGENT_COUNT_MAP = {
+    "ba_1000": 1000,
+    "facebook": 4039,
+    "wiki-vote": 7115,
+}
+
 if NETWORK_NAME not in NETWORK_CONF_MAP:
     raise ValueError(f"Unsupported NETWORK_NAME: {NETWORK_NAME}")
+
+if NETWORK_NAME not in NETWORK_AGENT_COUNT_MAP:
+    raise ValueError(f"Unsupported NETWORK_NAME for agent count: {NETWORK_NAME}")
+
+# 引数 --agents が与えられたときはそれを優先
+TOTAL_AGENTS = args.agents if args.agents is not None else NETWORK_AGENT_COUNT_MAP[NETWORK_NAME]
+
+if TOTAL_AGENTS <= 0:
+    raise ValueError(f"TOTAL_AGENTS must be positive, got {TOTAL_AGENTS}")
 
 # ---- 出力先フォルダ構成 ----
 # 例:
@@ -91,7 +113,6 @@ NETWORK_CONF = NETWORK_CONF_MAP[NETWORK_NAME]
 AGENT_CONF = ENV_ROOT / "agent" / "agent-type6.toml"
 STRATEGY_TEMPLATE = ENV_ROOT / "strategy" / "strategy-config.toml"
 
-TOTAL_AGENTS = 1000
 N_STARTUP_TRIALS = 10
 
 
@@ -236,6 +257,7 @@ def save_timing_report(study, total_elapsed_sec: float):
     summary = {
         "method": METHOD_NAME,
         "network": NETWORK_NAME,
+        "total_agents": TOTAL_AGENTS,
         "n_trials_total": len(df),
         "n_trials_complete": len(complete_df),
         "total_optimization_sec": total_elapsed_sec,
