@@ -1,0 +1,17 @@
+{
+  "method": "RANDOM",
+  "network": "facebook",
+  "total_agents": 4039,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 3531.7464457040187,
+  "mean_trial_sec": 35.290223746876,
+  "mean_simulation_sec": 35.28057295583422,
+  "mean_score_sec": 0.0038735976081807166,
+  "best_score": 1.733102253032929e-05,
+  "best_params": {
+    "certainty": 0.5704621124873813,
+    "effectiveness": 0.9010984903770198
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_facebook/random/logs/timing_random.csv"
+}

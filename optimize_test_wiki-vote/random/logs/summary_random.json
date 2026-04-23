@@ -1,0 +1,17 @@
+{
+  "method": "RANDOM",
+  "network": "wiki-vote",
+  "total_agents": 7115,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 2205.9091586010763,
+  "mean_trial_sec": 22.032531103858492,
+  "mean_simulation_sec": 22.022779637060594,
+  "mean_score_sec": 0.003914334552828223,
+  "best_score": 1.2649332396345747e-05,
+  "best_params": {
+    "certainty": 0.8629778394351197,
+    "effectiveness": 0.9485551299762885
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_wiki-vote/random/logs/timing_random.csv"
+}

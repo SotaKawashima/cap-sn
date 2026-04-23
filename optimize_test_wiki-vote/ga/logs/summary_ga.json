@@ -1,0 +1,17 @@
+{
+  "method": "GA",
+  "network": "wiki-vote",
+  "total_agents": 7115,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 2500.468595246086,
+  "mean_trial_sec": 24.974804433915995,
+  "mean_simulation_sec": 25.20634397109994,
+  "mean_score_sec": 0.0040088145972483535,
+  "best_score": 1.4054813773717499e-05,
+  "best_params": {
+    "certainty": 0.9037200775820313,
+    "effectiveness": 0.9480456499617467
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_wiki-vote/ga/logs/timing_ga.csv"
+}

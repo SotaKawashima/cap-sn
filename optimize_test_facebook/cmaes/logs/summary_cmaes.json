@@ -1,0 +1,17 @@
+{
+  "method": "CMAES",
+  "network": "facebook",
+  "total_agents": 4039,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 3558.232451925054,
+  "mean_trial_sec": 35.55523006364238,
+  "mean_simulation_sec": 35.53744979144074,
+  "mean_score_sec": 0.003743468512548134,
+  "best_score": 1.4855162168853676e-05,
+  "best_params": {
+    "certainty": 0.8023887944199164,
+    "effectiveness": 0.8429600702632805
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_facebook/cmaes/logs/timing_cmaes.csv"
+}

@@ -1,0 +1,14 @@
+=== Start batch experiment ===
+Network : wiki-vote
+Trials  : 100pi
+Methods : GPR CMAES RANDOM GA
+Time    : 2026年  4月 22日 水曜日 09:56:58 JST
+
+========================================
+Start: METHOD=GPR, NETWORK=wiki-vote
+Time : 2026年  4月 22日 水曜日 09:56:58 JST
+========================================
+usage: optimize_test.py [-h] [--method {GPR,CMAES,GA,RANDOM}]
+                        [--network {ba_1000,facebook,wiki-vote}]
+                        [--trials TRIALS] [--agents AGENTS]
+optimize_test.py: error: argument --trials: invalid int value: '100pi'

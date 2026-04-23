@@ -1,0 +1,17 @@
+{
+  "method": "GPR",
+  "network": "facebook",
+  "total_agents": 4039,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 3490.5579877750133,
+  "mean_trial_sec": 34.87908411775133,
+  "mean_simulation_sec": 34.60136973623361,
+  "mean_score_sec": 0.003242463424685411,
+  "best_score": 1.733102253032929e-05,
+  "best_params": {
+    "certainty": 0.5809335802500349,
+    "effectiveness": 0.5631692672834638
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_facebook/gpr/logs/timing_gpr.csv"
+}
