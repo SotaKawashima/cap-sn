@@ -1,0 +1,5 @@
+method,method_label,mean_final_selfish_ratio,max_final_selfish_ratio,peak_mean_selfish_ratio,mean_total_shared_ratio_misinformation,mean_total_viewed_ratio_misinformation,mean_total_shared_ratio_corrective,mean_total_viewed_ratio_corrective,mean_total_shared_ratio_observational,mean_total_viewed_ratio_observational,mean_total_shared_ratio_behavior_guiding,mean_total_viewed_ratio_behavior_guiding
+cmaes,CMA-ES,0.00001,0.001,0.09519999999999999,0.43694,4.72792,0.61334,7.072640000000001,0.32881818181818184,3.2757272727272726,0.20943,2.64892
+ga,GA,0.00001,0.001,0.09394,0.44168,4.77393,0.63924,7.4008400000000005,0.2895,2.8833571428571427,0.15243,2.09892
+gpr,GPR,0.00001,0.001,0.09394,0.44168,4.77393,0.63924,7.4008400000000005,0.2895,2.8833571428571427,0.15243,2.09892
+random,Random,0.0,0.0,0.09231,0.43981000000000003,4.75075,0.8250000000000001,9.64586,0.3110833333333333,3.0872916666666668,0.12161,1.77074
