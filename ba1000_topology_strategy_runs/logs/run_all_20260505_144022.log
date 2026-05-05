@@ -1,0 +1,116 @@
+=== Start BA1000 topology-strategy batch ===
+Output root: ba1000_topology_strategy_runs
+Runtime    : v2/test_2/runtime.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Time       : 2026年  5月  5日 火曜日 14:40:22 JST
+
+========================================
+Start: network=ba1000, strategy=balance
+Time : 2026年  5月  5日 火曜日 14:40:22 JST
+Result dir: ba1000_topology_strategy_runs/ba1000/balance/result
+Run log   : ba1000_topology_strategy_runs/ba1000/balance/run_20260505_144022.log
+========================================
+Finished: network=ba1000, strategy=balance
+Time    : 2026年  5月  5日 火曜日 14:40:27 JST
+
+========================================
+Start: network=ba1000, strategy=effective_high
+Time : 2026年  5月  5日 火曜日 14:40:27 JST
+Result dir: ba1000_topology_strategy_runs/ba1000/effective_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000/effective_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000, strategy=effective_high
+Time    : 2026年  5月  5日 火曜日 14:40:33 JST
+
+========================================
+Start: network=ba1000, strategy=certainty_high
+Time : 2026年  5月  5日 火曜日 14:40:33 JST
+Result dir: ba1000_topology_strategy_runs/ba1000/certainty_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000/certainty_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000, strategy=certainty_high
+Time    : 2026年  5月  5日 火曜日 14:40:39 JST
+
+========================================
+Start: network=ba1000_seed2, strategy=balance
+Time : 2026年  5月  5日 火曜日 14:40:39 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed2/balance/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed2/balance/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed2, strategy=balance
+Time    : 2026年  5月  5日 火曜日 14:40:44 JST
+
+========================================
+Start: network=ba1000_seed2, strategy=effective_high
+Time : 2026年  5月  5日 火曜日 14:40:44 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed2/effective_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed2/effective_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed2, strategy=effective_high
+Time    : 2026年  5月  5日 火曜日 14:40:50 JST
+
+========================================
+Start: network=ba1000_seed2, strategy=certainty_high
+Time : 2026年  5月  5日 火曜日 14:40:50 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed2/certainty_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed2/certainty_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed2, strategy=certainty_high
+Time    : 2026年  5月  5日 火曜日 14:40:55 JST
+
+========================================
+Start: network=ba1000_seed3, strategy=balance
+Time : 2026年  5月  5日 火曜日 14:40:55 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed3/balance/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed3/balance/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed3, strategy=balance
+Time    : 2026年  5月  5日 火曜日 14:41:00 JST
+
+========================================
+Start: network=ba1000_seed3, strategy=effective_high
+Time : 2026年  5月  5日 火曜日 14:41:00 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed3/effective_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed3/effective_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed3, strategy=effective_high
+Time    : 2026年  5月  5日 火曜日 14:41:06 JST
+
+========================================
+Start: network=ba1000_seed3, strategy=certainty_high
+Time : 2026年  5月  5日 火曜日 14:41:06 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed3/certainty_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed3/certainty_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed3, strategy=certainty_high
+Time    : 2026年  5月  5日 火曜日 14:41:12 JST
+
+========================================
+Start: network=ba1000_seed4, strategy=balance
+Time : 2026年  5月  5日 火曜日 14:41:12 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed4/balance/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed4/balance/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed4, strategy=balance
+Time    : 2026年  5月  5日 火曜日 14:41:17 JST
+
+========================================
+Start: network=ba1000_seed4, strategy=effective_high
+Time : 2026年  5月  5日 火曜日 14:41:17 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed4/effective_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed4/effective_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed4, strategy=effective_high
+Time    : 2026年  5月  5日 火曜日 14:41:23 JST
+
+========================================
+Start: network=ba1000_seed4, strategy=certainty_high
+Time : 2026年  5月  5日 火曜日 14:41:23 JST
+Result dir: ba1000_topology_strategy_runs/ba1000_seed4/certainty_high/result
+Run log   : ba1000_topology_strategy_runs/ba1000_seed4/certainty_high/run_20260505_144022.log
+========================================
+Finished: network=ba1000_seed4, strategy=certainty_high
+Time    : 2026年  5月  5日 火曜日 14:41:28 JST
+
+=== All runs finished ===
+Master log: ba1000_topology_strategy_runs/logs/run_all_20260505_144022.log
