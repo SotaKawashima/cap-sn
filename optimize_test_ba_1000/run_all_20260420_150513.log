@@ -1,124 +1,0 @@
-=== Start batch experiment ===
-Network : ba_1000
-Trials  : 5
-Methods : GPR CMAES RANDOM GA
-Time    : 2026年  4月 20日 月曜日 15:05:13 JST
-
-========================================
-Start: METHOD=GPR, NETWORK=ba_1000
-Time : 2026年  4月 20日 月曜日 15:05:13 JST
-========================================
-=== Start Optimization (Network: ba_1000, Method: GPR, Agents: 1000) ===
-Running trials...
-Optimization Progress:   0%|          | 0/5 [00:00<?, ?trial/s]Optimization Progress:  20%|██        | 1/5 [00:05<00:21,  5.37s/trial]Optimization Progress:  20%|██        | 1/5 [00:05<00:21,  5.37s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:10<00:16,  5.34s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:10<00:16,  5.34s/trial, Best Score=0.00001]Optimization Progress:  60%|██████    | 3/5 [00:15<00:10,  5.26s/trial, Best Score=0.00001]Optimization Progress:  60%|██████    | 3/5 [00:15<00:10,  5.26s/trial, Best Score=0.00001]Optimization Progress:  80%|████████  | 4/5 [00:21<00:05,  5.52s/trial, Best Score=0.00001]Optimization Progress:  80%|████████  | 4/5 [00:21<00:05,  5.52s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.55s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.55s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.47s/trial, Best Score=0.00001]
-initialising...
-started.
-0
-|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
-done.
-
-=== Optimization Finished ===
-Best Params: {'certainty': 0.8659969709057025, 'effectiveness': 0.7993292420985183}
-Best Score : 1e-05
-Total Time : 27.37 sec
-Avg Time/Trial : 5.47 sec
-
-[Timing] Trial log saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/gpr/logs/timing_gpr.csv
-[Timing] Summary saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/gpr/logs/summary_gpr.json
-
-=== Re-running Best Configuration ===
-
-[Success] Results saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/gpr/result
-
-Finished: METHOD=GPR, NETWORK=ba_1000
-Time    : 2026年  4月 20日 月曜日 15:05:49 JST
-
-========================================
-Start: METHOD=CMAES, NETWORK=ba_1000
-Time : 2026年  4月 20日 月曜日 15:05:49 JST
-========================================
-=== Start Optimization (Network: ba_1000, Method: CMAES, Agents: 1000) ===
-Running trials...
-Optimization Progress:   0%|          | 0/5 [00:00<?, ?trial/s]Optimization Progress:  20%|██        | 1/5 [00:05<00:21,  5.41s/trial]Optimization Progress:  20%|██        | 1/5 [00:05<00:21,  5.41s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:10<00:16,  5.44s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:10<00:16,  5.44s/trial, Best Score=0.00005]Optimization Progress:  60%|██████    | 3/5 [00:16<00:11,  5.51s/trial, Best Score=0.00005]Optimization Progress:  60%|██████    | 3/5 [00:16<00:11,  5.51s/trial, Best Score=0.00003]Optimization Progress:  80%|████████  | 4/5 [00:21<00:05,  5.46s/trial, Best Score=0.00003]Optimization Progress:  80%|████████  | 4/5 [00:21<00:05,  5.46s/trial, Best Score=0.00003]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.47s/trial, Best Score=0.00003]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.47s/trial, Best Score=0.00003]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.46s/trial, Best Score=0.00003]
-initialising...
-started.
-0
-|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
-done.
-
-=== Optimization Finished ===
-Best Params: {'certainty': 0.7447609747619225, 'effectiveness': 0.6712972373063778}
-Best Score : 2.9999999999999997e-05
-Total Time : 27.32 sec
-Avg Time/Trial : 5.46 sec
-
-[Timing] Trial log saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/cmaes/logs/timing_cmaes.csv
-[Timing] Summary saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/cmaes/logs/summary_cmaes.json
-
-=== Re-running Best Configuration ===
-
-[Success] Results saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/cmaes/result
-
-Finished: METHOD=CMAES, NETWORK=ba_1000
-Time    : 2026年  4月 20日 月曜日 15:06:25 JST
-
-========================================
-Start: METHOD=RANDOM, NETWORK=ba_1000
-Time : 2026年  4月 20日 月曜日 15:06:25 JST
-========================================
-=== Start Optimization (Network: ba_1000, Method: RANDOM, Agents: 1000) ===
-Running trials...
-Optimization Progress:   0%|          | 0/5 [00:00<?, ?trial/s]Optimization Progress:  20%|██        | 1/5 [00:05<00:22,  5.74s/trial]Optimization Progress:  20%|██        | 1/5 [00:05<00:22,  5.74s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:11<00:16,  5.49s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:11<00:16,  5.49s/trial, Best Score=0.00001]Optimization Progress:  60%|██████    | 3/5 [00:16<00:10,  5.37s/trial, Best Score=0.00001]Optimization Progress:  60%|██████    | 3/5 [00:16<00:10,  5.37s/trial, Best Score=0.00001]Optimization Progress:  80%|████████  | 4/5 [00:22<00:05,  5.56s/trial, Best Score=0.00001]Optimization Progress:  80%|████████  | 4/5 [00:22<00:05,  5.56s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.62s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.62s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.57s/trial, Best Score=0.00001]
-initialising...
-started.
-0
-|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
-done.
-
-=== Optimization Finished ===
-Best Params: {'certainty': 0.8659969709057025, 'effectiveness': 0.7993292420985183}
-Best Score : 1e-05
-Total Time : 27.87 sec
-Avg Time/Trial : 5.57 sec
-
-[Timing] Trial log saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/random/logs/timing_random.csv
-[Timing] Summary saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/random/logs/summary_random.json
-
-=== Re-running Best Configuration ===
-
-[Success] Results saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/random/result
-
-Finished: METHOD=RANDOM, NETWORK=ba_1000
-Time    : 2026年  4月 20日 月曜日 15:07:01 JST
-
-========================================
-Start: METHOD=GA, NETWORK=ba_1000
-Time : 2026年  4月 20日 月曜日 15:07:01 JST
-========================================
-=== Start Optimization (Network: ba_1000, Method: GA, Agents: 1000) ===
-Running trials...
-Optimization Progress:   0%|          | 0/5 [00:00<?, ?trial/s]Optimization Progress:  20%|██        | 1/5 [00:05<00:21,  5.46s/trial]Optimization Progress:  20%|██        | 1/5 [00:05<00:21,  5.46s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:10<00:16,  5.45s/trial, Best Score=0.00007]Optimization Progress:  40%|████      | 2/5 [00:10<00:16,  5.45s/trial, Best Score=0.00001]Optimization Progress:  60%|██████    | 3/5 [00:16<00:10,  5.32s/trial, Best Score=0.00001]Optimization Progress:  60%|██████    | 3/5 [00:16<00:10,  5.32s/trial, Best Score=0.00001]Optimization Progress:  80%|████████  | 4/5 [00:21<00:05,  5.49s/trial, Best Score=0.00001]Optimization Progress:  80%|████████  | 4/5 [00:21<00:05,  5.49s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.56s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.56s/trial, Best Score=0.00001]Optimization Progress: 100%|██████████| 5/5 [00:27<00:00,  5.50s/trial, Best Score=0.00001]
-initialising...
-started.
-0
-|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
-done.
-
-=== Optimization Finished ===
-Best Params: {'certainty': 0.8659969709057025, 'effectiveness': 0.7993292420985183}
-Best Score : 1e-05
-Total Time : 27.52 sec
-Avg Time/Trial : 5.50 sec
-
-[Timing] Trial log saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/ga/logs/timing_ga.csv
-[Timing] Summary saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/ga/logs/summary_ga.json
-
-=== Re-running Best Configuration ===
-
-[Success] Results saved to: /home/e25m5333/cap-sn/optimize_test_ba_1000/ga/result
-
-Finished: METHOD=GA, NETWORK=ba_1000
-Time    : 2026年  4月 20日 月曜日 15:07:37 JST
-
-=== All experiments finished ===
-Master log: optimize_test_ba_1000/run_all_20260420_150513.log

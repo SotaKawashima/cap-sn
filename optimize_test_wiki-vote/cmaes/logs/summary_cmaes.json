@@ -1,0 +1,17 @@
+{
+  "method": "CMAES",
+  "network": "wiki-vote",
+  "total_agents": 7115,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 2231.613909656997,
+  "mean_trial_sec": 22.289434368617368,
+  "mean_simulation_sec": 22.271486588548868,
+  "mean_score_sec": 0.003922961341449991,
+  "best_score": 1.1243851018973999e-05,
+  "best_params": {
+    "certainty": 0.9124817788563351,
+    "effectiveness": 0.9441215149884041
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_wiki-vote/cmaes/logs/timing_cmaes.csv"
+}

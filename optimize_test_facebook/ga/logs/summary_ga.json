@@ -1,0 +1,17 @@
+{
+  "method": "GA",
+  "network": "facebook",
+  "total_agents": 4039,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 3519.1273916200735,
+  "mean_trial_sec": 35.164110090391475,
+  "mean_simulation_sec": 35.14622456027311,
+  "mean_score_sec": 0.0035643539275042714,
+  "best_score": 1.733102253032929e-05,
+  "best_params": {
+    "certainty": 0.5704621124873813,
+    "effectiveness": 0.9010984903770198
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_facebook/ga/logs/timing_ga.csv"
+}

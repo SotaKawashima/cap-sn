@@ -16,6 +16,10 @@ temp_test_2_experiment/
 
 # 不要作業フォルダ
 trash_box/
+docs/
+notes/
+notebooks/
+BA_edgelist_create.py
 
 # Pythonキャッシュ
 __pycache__/

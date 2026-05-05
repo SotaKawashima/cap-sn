@@ -1,0 +1,17 @@
+{
+  "method": "GPR",
+  "network": "wiki-vote",
+  "total_agents": 7115,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 2212.7761633510236,
+  "mean_trial_sec": 22.102098256106256,
+  "mean_simulation_sec": 21.663779348509852,
+  "mean_score_sec": 0.0032359339587856085,
+  "best_score": 1.4054813773717499e-05,
+  "best_params": {
+    "certainty": 0.5080293153166033,
+    "effectiveness": 0.9269859152486077
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/optimize_test_wiki-vote/gpr/logs/timing_gpr.csv"
+}
