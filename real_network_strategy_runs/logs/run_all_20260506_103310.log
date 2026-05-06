@@ -1,0 +1,62 @@
+=== Start real-network strategy batch ===
+Output root: real_network_strategy_runs
+Runtime    : v2/test_2/runtime.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Time       : 2026年  5月  6日 水曜日 10:33:10 JST
+
+========================================
+Start: network=facebook, strategy=balance
+Time : 2026年  5月  6日 水曜日 10:33:10 JST
+Result dir: real_network_strategy_runs/facebook/balance/result
+Run log   : real_network_strategy_runs/facebook/balance/run_20260506_103310.log
+========================================
+Finished: network=facebook, strategy=balance
+Time    : 2026年  5月  6日 水曜日 10:33:45 JST
+
+========================================
+Start: network=facebook, strategy=effective_high
+Time : 2026年  5月  6日 水曜日 10:33:45 JST
+Result dir: real_network_strategy_runs/facebook/effective_high/result
+Run log   : real_network_strategy_runs/facebook/effective_high/run_20260506_103310.log
+========================================
+Finished: network=facebook, strategy=effective_high
+Time    : 2026年  5月  6日 水曜日 10:34:18 JST
+
+========================================
+Start: network=facebook, strategy=certainty_high
+Time : 2026年  5月  6日 水曜日 10:34:18 JST
+Result dir: real_network_strategy_runs/facebook/certainty_high/result
+Run log   : real_network_strategy_runs/facebook/certainty_high/run_20260506_103310.log
+========================================
+Finished: network=facebook, strategy=certainty_high
+Time    : 2026年  5月  6日 水曜日 10:34:54 JST
+
+========================================
+Start: network=wiki-vote, strategy=balance
+Time : 2026年  5月  6日 水曜日 10:34:54 JST
+Result dir: real_network_strategy_runs/wiki-vote/balance/result
+Run log   : real_network_strategy_runs/wiki-vote/balance/run_20260506_103310.log
+========================================
+Finished: network=wiki-vote, strategy=balance
+Time    : 2026年  5月  6日 水曜日 10:35:15 JST
+
+========================================
+Start: network=wiki-vote, strategy=effective_high
+Time : 2026年  5月  6日 水曜日 10:35:15 JST
+Result dir: real_network_strategy_runs/wiki-vote/effective_high/result
+Run log   : real_network_strategy_runs/wiki-vote/effective_high/run_20260506_103310.log
+========================================
+Finished: network=wiki-vote, strategy=effective_high
+Time    : 2026年  5月  6日 水曜日 10:35:39 JST
+
+========================================
+Start: network=wiki-vote, strategy=certainty_high
+Time : 2026年  5月  6日 水曜日 10:35:39 JST
+Result dir: real_network_strategy_runs/wiki-vote/certainty_high/result
+Run log   : real_network_strategy_runs/wiki-vote/certainty_high/run_20260506_103310.log
+========================================
+Finished: network=wiki-vote, strategy=certainty_high
+Time    : 2026年  5月  6日 水曜日 10:35:59 JST
+
+=== All runs finished ===
+Master log: real_network_strategy_runs/logs/run_all_20260506_103310.log
