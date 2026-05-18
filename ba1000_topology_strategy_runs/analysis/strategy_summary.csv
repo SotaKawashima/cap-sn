@@ -1,0 +1,4 @@
+strategy,strategy_label,avg_final_selfish_ratio,std_final_selfish_ratio,avg_peak_selfish_ratio,avg_shared_misinformation,avg_shared_corrective,avg_shared_observational,avg_shared_behavior_guiding
+balance,"Balance (0.8, 0.8)",0.0000475,9.574271077563381e-6,0.0930175,0.42906,0.728545,0.31342238095238095,0.155385
+certainty_high,"Certainty high (0.9, 0.5)",0.00008000000000000002,0.00004163331998932267,0.09499250000000001,0.42882750000000003,0.59598,0.33364819004524887,0.214415
+effective_high,"Effectiveness high (0.5, 0.9)",0.000055,0.000023804761428476166,0.09229500000000002,0.42787,0.79803,0.3140871976755129,0.1371275

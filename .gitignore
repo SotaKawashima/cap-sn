@@ -20,6 +20,7 @@ docs/
 notes/
 notebooks/
 BA_edgelist_create.py
+strategy_correlation_analysis/
 
 # Pythonキャッシュ
 __pycache__/

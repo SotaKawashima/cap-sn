@@ -1,0 +1,10 @@
+network,cluster_level,triad_probability,requested_seed,actual_seed,config_path,graph_path,num_nodes,num_edges,avg_degree,avg_clustering,transitivity,largest_connected_component_ratio,max_degree
+plc_low_seed1,low,0.0,20261518,20261518,v2/test_2/network/network-plc_low_seed1.toml,v2/test_2/network/powerlaw_cluster/plc_low_seed1/edgelist.txt,1000,9900,19.8,0.059700986215276204,0.05301696255300798,1.0,138
+plc_low_seed2,low,0.0,20262518,20262518,v2/test_2/network/network-plc_low_seed2.toml,v2/test_2/network/powerlaw_cluster/plc_low_seed2/edgelist.txt,1000,9900,19.8,0.05653844878733256,0.05349430223762231,1.0,160
+plc_low_seed3,low,0.0,20263518,20263518,v2/test_2/network/network-plc_low_seed3.toml,v2/test_2/network/powerlaw_cluster/plc_low_seed3/edgelist.txt,1000,9900,19.8,0.05872128564600577,0.05396391520344943,1.0,144
+plc_mid_seed1,mid,0.3,20261548,20261548,v2/test_2/network/network-plc_mid_seed1.toml,v2/test_2/network/powerlaw_cluster/plc_mid_seed1/edgelist.txt,1000,9840,19.68,0.13248501185017997,0.06954029426232303,1.0,234
+plc_mid_seed2,mid,0.3,20262548,20262548,v2/test_2/network/network-plc_mid_seed2.toml,v2/test_2/network/powerlaw_cluster/plc_mid_seed2/edgelist.txt,1000,9850,19.7,0.13187411294697338,0.07034805824286249,1.0,241
+plc_mid_seed3,mid,0.3,20263548,20263548,v2/test_2/network/network-plc_mid_seed3.toml,v2/test_2/network/powerlaw_cluster/plc_mid_seed3/edgelist.txt,1000,9851,19.702,0.1286012708194523,0.0696054658421716,1.0,230
+plc_high_seed1,high,1.0,20261618,20261618,v2/test_2/network/network-plc_high_seed1.toml,v2/test_2/network/powerlaw_cluster/plc_high_seed1/edgelist.txt,1000,9896,19.792,0.36996832659543616,0.195087666766477,1.0,208
+plc_high_seed2,high,1.0,20262618,20262618,v2/test_2/network/network-plc_high_seed2.toml,v2/test_2/network/powerlaw_cluster/plc_high_seed2/edgelist.txt,1000,9899,19.798,0.3508746188968144,0.19000251193167547,1.0,220
+plc_high_seed3,high,1.0,20263618,20263618,v2/test_2/network/network-plc_high_seed3.toml,v2/test_2/network/powerlaw_cluster/plc_high_seed3/edgelist.txt,1000,9897,19.794,0.34566725900800016,0.17177110155821487,1.0,253
