@@ -1,0 +1,5 @@
+path = "./powerlaw_degree_cluster/pdc_deg40_high_seed2/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"
