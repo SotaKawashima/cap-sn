@@ -1,0 +1,279 @@
+=== Start powerlaw-degree strategy batch ===
+Output root: powerlaw_degree_strategy_runs
+Runtime    : v2/test_2/runtime.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Networks   : 9
+Time       : 2026年  5月 19日 火曜日 11:09:43 JST
+
+========================================
+Start: network=pld_deg20_seed1, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:09:43 JST
+Config    : v2/test_2/network/network-pld_deg20_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed1/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed1/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed1, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:09:52 JST
+
+========================================
+Start: network=pld_deg20_seed1, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:09:52 JST
+Config    : v2/test_2/network/network-pld_deg20_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed1/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed1/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed1, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:10:00 JST
+
+========================================
+Start: network=pld_deg20_seed1, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:10:00 JST
+Config    : v2/test_2/network/network-pld_deg20_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed1/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed1/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed1, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:10:08 JST
+
+========================================
+Start: network=pld_deg20_seed2, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:10:08 JST
+Config    : v2/test_2/network/network-pld_deg20_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed2/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed2/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed2, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:10:16 JST
+
+========================================
+Start: network=pld_deg20_seed2, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:10:16 JST
+Config    : v2/test_2/network/network-pld_deg20_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed2/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed2/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed2, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:10:25 JST
+
+========================================
+Start: network=pld_deg20_seed2, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:10:25 JST
+Config    : v2/test_2/network/network-pld_deg20_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed2/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed2/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed2, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:10:33 JST
+
+========================================
+Start: network=pld_deg20_seed3, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:10:33 JST
+Config    : v2/test_2/network/network-pld_deg20_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed3/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed3/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed3, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:10:42 JST
+
+========================================
+Start: network=pld_deg20_seed3, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:10:42 JST
+Config    : v2/test_2/network/network-pld_deg20_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed3/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed3/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed3, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:10:50 JST
+
+========================================
+Start: network=pld_deg20_seed3, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:10:50 JST
+Config    : v2/test_2/network/network-pld_deg20_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg20_seed3/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg20_seed3/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg20_seed3, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:10:59 JST
+
+========================================
+Start: network=pld_deg30_seed1, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:10:59 JST
+Config    : v2/test_2/network/network-pld_deg30_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed1/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed1/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed1, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:11:11 JST
+
+========================================
+Start: network=pld_deg30_seed1, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:11:11 JST
+Config    : v2/test_2/network/network-pld_deg30_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed1/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed1/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed1, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:11:25 JST
+
+========================================
+Start: network=pld_deg30_seed1, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:11:25 JST
+Config    : v2/test_2/network/network-pld_deg30_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed1/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed1/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed1, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:11:36 JST
+
+========================================
+Start: network=pld_deg30_seed2, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:11:36 JST
+Config    : v2/test_2/network/network-pld_deg30_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed2/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed2/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed2, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:11:49 JST
+
+========================================
+Start: network=pld_deg30_seed2, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:11:49 JST
+Config    : v2/test_2/network/network-pld_deg30_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed2/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed2/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed2, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:12:03 JST
+
+========================================
+Start: network=pld_deg30_seed2, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:12:03 JST
+Config    : v2/test_2/network/network-pld_deg30_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed2/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed2/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed2, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:12:17 JST
+
+========================================
+Start: network=pld_deg30_seed3, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:12:17 JST
+Config    : v2/test_2/network/network-pld_deg30_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed3/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed3/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed3, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:12:29 JST
+
+========================================
+Start: network=pld_deg30_seed3, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:12:29 JST
+Config    : v2/test_2/network/network-pld_deg30_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed3/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed3/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed3, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:12:43 JST
+
+========================================
+Start: network=pld_deg30_seed3, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:12:43 JST
+Config    : v2/test_2/network/network-pld_deg30_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg30_seed3/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg30_seed3/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg30_seed3, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:12:55 JST
+
+========================================
+Start: network=pld_deg40_seed1, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:12:55 JST
+Config    : v2/test_2/network/network-pld_deg40_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed1/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed1/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed1, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:13:14 JST
+
+========================================
+Start: network=pld_deg40_seed1, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:13:14 JST
+Config    : v2/test_2/network/network-pld_deg40_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed1/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed1/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed1, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:13:33 JST
+
+========================================
+Start: network=pld_deg40_seed1, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:13:33 JST
+Config    : v2/test_2/network/network-pld_deg40_seed1.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed1/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed1/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed1, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:13:50 JST
+
+========================================
+Start: network=pld_deg40_seed2, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:13:50 JST
+Config    : v2/test_2/network/network-pld_deg40_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed2/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed2/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed2, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:14:10 JST
+
+========================================
+Start: network=pld_deg40_seed2, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:14:10 JST
+Config    : v2/test_2/network/network-pld_deg40_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed2/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed2/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed2, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:14:29 JST
+
+========================================
+Start: network=pld_deg40_seed2, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:14:29 JST
+Config    : v2/test_2/network/network-pld_deg40_seed2.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed2/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed2/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed2, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:14:46 JST
+
+========================================
+Start: network=pld_deg40_seed3, strategy=balance
+Time : 2026年  5月 19日 火曜日 11:14:46 JST
+Config    : v2/test_2/network/network-pld_deg40_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed3/balance/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed3/balance/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed3, strategy=balance
+Time    : 2026年  5月 19日 火曜日 11:15:02 JST
+
+========================================
+Start: network=pld_deg40_seed3, strategy=effective_high
+Time : 2026年  5月 19日 火曜日 11:15:02 JST
+Config    : v2/test_2/network/network-pld_deg40_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed3/effective_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed3/effective_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed3, strategy=effective_high
+Time    : 2026年  5月 19日 火曜日 11:15:20 JST
+
+========================================
+Start: network=pld_deg40_seed3, strategy=certainty_high
+Time : 2026年  5月 19日 火曜日 11:15:20 JST
+Config    : v2/test_2/network/network-pld_deg40_seed3.toml
+Result dir: powerlaw_degree_strategy_runs/pld_deg40_seed3/certainty_high/result
+Run log   : powerlaw_degree_strategy_runs/pld_deg40_seed3/certainty_high/run_20260519_110943.log
+========================================
+Finished: network=pld_deg40_seed3, strategy=certainty_high
+Time    : 2026年  5月 19日 火曜日 11:15:37 JST
+
+=== All runs finished ===
+Master log: powerlaw_degree_strategy_runs/logs/run_all_20260519_110943.log
