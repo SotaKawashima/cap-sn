@@ -8,7 +8,7 @@ cd "$REPO_ROOT"
 RUST_BIN="target/release/v2"
 RUNTIME_CONF="v2/test_2/runtime.toml"
 AGENT_CONF="v2/test_2/agent/agent-type6.toml"
-OUTPUT_ROOT="experiments/2026-05-18_powerlaw_cluster/strategy_runs"
+OUTPUT_ROOT="experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs"
 NETWORK_CONFIG_DIR="v2/test_2/network"
 
 if [ ! -x "$RUST_BIN" ]; then
@@ -17,12 +17,12 @@ if [ ! -x "$RUST_BIN" ]; then
 fi
 
 shopt -s nullglob
-NETWORK_CONFIGS=("$NETWORK_CONFIG_DIR"/network-plc_*.toml)
+NETWORK_CONFIGS=("$NETWORK_CONFIG_DIR"/network-plc06_*.toml)
 shopt -u nullglob
 
 if [ "${#NETWORK_CONFIGS[@]}" -eq 0 ]; then
-  echo "Error: network-plc_*.toml が見つかりません。先に以下を実行してください。"
-  echo "  .venv/bin/python scripts/prepare_powerlaw_cluster_experiment.py"
+  echo "Error: network-plc06_*.toml が見つかりません。先に以下を実行してください。"
+  echo "  .venv/bin/python scripts/prepare_powerlaw_cluster_c06_experiment.py"
   exit 1
 fi
 
@@ -36,7 +36,7 @@ TIMESTAMP="$(date +"%Y%m%d_%H%M%S")"
 mkdir -p "$OUTPUT_ROOT/logs"
 MASTER_LOG="$OUTPUT_ROOT/logs/run_all_${TIMESTAMP}.log"
 
-echo "=== Start powerlaw-cluster strategy batch ===" | tee -a "$MASTER_LOG"
+echo "=== Start powerlaw-cluster-c06 strategy batch ===" | tee -a "$MASTER_LOG"
 echo "Output root: $OUTPUT_ROOT" | tee -a "$MASTER_LOG"
 echo "Runtime    : $RUNTIME_CONF" | tee -a "$MASTER_LOG"
 echo "Agent      : $AGENT_CONF" | tee -a "$MASTER_LOG"

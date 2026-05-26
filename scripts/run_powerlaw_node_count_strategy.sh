@@ -8,7 +8,7 @@ cd "$REPO_ROOT"
 RUST_BIN="target/release/v2"
 RUNTIME_CONF="v2/test_2/runtime.toml"
 AGENT_CONF="v2/test_2/agent/agent-type6.toml"
-OUTPUT_ROOT="powerlaw_node_count_strategy_runs"
+OUTPUT_ROOT="experiments/2026-05-25_powerlaw_node_count_graph_comm/strategy_runs"
 NETWORK_CONFIG_DIR="v2/test_2/network"
 
 if [ ! -x "$RUST_BIN" ]; then

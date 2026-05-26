@@ -30,7 +30,17 @@ if [ -d ".venv" ]; then
   source .venv/bin/activate
 fi
 
-LOG_DIR="optimize_test_${NETWORK}"
+case "$NETWORK" in
+  ba_1000)
+    LOG_DIR="experiments/optimization_ba1000/optimize_runs"
+    ;;
+  facebook)
+    LOG_DIR="experiments/optimization_facebook/optimize_runs"
+    ;;
+  wiki-vote)
+    LOG_DIR="experiments/optimization_wiki_vote/optimize_runs"
+    ;;
+esac
 mkdir -p "$LOG_DIR"
 
 TIMESTAMP="$(date +"%Y%m%d_%H%M%S")"

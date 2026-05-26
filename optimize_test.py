@@ -93,10 +93,16 @@ if TOTAL_AGENTS <= 0:
 
 # ---- 出力先フォルダ構成 ----
 # 例:
-# optimize_test_ba_1000/gpr/
-# optimize_test_facebook/cmaes/
-# optimize_test_wiki-vote/random/
-NETWORK_OUTPUT_DIR = BASE_DIR / f"optimize_test_{NETWORK_NAME}"
+# experiments/optimization_ba1000/optimize_runs/gpr/
+# experiments/optimization_facebook/optimize_runs/cmaes/
+# experiments/optimization_wiki_vote/optimize_runs/random/
+OPTIMIZE_OUTPUT_DIR_MAP = {
+    "ba_1000": BASE_DIR / "experiments" / "optimization_ba1000" / "optimize_runs",
+    "facebook": BASE_DIR / "experiments" / "optimization_facebook" / "optimize_runs",
+    "wiki-vote": BASE_DIR / "experiments" / "optimization_wiki_vote" / "optimize_runs",
+}
+
+NETWORK_OUTPUT_DIR = OPTIMIZE_OUTPUT_DIR_MAP[NETWORK_NAME]
 METHOD_DIR = NETWORK_OUTPUT_DIR / METHOD_NAME.lower()
 
 RESULT_DIR = METHOD_DIR / "result"

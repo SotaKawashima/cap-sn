@@ -8,7 +8,7 @@ cd "$REPO_ROOT"
 RUST_BIN="target/release/v2"
 RUNTIME_CONF="v2/test_2/runtime.toml"
 AGENT_CONF="v2/test_2/agent/agent-type6.toml"
-OUTPUT_ROOT="ba1000_topology_strategy_runs"
+OUTPUT_ROOT="experiments/2026-05_baseline_ba1000_topology/strategy_runs"
 
 if [ ! -x "$RUST_BIN" ]; then
   echo "Error: $RUST_BIN が見つからないか、実行できません。先に cargo build --release を実行してください。"

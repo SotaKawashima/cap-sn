@@ -1,0 +1,5 @@
+path = "./powerlaw_cluster_c06/plc06_seed1/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"
