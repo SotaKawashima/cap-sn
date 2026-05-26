@@ -1,0 +1,5 @@
+path = "./powerlaw_node_count_ba_comm/pncba_n3000_deg40_low_seed2/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"
