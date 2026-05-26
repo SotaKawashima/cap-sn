@@ -1,0 +1,99 @@
+=== Start powerlaw-cluster-c06 strategy batch ===
+Output root: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs
+Runtime    : v2/test_2/runtime.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Networks   : 3
+Time       : 2026年  5月 26日 火曜日 16:44:38 JST
+
+========================================
+Start: network=plc06_seed1, strategy=balance
+Time : 2026年  5月 26日 火曜日 16:44:38 JST
+Config    : v2/test_2/network/network-plc06_seed1.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed1/balance/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed1/balance/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed1, strategy=balance
+Time    : 2026年  5月 26日 火曜日 16:44:39 JST
+
+========================================
+Start: network=plc06_seed1, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 16:44:39 JST
+Config    : v2/test_2/network/network-plc06_seed1.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed1/effective_high/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed1/effective_high/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed1, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 16:44:40 JST
+
+========================================
+Start: network=plc06_seed1, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 16:44:40 JST
+Config    : v2/test_2/network/network-plc06_seed1.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed1/certainty_high/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed1/certainty_high/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed1, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 16:44:41 JST
+
+========================================
+Start: network=plc06_seed2, strategy=balance
+Time : 2026年  5月 26日 火曜日 16:44:41 JST
+Config    : v2/test_2/network/network-plc06_seed2.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed2/balance/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed2/balance/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed2, strategy=balance
+Time    : 2026年  5月 26日 火曜日 16:44:42 JST
+
+========================================
+Start: network=plc06_seed2, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 16:44:42 JST
+Config    : v2/test_2/network/network-plc06_seed2.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed2/effective_high/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed2/effective_high/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed2, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 16:44:43 JST
+
+========================================
+Start: network=plc06_seed2, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 16:44:43 JST
+Config    : v2/test_2/network/network-plc06_seed2.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed2/certainty_high/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed2/certainty_high/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed2, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 16:44:44 JST
+
+========================================
+Start: network=plc06_seed3, strategy=balance
+Time : 2026年  5月 26日 火曜日 16:44:44 JST
+Config    : v2/test_2/network/network-plc06_seed3.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed3/balance/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed3/balance/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed3, strategy=balance
+Time    : 2026年  5月 26日 火曜日 16:44:45 JST
+
+========================================
+Start: network=plc06_seed3, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 16:44:45 JST
+Config    : v2/test_2/network/network-plc06_seed3.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed3/effective_high/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed3/effective_high/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed3, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 16:44:46 JST
+
+========================================
+Start: network=plc06_seed3, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 16:44:46 JST
+Config    : v2/test_2/network/network-plc06_seed3.toml
+Result dir: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed3/certainty_high/result
+Run log   : experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/plc06_seed3/certainty_high/run_20260526_164438.log
+========================================
+Finished: network=plc06_seed3, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 16:44:47 JST
+
+=== All runs finished ===
+Master log: experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/logs/run_all_20260526_164438.log
