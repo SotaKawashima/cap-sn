@@ -1,0 +1,549 @@
+=== Start powerlaw-node-count-ba-comm strategy batch ===
+Output root: powerlaw_node_count_ba_comm_strategy_runs
+Runtime    : v2/test_2/runtime.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Networks   : 18
+Time       : 2026年  5月 26日 火曜日 13:31:05 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed1, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:31:05 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed1/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed1/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed1, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:31:42 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed1, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:31:42 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed1/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed1/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed1, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:32:19 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed1, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:32:19 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed1/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed1/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed1, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:32:50 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed2, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:32:50 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed2/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed2/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed2, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:33:25 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed2, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:33:25 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed2/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed2/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed2, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:34:02 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed2, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:34:02 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed2/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed2/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed2, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:34:32 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed3, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:34:32 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed3/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed3/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed3, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:35:06 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed3, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:35:06 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed3/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed3/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed3, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:35:42 JST
+
+========================================
+Start: network=pncba_n2000_deg40_high_seed3, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:35:42 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed3/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_high_seed3/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_high_seed3, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:36:12 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed1, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:36:12 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed1/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed1/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed1, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:36:49 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed1, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:36:49 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed1/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed1/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed1, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:37:30 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed1, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:37:30 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed1/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed1/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed1, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:38:09 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed2, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:38:09 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed2/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed2/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed2, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:38:51 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed2, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:38:51 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed2/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed2/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed2, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:39:36 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed2, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:39:36 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed2/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed2/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed2, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:40:14 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed3, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:40:14 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed3/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed3/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed3, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:40:54 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed3, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:40:54 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed3/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed3/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed3, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:41:38 JST
+
+========================================
+Start: network=pncba_n2000_deg40_low_seed3, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:41:38 JST
+Config    : v2/test_2/network/network-pncba_n2000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed3/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n2000_deg40_low_seed3/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n2000_deg40_low_seed3, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:42:14 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed1, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:42:14 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed1/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed1/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed1, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:43:40 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed1, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:43:40 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed1/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed1/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed1, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:45:03 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed1, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:45:03 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed1/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed1/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed1, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:46:16 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed2, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:46:16 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed2/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed2/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed2, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:47:32 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed2, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:47:32 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed2/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed2/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed2, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:48:52 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed2, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:48:52 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed2/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed2/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed2, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:50:03 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed3, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:50:03 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed3/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed3/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed3, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:51:23 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed3, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:51:23 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed3/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed3/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed3, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:52:45 JST
+
+========================================
+Start: network=pncba_n3000_deg40_high_seed3, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:52:45 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed3/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_high_seed3/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_high_seed3, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:53:58 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed1, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:53:58 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed1/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed1/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed1, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:55:22 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed1, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:55:22 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed1/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed1/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed1, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 13:56:50 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed1, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 13:56:50 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed1/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed1/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed1, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 13:58:02 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed2, strategy=balance
+Time : 2026年  5月 26日 火曜日 13:58:02 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed2/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed2/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed2, strategy=balance
+Time    : 2026年  5月 26日 火曜日 13:59:31 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed2, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 13:59:31 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed2/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed2/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed2, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:00:49 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed2, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:00:49 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed2/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed2/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed2, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:02:10 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed3, strategy=balance
+Time : 2026年  5月 26日 火曜日 14:02:10 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed3/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed3/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed3, strategy=balance
+Time    : 2026年  5月 26日 火曜日 14:03:39 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed3, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 14:03:39 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed3/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed3/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed3, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:05:03 JST
+
+========================================
+Start: network=pncba_n3000_deg40_low_seed3, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:05:03 JST
+Config    : v2/test_2/network/network-pncba_n3000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed3/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n3000_deg40_low_seed3/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n3000_deg40_low_seed3, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:06:23 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed1, strategy=balance
+Time : 2026年  5月 26日 火曜日 14:06:23 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed1/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed1/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed1, strategy=balance
+Time    : 2026年  5月 26日 火曜日 14:08:54 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed1, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 14:08:54 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed1/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed1/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed1, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:11:24 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed1, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:11:24 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed1/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed1/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed1, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:13:25 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed2, strategy=balance
+Time : 2026年  5月 26日 火曜日 14:13:25 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed2/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed2/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed2, strategy=balance
+Time    : 2026年  5月 26日 火曜日 14:16:04 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed2, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 14:16:04 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed2/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed2/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed2, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:18:37 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed2, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:18:37 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed2/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed2/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed2, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:21:06 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed3, strategy=balance
+Time : 2026年  5月 26日 火曜日 14:21:06 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed3/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed3/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed3, strategy=balance
+Time    : 2026年  5月 26日 火曜日 14:23:27 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed3, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 14:23:27 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed3/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed3/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed3, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:26:07 JST
+
+========================================
+Start: network=pncba_n4000_deg40_high_seed3, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:26:07 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_high_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed3/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_high_seed3/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_high_seed3, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:28:24 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed1, strategy=balance
+Time : 2026年  5月 26日 火曜日 14:28:24 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed1/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed1/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed1, strategy=balance
+Time    : 2026年  5月 26日 火曜日 14:31:09 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed1, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 14:31:09 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed1/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed1/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed1, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:34:01 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed1, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:34:01 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed1.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed1/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed1/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed1, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:36:29 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed2, strategy=balance
+Time : 2026年  5月 26日 火曜日 14:36:29 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed2/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed2/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed2, strategy=balance
+Time    : 2026年  5月 26日 火曜日 14:39:16 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed2, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 14:39:16 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed2/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed2/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed2, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:41:52 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed2, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:41:52 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed2.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed2/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed2/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed2, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:44:16 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed3, strategy=balance
+Time : 2026年  5月 26日 火曜日 14:44:16 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed3/balance/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed3/balance/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed3, strategy=balance
+Time    : 2026年  5月 26日 火曜日 14:46:59 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed3, strategy=effective_high
+Time : 2026年  5月 26日 火曜日 14:46:59 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed3/effective_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed3/effective_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed3, strategy=effective_high
+Time    : 2026年  5月 26日 火曜日 14:50:03 JST
+
+========================================
+Start: network=pncba_n4000_deg40_low_seed3, strategy=certainty_high
+Time : 2026年  5月 26日 火曜日 14:50:03 JST
+Config    : v2/test_2/network/network-pncba_n4000_deg40_low_seed3.toml
+Result dir: powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed3/certainty_high/result
+Run log   : powerlaw_node_count_ba_comm_strategy_runs/pncba_n4000_deg40_low_seed3/certainty_high/run_20260526_133105.log
+========================================
+Finished: network=pncba_n4000_deg40_low_seed3, strategy=certainty_high
+Time    : 2026年  5月 26日 火曜日 14:52:35 JST
+
+=== All runs finished ===
+Master log: powerlaw_node_count_ba_comm_strategy_runs/logs/run_all_20260526_133105.log
