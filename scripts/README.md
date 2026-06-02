@@ -16,6 +16,7 @@
 | `run_powerlaw_node_count_strategy.sh` | `graph_comm.ipynb` 由来 comm.csv を使ったノード数実験 | `experiments/2026-05-25_powerlaw_node_count_graph_comm/strategy_runs/` |
 | `run_powerlaw_node_count_ba_comm_strategy.sh` | BA1000 由来 comm.csv をリサンプリングしたノード数実験 | `experiments/2026-05-26_powerlaw_node_count_ba_comm/strategy_runs/` |
 | `run_lfr_community_strategy.sh` | LFRのコミュニティ混合度を変えた実験 | `experiments/2026-06-02_lfr_community/strategy_runs/` |
+| `run_lfr_facebook_pool_strategy.sh` | LFR strongでsupport level候補プールの偏りを変えた実験 | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/` |
 | `run_optimize.sh` | BA1000 / Facebook / Wiki-vote の最適化実験 | `experiments/optimization_*/optimize_runs/` |
 | `run_ba_1000.sh` | `run_optimize.sh ba_1000` のショートカット | `experiments/optimization_ba1000/optimize_runs/` |
 | `run_facebook.sh` | `run_optimize.sh facebook` のショートカット | `experiments/optimization_facebook/optimize_runs/` |
@@ -32,6 +33,7 @@
 | `prepare_powerlaw_node_count_experiment.py` | ノード数変更グラフと comm.csv 作成 | `v2/test_2/network/powerlaw_node_count/` |
 | `prepare_powerlaw_node_count_ba_comm_experiment.py` | BA1000 comm.csv 分布リサンプリング版のノード数変更グラフ作成 | `v2/test_2/network/powerlaw_node_count_ba_comm/` |
 | `prepare_lfr_community_experiment.py` | LFRグラフ、support level用comm.csv、LFR正解コミュニティを作成 | `v2/test_2/network/lfr_community/` |
+| `prepare_lfr_facebook_pool_experiment.py` | LFR strong固定でsupport level候補プールの偏りを変えたcomm.csvを作成 | `v2/test_2/network/lfr_facebook_pool/` |
 | `generate_comm_from_graph.py` | 既存グラフから comm.csv を作成 | 指定した `--output` |
 
 ## 指標計算

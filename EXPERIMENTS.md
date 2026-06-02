@@ -11,6 +11,7 @@
 | 状態 | 意味 |
 | :--- | :--- |
 | 採用 | 現時点の考察に使う |
+| 集計済み・考察前 | 実行・集計・可視化は終わったが、研究上の解釈は未整理 |
 | 実行済み・分析前 | 実行は終わったが、ログ確認・集計・考察が未完了 |
 | 実行前 | 実験セット・設定は作成済みだが、Rustシミュレーションは未実行 |
 | 注意 | 結果はあるが、実験条件に注意が必要 |
@@ -32,7 +33,8 @@
 | `optimization_ba1000` | BA1000での最適化実験 | BA1000 | BA1000設定 | `experiments/optimization_ba1000/optimize_runs/` | `experiments/optimization_ba1000/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
 | `optimization_facebook` | Facebookでの最適化実験 | Facebook | Facebook由来 | `experiments/optimization_facebook/optimize_runs/` | `experiments/optimization_facebook/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
 | `optimization_wiki_vote` | Wiki-voteでの最適化実験 | Wiki-vote | Wiki-vote由来 | `experiments/optimization_wiki_vote/optimize_runs/` | `experiments/optimization_wiki_vote/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
-| `lfr_community` | Facebook的なコミュニティ閉じ込めを制御して確認 | LFR n=1000, mu=0.05/0.20/0.40, 平均次数約38-40 | `principled_clustering(G, 2)`由来 | `experiments/2026-06-02_lfr_community/strategy_runs/` | `experiments/2026-06-02_lfr_community/strategy_runs/analysis/` | 実行前 | strong/middle/weak 各3 seed。生成summaryは `v2/test_2/network/lfr_community/generation_summary.csv` |
+| `lfr_community` | Facebook的なコミュニティ閉じ込めを制御して確認 | LFR n=1000, mu=0.05/0.20/0.40, 平均次数約38-40 | `principled_clustering(G, 2)`由来 | `experiments/2026-06-02_lfr_community/strategy_runs/` | `experiments/2026-06-02_lfr_community/strategy_runs/analysis/` | 集計済み・考察前 | 9ネットワーク x 3 strategy実行済み。集計・可視化は `notebooks/network_strategy_analysis.ipynb` に追加済み |
+| `lfr_facebook_pool` | LFR strongでsupport level候補プールの偏りだけを変える | LFR strong seed1-3固定 | original/random/half_facebook/facebook_like | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/` | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/analysis/` | 実行前 | 12 network x 3 strategy予定。生成summaryは `v2/test_2/network/lfr_facebook_pool/generation_summary.csv` |
 
 ## スクリプト対応表
 
@@ -45,6 +47,7 @@
 | ノード数実験 graph_comm版 | `scripts/prepare_powerlaw_node_count_experiment.py` | `scripts/run_powerlaw_node_count_strategy.sh` |
 | ノード数実験 BA1000 comm版 | `scripts/prepare_powerlaw_node_count_ba_comm_experiment.py` | `scripts/run_powerlaw_node_count_ba_comm_strategy.sh` |
 | LFRコミュニティ構造実験 | `scripts/prepare_lfr_community_experiment.py` | `scripts/run_lfr_community_strategy.sh` |
+| LFR support pool偏り実験 | `scripts/prepare_lfr_facebook_pool_experiment.py` | `scripts/run_lfr_facebook_pool_strategy.sh` |
 | graph_comm方式のcomm.csv生成 | `scripts/generate_comm_from_graph.py` | なし |
 
 ## 分析notebook
@@ -60,3 +63,4 @@
 - そのため、`comm.csv` の生成方法を変えると、ネットワーク構造だけでなく発信者配置も変わる。
 - `powerlaw_node_count_graph_comm` はこの影響で訂正情報が不自然に広がった可能性が高いため、本筋の考察には使わない方針。
 - LFR実験では、LFR正解コミュニティは `lfr_communities.csv` に保存し、Rustが読む `comm.csv` とは分ける。
+- LFR support pool偏り実験では、グラフ構造を固定し、`comm.csv` のsupport level順位だけを変える。

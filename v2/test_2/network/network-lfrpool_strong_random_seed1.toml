@@ -1,0 +1,5 @@
+path = "./lfr_facebook_pool/lfrpool_strong_random_seed1/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"
