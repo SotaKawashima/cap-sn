@@ -1,0 +1,369 @@
+=== Start lfr-facebook-pool strategy batch ===
+Output root: experiments/2026-06-02_lfr_facebook_pool/strategy_runs
+Runtime    : v2/test_2/runtime.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Networks   : 12
+Time       : 2026年  6月  2日 火曜日 15:20:41 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed1, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:20:41 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed1/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed1/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed1, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:20:50 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed1, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:20:50 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed1/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed1/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed1, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:20:58 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed1, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:20:58 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed1/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed1/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed1, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:21:06 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed2, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:21:06 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed2/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed2/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed2, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:21:15 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed2, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:21:15 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed2/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed2/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed2, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:21:24 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed2, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:21:24 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed2/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed2/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed2, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:21:33 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed3, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:21:33 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed3/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed3/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed3, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:21:42 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed3, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:21:42 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed3/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed3/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed3, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:21:51 JST
+
+========================================
+Start: network=lfrpool_strong_facebook_like_seed3, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:21:51 JST
+Config    : v2/test_2/network/network-lfrpool_strong_facebook_like_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed3/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_facebook_like_seed3/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_facebook_like_seed3, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:22:00 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed1, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:22:00 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed1/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed1/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed1, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:22:08 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed1, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:22:08 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed1/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed1/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed1, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:22:17 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed1, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:22:17 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed1/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed1/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed1, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:22:25 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed2, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:22:25 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed2/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed2/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed2, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:22:34 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed2, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:22:34 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed2/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed2/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed2, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:22:43 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed2, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:22:43 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed2/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed2/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed2, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:22:51 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed3, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:22:51 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed3/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed3/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed3, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:23:00 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed3, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:23:00 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed3/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed3/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed3, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:23:09 JST
+
+========================================
+Start: network=lfrpool_strong_half_facebook_seed3, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:23:09 JST
+Config    : v2/test_2/network/network-lfrpool_strong_half_facebook_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed3/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_half_facebook_seed3/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_half_facebook_seed3, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:23:18 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed1, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:23:18 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed1/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed1/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed1, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:23:27 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed1, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:23:27 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed1/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed1/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed1, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:23:35 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed1, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:23:35 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed1/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed1/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed1, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:23:43 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed2, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:23:43 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed2/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed2/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed2, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:23:52 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed2, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:23:52 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed2/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed2/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed2, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:24:00 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed2, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:24:00 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed2/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed2/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed2, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:24:09 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed3, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:24:09 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed3/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed3/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed3, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:24:18 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed3, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:24:18 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed3/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed3/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed3, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:24:26 JST
+
+========================================
+Start: network=lfrpool_strong_original_seed3, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:24:26 JST
+Config    : v2/test_2/network/network-lfrpool_strong_original_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed3/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_original_seed3/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_original_seed3, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:24:34 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed1, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:24:34 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed1/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed1/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed1, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:24:43 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed1, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:24:43 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed1/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed1/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed1, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:24:52 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed1, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:24:52 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed1.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed1/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed1/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed1, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:25:00 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed2, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:25:01 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed2/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed2/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed2, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:25:08 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed2, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:25:08 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed2/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed2/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed2, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:25:16 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed2, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:25:16 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed2.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed2/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed2/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed2, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:25:24 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed3, strategy=balance
+Time : 2026年  6月  2日 火曜日 15:25:24 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed3/balance/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed3/balance/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed3, strategy=balance
+Time    : 2026年  6月  2日 火曜日 15:25:32 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed3, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 15:25:32 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed3/effective_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed3/effective_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed3, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 15:25:40 JST
+
+========================================
+Start: network=lfrpool_strong_random_seed3, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 15:25:40 JST
+Config    : v2/test_2/network/network-lfrpool_strong_random_seed3.toml
+Result dir: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed3/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_facebook_pool/strategy_runs/lfrpool_strong_random_seed3/certainty_high/run_20260602_152041.log
+========================================
+Finished: network=lfrpool_strong_random_seed3, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 15:25:49 JST
+
+=== All runs finished ===
+Master log: experiments/2026-06-02_lfr_facebook_pool/strategy_runs/logs/run_all_20260602_152041.log
