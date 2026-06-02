@@ -12,6 +12,7 @@
 | :--- | :--- |
 | 採用 | 現時点の考察に使う |
 | 実行済み・分析前 | 実行は終わったが、ログ確認・集計・考察が未完了 |
+| 実行前 | 実験セット・設定は作成済みだが、Rustシミュレーションは未実行 |
 | 注意 | 結果はあるが、実験条件に注意が必要 |
 | 不採用候補 | 本筋の考察には使いにくい |
 | 未作成 | 今後作る予定 |
@@ -27,11 +28,11 @@
 | `powerlaw_degree_cluster` | 平均次数40でクラスタ係数を変えた影響を見る | n=1000, deg40 low/high | BA1000コピー | `experiments/2026-05-19_powerlaw_degree_cluster/strategy_runs/` | `experiments/2026-05-19_powerlaw_degree_cluster/strategy_runs/analysis/` | 採用 | 5/19案B |
 | `powerlaw_node_count_graph_comm` | ノード数をFacebook規模へ近づける | n=2000/3000/4000, deg40 low/high | graph_comm方式で各グラフから生成 | `experiments/2026-05-25_powerlaw_node_count_graph_comm/strategy_runs/` | `experiments/2026-05-25_powerlaw_node_count_graph_comm/strategy_runs/analysis/` | 注意 / 不採用候補 | 訂正情報が不自然に大きく拡散。comm.csv再生成で発信者配置が変わった可能性 |
 | `powerlaw_node_count_ba_comm` | ノード数実験のやり直し | n=2000/3000/4000, deg40 low/high | BA1000由来分布を復元抽出 | `experiments/2026-05-26_powerlaw_node_count_ba_comm/strategy_runs/` | `experiments/2026-05-26_powerlaw_node_count_ba_comm/strategy_runs/analysis/` | 実行済み・分析前 | graphは前回と同じ、comm.csvだけBA1000分布へ戻す |
-| `powerlaw_cluster_c06` | クラスタ係数0.6付近の人工グラフで確認 | n=1000, 平均次数約6, clustering約0.6 | BA1000コピー | `experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/` | 未作成 | 未実行 | 平均次数は既存条件と揃っていないため探索実験として扱う |
+| `powerlaw_cluster_c06` | クラスタ係数0.6付近の人工グラフで確認 | n=1000, 平均次数約6, clustering約0.6 | BA1000コピー | `experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/` | `experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs/analysis/` | 注意 | 平均次数は既存条件と揃っていないため探索実験として扱う |
 | `optimization_ba1000` | BA1000での最適化実験 | BA1000 | BA1000設定 | `experiments/optimization_ba1000/optimize_runs/` | `experiments/optimization_ba1000/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
 | `optimization_facebook` | Facebookでの最適化実験 | Facebook | Facebook由来 | `experiments/optimization_facebook/optimize_runs/` | `experiments/optimization_facebook/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
 | `optimization_wiki_vote` | Wiki-voteでの最適化実験 | Wiki-vote | Wiki-vote由来 | `experiments/optimization_wiki_vote/optimize_runs/` | `experiments/optimization_wiki_vote/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
-| `lfr_community` | Facebook的なコミュニティ閉じ込めを制御して確認 | LFR予定 | 未定 | 未作成 | 未作成 | 未作成 | コミュニティ構造制御の本命候補 |
+| `lfr_community` | Facebook的なコミュニティ閉じ込めを制御して確認 | LFR n=1000, mu=0.05/0.20/0.40, 平均次数約38-40 | `principled_clustering(G, 2)`由来 | `experiments/2026-06-02_lfr_community/strategy_runs/` | `experiments/2026-06-02_lfr_community/strategy_runs/analysis/` | 実行前 | strong/middle/weak 各3 seed。生成summaryは `v2/test_2/network/lfr_community/generation_summary.csv` |
 
 ## スクリプト対応表
 
@@ -43,6 +44,7 @@
 | 平均次数 x クラスタ係数実験 | `scripts/prepare_powerlaw_degree_cluster_experiment.py` | `scripts/run_powerlaw_degree_cluster_strategy.sh` |
 | ノード数実験 graph_comm版 | `scripts/prepare_powerlaw_node_count_experiment.py` | `scripts/run_powerlaw_node_count_strategy.sh` |
 | ノード数実験 BA1000 comm版 | `scripts/prepare_powerlaw_node_count_ba_comm_experiment.py` | `scripts/run_powerlaw_node_count_ba_comm_strategy.sh` |
+| LFRコミュニティ構造実験 | `scripts/prepare_lfr_community_experiment.py` | `scripts/run_lfr_community_strategy.sh` |
 | graph_comm方式のcomm.csv生成 | `scripts/generate_comm_from_graph.py` | なし |
 
 ## 分析notebook
@@ -57,3 +59,4 @@
 - 誤情報・訂正情報・行動誘導情報の初期発信者は、`comm.csv` のlevel順に依存する。
 - そのため、`comm.csv` の生成方法を変えると、ネットワーク構造だけでなく発信者配置も変わる。
 - `powerlaw_node_count_graph_comm` はこの影響で訂正情報が不自然に広がった可能性が高いため、本筋の考察には使わない方針。
+- LFR実験では、LFR正解コミュニティは `lfr_communities.csv` に保存し、Rustが読む `comm.csv` とは分ける。

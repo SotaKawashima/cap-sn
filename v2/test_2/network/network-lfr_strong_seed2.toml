@@ -1,0 +1,5 @@
+path = "./lfr_community/lfr_strong_seed2/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"
