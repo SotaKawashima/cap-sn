@@ -1,0 +1,279 @@
+=== Start lfr-community strategy batch ===
+Output root: experiments/2026-06-02_lfr_community/strategy_runs
+Runtime    : v2/test_2/runtime.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Networks   : 9
+Time       : 2026年  6月  2日 火曜日 13:54:38 JST
+
+========================================
+Start: network=lfr_middle_seed1, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:54:38 JST
+Config    : v2/test_2/network/network-lfr_middle_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed1/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed1/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed1, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:54:49 JST
+
+========================================
+Start: network=lfr_middle_seed1, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:54:49 JST
+Config    : v2/test_2/network/network-lfr_middle_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed1/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed1/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed1, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:55:00 JST
+
+========================================
+Start: network=lfr_middle_seed1, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:55:00 JST
+Config    : v2/test_2/network/network-lfr_middle_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed1/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed1/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed1, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:55:11 JST
+
+========================================
+Start: network=lfr_middle_seed2, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:55:11 JST
+Config    : v2/test_2/network/network-lfr_middle_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed2/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed2/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed2, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:55:21 JST
+
+========================================
+Start: network=lfr_middle_seed2, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:55:21 JST
+Config    : v2/test_2/network/network-lfr_middle_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed2/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed2/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed2, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:55:31 JST
+
+========================================
+Start: network=lfr_middle_seed2, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:55:31 JST
+Config    : v2/test_2/network/network-lfr_middle_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed2/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed2/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed2, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:55:42 JST
+
+========================================
+Start: network=lfr_middle_seed3, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:55:42 JST
+Config    : v2/test_2/network/network-lfr_middle_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed3/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed3/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed3, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:55:54 JST
+
+========================================
+Start: network=lfr_middle_seed3, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:55:54 JST
+Config    : v2/test_2/network/network-lfr_middle_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed3/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed3/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed3, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:56:06 JST
+
+========================================
+Start: network=lfr_middle_seed3, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:56:06 JST
+Config    : v2/test_2/network/network-lfr_middle_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed3/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_middle_seed3/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_middle_seed3, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:56:17 JST
+
+========================================
+Start: network=lfr_strong_seed1, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:56:17 JST
+Config    : v2/test_2/network/network-lfr_strong_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed1/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed1/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed1, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:56:26 JST
+
+========================================
+Start: network=lfr_strong_seed1, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:56:26 JST
+Config    : v2/test_2/network/network-lfr_strong_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed1/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed1/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed1, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:56:33 JST
+
+========================================
+Start: network=lfr_strong_seed1, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:56:33 JST
+Config    : v2/test_2/network/network-lfr_strong_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed1/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed1/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed1, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:56:42 JST
+
+========================================
+Start: network=lfr_strong_seed2, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:56:42 JST
+Config    : v2/test_2/network/network-lfr_strong_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed2/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed2/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed2, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:56:50 JST
+
+========================================
+Start: network=lfr_strong_seed2, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:56:50 JST
+Config    : v2/test_2/network/network-lfr_strong_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed2/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed2/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed2, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:56:59 JST
+
+========================================
+Start: network=lfr_strong_seed2, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:56:59 JST
+Config    : v2/test_2/network/network-lfr_strong_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed2/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed2/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed2, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:57:07 JST
+
+========================================
+Start: network=lfr_strong_seed3, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:57:07 JST
+Config    : v2/test_2/network/network-lfr_strong_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed3/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed3/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed3, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:57:16 JST
+
+========================================
+Start: network=lfr_strong_seed3, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:57:16 JST
+Config    : v2/test_2/network/network-lfr_strong_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed3/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed3/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed3, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:57:25 JST
+
+========================================
+Start: network=lfr_strong_seed3, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:57:25 JST
+Config    : v2/test_2/network/network-lfr_strong_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed3/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_strong_seed3/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_strong_seed3, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:57:32 JST
+
+========================================
+Start: network=lfr_weak_seed1, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:57:32 JST
+Config    : v2/test_2/network/network-lfr_weak_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed1/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed1/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed1, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:57:43 JST
+
+========================================
+Start: network=lfr_weak_seed1, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:57:43 JST
+Config    : v2/test_2/network/network-lfr_weak_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed1/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed1/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed1, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:57:56 JST
+
+========================================
+Start: network=lfr_weak_seed1, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:57:56 JST
+Config    : v2/test_2/network/network-lfr_weak_seed1.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed1/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed1/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed1, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:58:08 JST
+
+========================================
+Start: network=lfr_weak_seed2, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:58:08 JST
+Config    : v2/test_2/network/network-lfr_weak_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed2/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed2/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed2, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:58:20 JST
+
+========================================
+Start: network=lfr_weak_seed2, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:58:20 JST
+Config    : v2/test_2/network/network-lfr_weak_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed2/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed2/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed2, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:58:31 JST
+
+========================================
+Start: network=lfr_weak_seed2, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:58:31 JST
+Config    : v2/test_2/network/network-lfr_weak_seed2.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed2/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed2/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed2, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:58:42 JST
+
+========================================
+Start: network=lfr_weak_seed3, strategy=balance
+Time : 2026年  6月  2日 火曜日 13:58:42 JST
+Config    : v2/test_2/network/network-lfr_weak_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed3/balance/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed3/balance/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed3, strategy=balance
+Time    : 2026年  6月  2日 火曜日 13:58:54 JST
+
+========================================
+Start: network=lfr_weak_seed3, strategy=effective_high
+Time : 2026年  6月  2日 火曜日 13:58:54 JST
+Config    : v2/test_2/network/network-lfr_weak_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed3/effective_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed3/effective_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed3, strategy=effective_high
+Time    : 2026年  6月  2日 火曜日 13:59:07 JST
+
+========================================
+Start: network=lfr_weak_seed3, strategy=certainty_high
+Time : 2026年  6月  2日 火曜日 13:59:07 JST
+Config    : v2/test_2/network/network-lfr_weak_seed3.toml
+Result dir: experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed3/certainty_high/result
+Run log   : experiments/2026-06-02_lfr_community/strategy_runs/lfr_weak_seed3/certainty_high/run_20260602_135438.log
+========================================
+Finished: network=lfr_weak_seed3, strategy=certainty_high
+Time    : 2026年  6月  2日 火曜日 13:59:20 JST
+
+=== All runs finished ===
+Master log: experiments/2026-06-02_lfr_community/strategy_runs/logs/run_all_20260602_135438.log
