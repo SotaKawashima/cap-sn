@@ -1,0 +1,7 @@
+order,pool,node_count,degree_mean,communities_touched,largest_comm_count,largest_comm_ratio
+rust_stable_level_desc_agent_asc,top20,808,36.82920792079208,7,340,0.4207920792079208
+rust_stable_level_desc_agent_asc,middle20,808,30.85891089108911,10,493,0.6101485148514851
+rust_stable_level_desc_agent_asc,bottom20,808,33.95173267326733,5,425,0.525990099009901
+previous_target_level_desc_agent_desc,top20,808,30.849009900990097,3,521,0.6448019801980198
+previous_target_level_desc_agent_desc,middle20,808,33.209158415841586,9,308,0.3811881188118812
+previous_target_level_desc_agent_desc,bottom20,808,34.102722772277225,5,425,0.525990099009901

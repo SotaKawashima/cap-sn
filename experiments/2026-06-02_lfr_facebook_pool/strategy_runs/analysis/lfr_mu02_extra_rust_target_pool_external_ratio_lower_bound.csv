@@ -1,0 +1,10 @@
+network,pool,target_external_ratio_mean,lowest_possible_external_ratio_mean_without_comm_constraints
+lfr_mu02_seed4,top20,0.008945361536991775,0.0
+lfr_mu02_seed4,middle20,0.03338103645201027,0.0
+lfr_mu02_seed4,bottom20,0.018996130078641007,0.0
+lfr_mu02_seed5,top20,0.008945361536991775,0.0
+lfr_mu02_seed5,middle20,0.03338103645201027,0.0
+lfr_mu02_seed5,bottom20,0.018996130078641007,0.0
+lfr_mu02_seed6,top20,0.008945361536991775,0.0
+lfr_mu02_seed6,middle20,0.03338103645201027,0.0
+lfr_mu02_seed6,bottom20,0.018996130078641007,0.0

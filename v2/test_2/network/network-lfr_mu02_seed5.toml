@@ -1,0 +1,5 @@
+path = "./lfr_low_external_mu02_extra/lfr_mu02_seed5/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"

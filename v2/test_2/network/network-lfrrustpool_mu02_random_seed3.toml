@@ -1,0 +1,5 @@
+path = "./lfr_rust_target_pool/lfrrustpool_mu02_random_seed3/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"

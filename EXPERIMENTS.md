@@ -34,7 +34,8 @@
 | `optimization_facebook` | Facebookでの最適化実験 | Facebook | Facebook由来 | `experiments/optimization_facebook/optimize_runs/` | `experiments/optimization_facebook/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
 | `optimization_wiki_vote` | Wiki-voteでの最適化実験 | Wiki-vote | Wiki-vote由来 | `experiments/optimization_wiki_vote/optimize_runs/` | `experiments/optimization_wiki_vote/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
 | `lfr_community` | Facebook的なコミュニティ閉じ込めを制御して確認 | LFR n=1000, mu=0.05/0.20/0.40, 平均次数約38-40 | `principled_clustering(G, 2)`由来 | `experiments/2026-06-02_lfr_community/strategy_runs/` | `experiments/2026-06-02_lfr_community/strategy_runs/analysis/` | 集計済み・考察前 | 9ネットワーク x 3 strategy実行済み。集計・可視化は `notebooks/network_strategy_analysis.ipynb` に追加済み |
-| `lfr_facebook_pool` | LFR strongでsupport level候補プールの偏りだけを変える | LFR strong seed1-3固定 | original/random/half_facebook/facebook_like | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/` | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/analysis/` | 実行前 | 12 network x 3 strategy予定。生成summaryは `v2/test_2/network/lfr_facebook_pool/generation_summary.csv` |
+| `lfr_facebook_pool` | LFR strongでsupport level候補プールの偏りだけを変える | LFR strong seed1-3固定 | original/random/half_facebook/facebook_like | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/` | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/analysis/` | 集計済み・考察前 | 12 network x 3 strategy実行済み。ログ確認・集計・可視化は `notebooks/network_strategy_analysis.ipynb` に追加済み |
+| `lfr_rust_target_pool` | Facebook Rust実順序のsupport pool集中度・外部次数比に合わせる | LFR mu=0.02 seed3/4/5 | original/random/rust_target | `experiments/2026-06-03_lfr_rust_target_pool/strategy_runs/` | `experiments/2026-06-03_lfr_rust_target_pool/strategy_runs/analysis/` | 実行前 | 9 network x 3 strategy予定。Rust実順序のFacebook目標に近い候補プール配置を事前生成済み |
 
 ## スクリプト対応表
 
@@ -48,6 +49,7 @@
 | ノード数実験 BA1000 comm版 | `scripts/prepare_powerlaw_node_count_ba_comm_experiment.py` | `scripts/run_powerlaw_node_count_ba_comm_strategy.sh` |
 | LFRコミュニティ構造実験 | `scripts/prepare_lfr_community_experiment.py` | `scripts/run_lfr_community_strategy.sh` |
 | LFR support pool偏り実験 | `scripts/prepare_lfr_facebook_pool_experiment.py` | `scripts/run_lfr_facebook_pool_strategy.sh` |
+| LFR Rust実順序target pool実験 | `scripts/prepare_lfr_rust_target_pool_experiment.py` | `scripts/run_lfr_rust_target_pool_strategy.sh` |
 | graph_comm方式のcomm.csv生成 | `scripts/generate_comm_from_graph.py` | なし |
 
 ## 分析notebook
@@ -64,3 +66,4 @@
 - `powerlaw_node_count_graph_comm` はこの影響で訂正情報が不自然に広がった可能性が高いため、本筋の考察には使わない方針。
 - LFR実験では、LFR正解コミュニティは `lfr_communities.csv` に保存し、Rustが読む `comm.csv` とは分ける。
 - LFR support pool偏り実験では、グラフ構造を固定し、`comm.csv` のsupport level順位だけを変える。
+- LFR Rust実順序target pool実験では、support level値を一意にし、Rustの同値タイブレークに依存しない配置にする。
