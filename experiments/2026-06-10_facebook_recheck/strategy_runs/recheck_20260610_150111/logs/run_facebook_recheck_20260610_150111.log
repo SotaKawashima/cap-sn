@@ -1,0 +1,37 @@
+=== Start facebook recheck strategy batch ===
+Run id     : recheck_20260610_150111
+Output root: experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111
+Runtime    : v2/test_2/runtime.toml
+Network    : v2/test_2/network/network-facebook.toml
+Agent      : v2/test_2/agent/agent-type6.toml
+Time       : 2026年  6月 10日 水曜日 15:01:11 JST
+
+========================================
+Start: network=facebook, strategy=balance
+Time : 2026年  6月 10日 水曜日 15:01:11 JST
+Result dir: experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111/facebook/balance/result
+Run log   : experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111/facebook/balance/run_20260610_150111.log
+========================================
+Finished: network=facebook, strategy=balance
+Time    : 2026年  6月 10日 水曜日 15:01:46 JST
+
+========================================
+Start: network=facebook, strategy=effective_high
+Time : 2026年  6月 10日 水曜日 15:01:46 JST
+Result dir: experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111/facebook/effective_high/result
+Run log   : experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111/facebook/effective_high/run_20260610_150111.log
+========================================
+Finished: network=facebook, strategy=effective_high
+Time    : 2026年  6月 10日 水曜日 15:02:20 JST
+
+========================================
+Start: network=facebook, strategy=certainty_high
+Time : 2026年  6月 10日 水曜日 15:02:20 JST
+Result dir: experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111/facebook/certainty_high/result
+Run log   : experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111/facebook/certainty_high/run_20260610_150111.log
+========================================
+Finished: network=facebook, strategy=certainty_high
+Time    : 2026年  6月 10日 水曜日 15:02:55 JST
+
+=== All facebook recheck runs finished ===
+Master log: experiments/2026-06-10_facebook_recheck/strategy_runs/recheck_20260610_150111/logs/run_facebook_recheck_20260610_150111.log
