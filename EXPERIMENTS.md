@@ -35,7 +35,7 @@
 | `optimization_wiki_vote` | Wiki-voteでの最適化実験 | Wiki-vote | Wiki-vote由来 | `experiments/optimization_wiki_vote/optimize_runs/` | `experiments/optimization_wiki_vote/behavior_compare/` | 採用 | 最適化結果と挙動比較 |
 | `lfr_community` | Facebook的なコミュニティ閉じ込めを制御して確認 | LFR n=1000, mu=0.05/0.20/0.40, 平均次数約38-40 | `principled_clustering(G, 2)`由来 | `experiments/2026-06-02_lfr_community/strategy_runs/` | `experiments/2026-06-02_lfr_community/strategy_runs/analysis/` | 集計済み・考察前 | 9ネットワーク x 3 strategy実行済み。集計・可視化は `notebooks/network_strategy_analysis.ipynb` に追加済み |
 | `lfr_facebook_pool` | LFR strongでsupport level候補プールの偏りだけを変える | LFR strong seed1-3固定 | original/random/half_facebook/facebook_like | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/` | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/analysis/` | 集計済み・考察前 | 12 network x 3 strategy実行済み。ログ確認・集計・可視化は `notebooks/network_strategy_analysis.ipynb` に追加済み |
-| `lfr_rust_target_pool` | Facebook Rust実順序のsupport pool集中度・外部次数比に合わせる | LFR mu=0.02 seed3/4/5 | original/random/rust_target | `experiments/2026-06-03_lfr_rust_target_pool/strategy_runs/` | `experiments/2026-06-03_lfr_rust_target_pool/strategy_runs/analysis/` | 実行前 | 9 network x 3 strategy予定。Rust実順序のFacebook目標に近い候補プール配置を事前生成済み |
+| `lfr_rust_target_pool` | Facebook Rust実順序のsupport pool集中度・外部次数比に合わせる | LFR mu=0.02 seed3/4/5 | original/random/rust_target | `experiments/2026-06-03_lfr_rust_target_pool/strategy_runs/` | `experiments/2026-06-03_lfr_rust_target_pool/strategy_runs/analysis/` | 集計済み・考察前 | 9 network x 3 strategy実行済み。ログ確認・集計・可視化は `notebooks/network_strategy_analysis.ipynb` に追加済み |
 
 ## スクリプト対応表
 
