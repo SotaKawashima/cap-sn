@@ -1,0 +1,16 @@
+=== Start facebook seed sensitivity batch ===
+Run id         : seed_sensitivity_20260610_151713
+Output root    : experiments/2026-06-10_facebook_seed_sensitivity/strategy_runs/seed_sensitivity_20260610_151713
+Seeds          : 0 1 2 3 4 5 6 7 8 9
+Iteration count: 100
+Network        : v2/test_2/network/network-facebook.toml
+Agent          : v2/test_2/agent/agent-type6.toml
+Time           : 2026年  6月 10日 水曜日 15:17:13 JST
+
+========================================
+Start: seed=0, network=facebook, strategy=balance
+Time : 2026年  6月 10日 水曜日 15:17:13 JST
+Runtime   : experiments/2026-06-10_facebook_seed_sensitivity/strategy_runs/seed_sensitivity_20260610_151713/runtime/runtime_seed0.toml
+Result dir: experiments/2026-06-10_facebook_seed_sensitivity/strategy_runs/seed_sensitivity_20260610_151713/seed_0/facebook/balance/result
+Run log   : experiments/2026-06-10_facebook_seed_sensitivity/strategy_runs/seed_sensitivity_20260610_151713/seed_0/facebook/balance/run_20260610_151713.log
+========================================
