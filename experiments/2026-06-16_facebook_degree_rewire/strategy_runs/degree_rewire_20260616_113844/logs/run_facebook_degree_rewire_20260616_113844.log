@@ -1,0 +1,671 @@
+=== Start facebook degree-rewire strategy batch ===
+Run id         : degree_rewire_20260616_113844
+Output root    : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844
+Seeds          : 0 1 2 3 4
+Iteration count: 100
+Agent          : v2/test_2/agent/agent-type6.toml
+Networks       : 4
+Time           : 2026年  6月 16日 火曜日 11:38:44 JST
+
+========================================
+Start: seed=0, network=fbdeg_original, strategy=balance
+Time : 2026年  6月 16日 火曜日 11:38:44 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_original/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_original/balance/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_original, strategy=balance
+Time    : 2026年  6月 16日 火曜日 11:39:18 JST
+
+========================================
+Start: seed=0, network=fbdeg_original, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 11:39:18 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_original/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_original/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_original, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 11:39:51 JST
+
+========================================
+Start: seed=0, network=fbdeg_original, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 11:39:52 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_original/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_original/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_original, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 11:40:27 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_0p1, strategy=balance
+Time : 2026年  6月 16日 火曜日 11:40:27 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_0p1/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_0p1/balance/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_0p1, strategy=balance
+Time    : 2026年  6月 16日 火曜日 11:42:33 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_0p1, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 11:42:33 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_0p1/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_0p1/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_0p1, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 11:44:51 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 11:44:51 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_0p1/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_0p1/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 11:46:52 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_1p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 11:46:52 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_1p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_1p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_1p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 11:49:24 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_1p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 11:49:24 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_1p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_1p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_1p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 11:51:53 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 11:51:53 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_1p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_1p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 11:54:15 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_5p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 11:54:15 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_5p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_5p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_5p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 11:56:49 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_5p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 11:56:49 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_5p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_5p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_5p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 11:59:25 JST
+
+========================================
+Start: seed=0, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 11:59:25 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed0.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_5p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_0/fbdeg_rewire_5p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=0, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:01:42 JST
+
+========================================
+Start: seed=1, network=fbdeg_original, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:01:42 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_original/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_original/balance/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_original, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:02:22 JST
+
+========================================
+Start: seed=1, network=fbdeg_original, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:02:22 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_original/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_original/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_original, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:03:19 JST
+
+========================================
+Start: seed=1, network=fbdeg_original, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:03:19 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_original/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_original/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_original, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:03:58 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_0p1, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:03:58 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_0p1/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_0p1/balance/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_0p1, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:06:33 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_0p1, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:06:33 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_0p1/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_0p1/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_0p1, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:08:55 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:08:55 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_0p1/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_0p1/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:11:16 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_1p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:11:16 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_1p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_1p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_1p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:14:02 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_1p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:14:02 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_1p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_1p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_1p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:17:00 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:17:00 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_1p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_1p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:19:30 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_5p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:19:30 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_5p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_5p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_5p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:22:08 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_5p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:22:08 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_5p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_5p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_5p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:24:45 JST
+
+========================================
+Start: seed=1, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:24:45 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed1.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_5p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_1/fbdeg_rewire_5p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=1, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:27:13 JST
+
+========================================
+Start: seed=2, network=fbdeg_original, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:27:13 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_original/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_original/balance/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_original, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:27:47 JST
+
+========================================
+Start: seed=2, network=fbdeg_original, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:27:47 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_original/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_original/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_original, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:28:23 JST
+
+========================================
+Start: seed=2, network=fbdeg_original, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:28:23 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_original/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_original/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_original, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:28:59 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_0p1, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:28:59 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_0p1/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_0p1/balance/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_0p1, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:31:19 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_0p1, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:31:19 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_0p1/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_0p1/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_0p1, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:33:26 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:33:26 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_0p1/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_0p1/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:35:25 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_1p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:35:25 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_1p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_1p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_1p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:38:06 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_1p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:38:06 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_1p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_1p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_1p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:40:54 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:40:54 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_1p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_1p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:43:22 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_5p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:43:22 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_5p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_5p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_5p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:45:51 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_5p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:45:51 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_5p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_5p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_5p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:48:24 JST
+
+========================================
+Start: seed=2, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:48:24 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed2.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_5p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_2/fbdeg_rewire_5p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=2, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:50:40 JST
+
+========================================
+Start: seed=3, network=fbdeg_original, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:50:40 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_original/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_original/balance/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_original, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:51:14 JST
+
+========================================
+Start: seed=3, network=fbdeg_original, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:51:14 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_original/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_original/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_original, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:51:50 JST
+
+========================================
+Start: seed=3, network=fbdeg_original, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:51:50 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_original/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_original/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_original, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:52:26 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_0p1, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:52:26 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_0p1/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_0p1/balance/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_0p1, strategy=balance
+Time    : 2026年  6月 16日 火曜日 12:54:54 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_0p1, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 12:54:54 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_0p1/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_0p1/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_0p1, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 12:57:27 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 12:57:27 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_0p1/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_0p1/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 12:59:39 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_1p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 12:59:39 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_1p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_1p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_1p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 13:02:16 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_1p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 13:02:16 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_1p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_1p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_1p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 13:05:09 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 13:05:09 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_1p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_1p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 13:07:50 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_5p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 13:07:50 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_5p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_5p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_5p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 13:10:35 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_5p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 13:10:35 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_5p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_5p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_5p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 13:13:19 JST
+
+========================================
+Start: seed=3, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 13:13:19 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed3.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_5p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_3/fbdeg_rewire_5p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=3, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 13:15:38 JST
+
+========================================
+Start: seed=4, network=fbdeg_original, strategy=balance
+Time : 2026年  6月 16日 火曜日 13:15:38 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_original/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_original/balance/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_original, strategy=balance
+Time    : 2026年  6月 16日 火曜日 13:16:15 JST
+
+========================================
+Start: seed=4, network=fbdeg_original, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 13:16:15 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_original/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_original/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_original, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 13:16:54 JST
+
+========================================
+Start: seed=4, network=fbdeg_original, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 13:16:55 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_original.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_original/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_original/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_original, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 13:17:31 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_0p1, strategy=balance
+Time : 2026年  6月 16日 火曜日 13:17:31 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_0p1/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_0p1/balance/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_0p1, strategy=balance
+Time    : 2026年  6月 16日 火曜日 13:19:41 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_0p1, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 13:19:41 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_0p1/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_0p1/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_0p1, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 13:22:13 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 13:22:13 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_0p1.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_0p1/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_0p1/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_0p1, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 13:24:31 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_1p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 13:24:31 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_1p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_1p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_1p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 13:26:56 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_1p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 13:26:56 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_1p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_1p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_1p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 13:29:37 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 13:29:37 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_1p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_1p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_1p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_1p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 13:31:56 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_5p0, strategy=balance
+Time : 2026年  6月 16日 火曜日 13:31:56 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_5p0/balance/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_5p0/balance/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_5p0, strategy=balance
+Time    : 2026年  6月 16日 火曜日 13:34:39 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_5p0, strategy=effective_high
+Time : 2026年  6月 16日 火曜日 13:34:39 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_5p0/effective_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_5p0/effective_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_5p0, strategy=effective_high
+Time    : 2026年  6月 16日 火曜日 13:37:19 JST
+
+========================================
+Start: seed=4, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time : 2026年  6月 16日 火曜日 13:37:19 JST
+Runtime   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/runtime/runtime_seed4.toml
+Config    : v2/test_2/network/network-fbdeg_rewire_5p0.toml
+Result dir: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_5p0/certainty_high/result
+Run log   : experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/seed_4/fbdeg_rewire_5p0/certainty_high/run_20260616_113844.log
+========================================
+Finished: seed=4, network=fbdeg_rewire_5p0, strategy=certainty_high
+Time    : 2026年  6月 16日 火曜日 13:39:53 JST
+
+=== All facebook degree-rewire runs finished ===
+Master log: experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844/logs/run_facebook_degree_rewire_20260616_113844.log
