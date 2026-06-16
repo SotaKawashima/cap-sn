@@ -1,0 +1,5 @@
+path = "./facebook_degree_rewire/fbdeg_rewire_0p1/"
+graph = "edgelist.txt"
+directed = false
+transposed = false
+community = "comm.csv"

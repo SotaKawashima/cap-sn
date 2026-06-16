@@ -1,0 +1,13 @@
+strategy,strategy_label,info_name,avg_shared_ratio,std_shared_ratio
+balance,"Balance (0.8, 0.8)",misinformation,0.35078237187422634,0.004413041275375998
+balance,"Balance (0.8, 0.8)",corrective,0.3503344887348353,0.014196631838157168
+balance,"Balance (0.8, 0.8)",observational,0.13708698568372585,0.02010796038348196
+balance,"Balance (0.8, 0.8)",behavior-guiding,0.23195370141124041,0.0050020387006751744
+effective_high,"Effectiveness high (0.5, 0.9)",misinformation,0.3508947759346373,0.004670894462381897
+effective_high,"Effectiveness high (0.5, 0.9)",corrective,0.3625132458529339,0.02419185887910918
+effective_high,"Effectiveness high (0.5, 0.9)",observational,0.13851367573366694,0.015229478785190105
+effective_high,"Effectiveness high (0.5, 0.9)",behavior-guiding,0.22707947511760337,0.005368994922265964
+certainty_high,"Certainty high (0.9, 0.5)",misinformation,0.3507893042832384,0.003683239638379834
+certainty_high,"Certainty high (0.9, 0.5)",corrective,0.3489524634810597,0.014445430114845557
+certainty_high,"Certainty high (0.9, 0.5)",observational,0.14403114546008491,0.01825206864459855
+certainty_high,"Certainty high (0.9, 0.5)",behavior-guiding,0.2450987868284229,0.004616968841626928
