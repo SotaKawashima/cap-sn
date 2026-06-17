@@ -1,0 +1,49 @@
+network,network_label,variant,swap_ratio,strategy,strategy_label,info_name,avg_shared_ratio,std_shared_ratio
+fbdeg_original,original,original,0.0,balance,"Balance (0.8, 0.8)",misinformation,0.3493706362961129,0.004213668996802845
+fbdeg_original,original,original,0.0,balance,"Balance (0.8, 0.8)",corrective,0.34684624907155237,0.01687967625688088
+fbdeg_original,original,original,0.0,balance,"Balance (0.8, 0.8)",observational,0.1429027144633134,0.014074664472567158
+fbdeg_original,original,original,0.0,balance,"Balance (0.8, 0.8)",behavior-guiding,0.23562119336469425,0.004208370769451447
+fbdeg_original,original,original,0.0,effective_high,"Effectiveness high (0.5, 0.9)",misinformation,0.3490854171824709,0.004371652097081433
+fbdeg_original,original,original,0.0,effective_high,"Effectiveness high (0.5, 0.9)",corrective,0.3584273334983907,0.03218511822370872
+fbdeg_original,original,original,0.0,effective_high,"Effectiveness high (0.5, 0.9)",observational,0.1378280791565007,0.017482423673665093
+fbdeg_original,original,original,0.0,effective_high,"Effectiveness high (0.5, 0.9)",behavior-guiding,0.2309126021292399,0.00431115814049429
+fbdeg_original,original,original,0.0,certainty_high,"Certainty high (0.9, 0.5)",misinformation,0.3492592225798465,0.0031204708179761284
+fbdeg_original,original,original,0.0,certainty_high,"Certainty high (0.9, 0.5)",corrective,0.34483585045803417,0.010439647224864025
+fbdeg_original,original,original,0.0,certainty_high,"Certainty high (0.9, 0.5)",observational,0.14343838262598096,0.019949934740943653
+fbdeg_original,original,original,0.0,certainty_high,"Certainty high (0.9, 0.5)",behavior-guiding,0.24841445902451104,0.003728241916711873
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,balance,"Balance (0.8, 0.8)",misinformation,0.6692334736320872,0.0019186229350114548
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,balance,"Balance (0.8, 0.8)",corrective,2.318742758108443,0.16015435737531702
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,balance,"Balance (0.8, 0.8)",observational,0.26067876086112773,0.012003773632281592
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,balance,"Balance (0.8, 0.8)",behavior-guiding,0.07345976726912602,0.001916715406513417
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,effective_high,"Effectiveness high (0.5, 0.9)",misinformation,0.6694478831393911,0.002091290967347123
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,effective_high,"Effectiveness high (0.5, 0.9)",corrective,2.3968908145580587,0.2541266171448369
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,effective_high,"Effectiveness high (0.5, 0.9)",observational,0.2606012581153753,0.01745238292129454
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,effective_high,"Effectiveness high (0.5, 0.9)",behavior-guiding,0.0659306759098787,0.0015600892991422827
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,certainty_high,"Certainty high (0.9, 0.5)",misinformation,0.6676395147313692,0.0021344993686136155
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,certainty_high,"Certainty high (0.9, 0.5)",corrective,2.0326452092102008,0.11024415657231416
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,certainty_high,"Certainty high (0.9, 0.5)",observational,0.26279802860657825,0.014319056506873965
+fbdeg_rewire_0p1,rewire 0.1x edges,rewire_0p1,0.1,certainty_high,"Certainty high (0.9, 0.5)",behavior-guiding,0.096406041099282,0.0018023409783648114
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,balance,"Balance (0.8, 0.8)",misinformation,0.8340539737558801,0.004040881193500662
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,balance,"Balance (0.8, 0.8)",corrective,2.744672938846249,0.1955877622199074
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,balance,"Balance (0.8, 0.8)",observational,0.2748648910406028,0.0074636984019421475
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,balance,"Balance (0.8, 0.8)",behavior-guiding,0.04090765040851696,0.0011960565961836667
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,effective_high,"Effectiveness high (0.5, 0.9)",misinformation,0.8349690517454815,0.004524154007515511
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,effective_high,"Effectiveness high (0.5, 0.9)",corrective,3.015404803169101,0.24378533151603113
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,effective_high,"Effectiveness high (0.5, 0.9)",observational,0.2820069157470636,0.010664216458988497
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,effective_high,"Effectiveness high (0.5, 0.9)",behavior-guiding,0.03532953701411241,0.0013437304161013062
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,certainty_high,"Certainty high (0.9, 0.5)",misinformation,0.8319326565981677,0.004890337097531532
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,certainty_high,"Certainty high (0.9, 0.5)",corrective,2.64517801435999,0.24151229331492954
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,certainty_high,"Certainty high (0.9, 0.5)",observational,0.2864561632641511,0.007611993940584589
+fbdeg_rewire_1p0,rewire 1.0x edges,rewire_1p0,1.0,certainty_high,"Certainty high (0.9, 0.5)",behavior-guiding,0.0613904431790047,0.0017532217378763847
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,balance,"Balance (0.8, 0.8)",misinformation,0.8422069819262195,0.003168837514557101
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,balance,"Balance (0.8, 0.8)",corrective,2.884948254518445,0.242681857458333
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,balance,"Balance (0.8, 0.8)",observational,0.2746050636203713,0.00804718446688824
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,balance,"Balance (0.8, 0.8)",behavior-guiding,0.0396548650656103,0.0015032872826246013
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,effective_high,"Effectiveness high (0.5, 0.9)",misinformation,0.8421317157712306,0.0035997660167468976
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,effective_high,"Effectiveness high (0.5, 0.9)",corrective,2.9133211190888835,0.20347504844678976
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,effective_high,"Effectiveness high (0.5, 0.9)",observational,0.2695673349246778,0.017545259309301547
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,effective_high,"Effectiveness high (0.5, 0.9)",behavior-guiding,0.0343550383758356,0.0011317051820166485
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,certainty_high,"Certainty high (0.9, 0.5)",misinformation,0.8389566724436742,0.0035035941878160375
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,certainty_high,"Certainty high (0.9, 0.5)",corrective,2.5120886358009407,0.17432780562253827
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,certainty_high,"Certainty high (0.9, 0.5)",observational,0.28829428891423003,0.010136711131075758
+fbdeg_rewire_5p0,rewire 5.0x edges,rewire_5p0,5.0,certainty_high,"Certainty high (0.9, 0.5)",behavior-guiding,0.06032285219113642,0.0022908837711793995

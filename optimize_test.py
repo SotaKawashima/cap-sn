@@ -8,6 +8,7 @@ import time
 import json
 import warnings
 import argparse
+import math
 from pathlib import Path
 from optuna.integration import BoTorchSampler
 from tqdm import tqdm
@@ -49,6 +50,35 @@ def parse_args():
         default=None,
         help="Override total number of agents for score normalization"
     )
+    parser.add_argument(
+        "--score-metric",
+        type=str,
+        default="auc",
+        choices=["auc", "final", "peak", "final-window"],
+        help=(
+            "Optimization score metric. "
+            "'auc' uses mean selfish ratio over all timesteps, "
+            "'final' keeps the original final-timestep score."
+        )
+    )
+    parser.add_argument(
+        "--sampler-seed",
+        type=int,
+        default=None,
+        help="Override optimizer sampler seed. Default uses a different seed for each method."
+    )
+    parser.add_argument(
+        "--run-label",
+        type=str,
+        default="",
+        help="Optional label appended to the output run directory, e.g. 20260617."
+    )
+    parser.add_argument(
+        "--replicate-label",
+        type=str,
+        default="",
+        help="Optional label appended to the method directory, e.g. optseed1."
+    )
     return parser.parse_args()
 
 
@@ -62,6 +92,9 @@ args = parse_args()
 METHOD_NAME = args.method
 NETWORK_NAME = args.network
 N_TRIALS = args.trials
+SCORE_METRIC = args.score_metric
+RUN_LABEL = args.run_label.strip()
+REPLICATE_LABEL = args.replicate_label.strip()
 
 BASE_DIR = Path(__file__).resolve().parent
 ENV_ROOT = BASE_DIR / "v2" / "test_2"
@@ -91,19 +124,44 @@ TOTAL_AGENTS = args.agents if args.agents is not None else NETWORK_AGENT_COUNT_M
 if TOTAL_AGENTS <= 0:
     raise ValueError(f"TOTAL_AGENTS must be positive, got {TOTAL_AGENTS}")
 
+if "/" in RUN_LABEL or "\\" in RUN_LABEL:
+    raise ValueError("--run-label must not contain path separators")
+
+if "/" in REPLICATE_LABEL or "\\" in REPLICATE_LABEL:
+    raise ValueError("--replicate-label must not contain path separators")
+
+SAMPLER_SEED_MAP = {
+    "GPR": 4201,
+    "CMAES": 4202,
+    "RANDOM": 4203,
+    "GA": 4204,
+}
+SAMPLER_SEED = args.sampler_seed if args.sampler_seed is not None else SAMPLER_SEED_MAP[METHOD_NAME]
+
 # ---- 出力先フォルダ構成 ----
 # 例:
 # experiments/optimization_ba1000/optimize_runs/gpr/
 # experiments/optimization_facebook/optimize_runs/cmaes/
 # experiments/optimization_wiki_vote/optimize_runs/random/
+#
+# AUCなど新しい指標で再実行するときに既存のfinal指標結果を上書きしないよう、
+# final以外は optimize_runs_<metric> に分けて保存する。
+RUN_DIR_NAME = "optimize_runs" if SCORE_METRIC == "final" else f"optimize_runs_{SCORE_METRIC.replace('-', '_')}"
+if RUN_LABEL:
+    RUN_DIR_NAME = f"{RUN_DIR_NAME}_{RUN_LABEL}"
+
 OPTIMIZE_OUTPUT_DIR_MAP = {
-    "ba_1000": BASE_DIR / "experiments" / "optimization_ba1000" / "optimize_runs",
-    "facebook": BASE_DIR / "experiments" / "optimization_facebook" / "optimize_runs",
-    "wiki-vote": BASE_DIR / "experiments" / "optimization_wiki_vote" / "optimize_runs",
+    "ba_1000": BASE_DIR / "experiments" / "optimization_ba1000" / RUN_DIR_NAME,
+    "facebook": BASE_DIR / "experiments" / "optimization_facebook" / RUN_DIR_NAME,
+    "wiki-vote": BASE_DIR / "experiments" / "optimization_wiki_vote" / RUN_DIR_NAME,
 }
 
 NETWORK_OUTPUT_DIR = OPTIMIZE_OUTPUT_DIR_MAP[NETWORK_NAME]
-METHOD_DIR = NETWORK_OUTPUT_DIR / METHOD_NAME.lower()
+METHOD_DIR_NAME = METHOD_NAME.lower()
+if REPLICATE_LABEL:
+    METHOD_DIR_NAME = f"{METHOD_DIR_NAME}_{REPLICATE_LABEL}"
+
+METHOD_DIR = NETWORK_OUTPUT_DIR / METHOD_DIR_NAME
 
 RESULT_DIR = METHOD_DIR / "result"
 CSV_DIR = METHOD_DIR / "csv"
@@ -120,6 +178,8 @@ AGENT_CONF = ENV_ROOT / "agent" / "agent-type6.toml"
 STRATEGY_TEMPLATE = ENV_ROOT / "strategy" / "strategy-config.toml"
 
 N_STARTUP_TRIALS = 10
+FINAL_WINDOW_FRACTION = 0.10
+MIN_FINAL_WINDOW_STEPS = 3
 
 
 # ==========================================
@@ -192,21 +252,35 @@ def run_simulation(identifier: str, strategy_path: Path, show_output=False):
     else:
         subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-def calc_score(identifier: str) -> float:
-    """
-    各 num_iter の最終時刻 t における num_selfish を取り、
-    その平均を TOTAL_AGENTS で割った割合を返す
-    """
+def read_pop_arrow(identifier: str) -> pd.DataFrame | None:
+    """pop.arrowを読み込む。読めない場合はNoneを返す。"""
     arrow_path = RESULT_DIR / f"{identifier}_pop.arrow"
     if not arrow_path.exists():
-        return 1.0
+        return None
 
     try:
         df = pd.read_feather(arrow_path)
+    except Exception as e:
+        print(f"  [Error] pop.arrow read failed: {e}", file=sys.stderr)
+        return None
 
-        if "num_selfish" not in df.columns:
-            return 1.0
+    if "num_selfish" not in df.columns:
+        return None
 
+    return df
+
+def calc_final_selfish_score(identifier: str) -> float:
+    """
+    旧スコア。
+
+    各 num_iter の最終時刻 t における num_selfish を取り、
+    その平均を TOTAL_AGENTS で割った割合を返す
+    """
+    df = read_pop_arrow(identifier)
+    if df is None:
+        return 1.0
+
+    try:
         if "num_iter" in df.columns and "t" in df.columns:
             final_rows = (
                 df.sort_values(["num_iter", "t"])
@@ -224,8 +298,203 @@ def calc_score(identifier: str) -> float:
         return float(avg_selfish) / TOTAL_AGENTS
 
     except Exception as e:
-        print(f"  [Error] Score calculation failed: {e}", file=sys.stderr)
+        print(f"  [Error] Final score calculation failed: {e}", file=sys.stderr)
         return 1.0
+
+def calc_normalized_selfish_auc_score(identifier: str) -> float:
+    """
+    新しい主スコア。
+
+    各 num_iter について全時刻の num_selfish / TOTAL_AGENTS を平均し、
+    さらに num_iter 間で平均する。時系列全体で利己的行動がどれだけ
+    存在したかを0-1系の値として評価する。
+    """
+    df = read_pop_arrow(identifier)
+    if df is None:
+        return 1.0
+
+    try:
+        if "num_iter" in df.columns and "t" in df.columns:
+            sorted_df = df.sort_values(["num_iter", "t"]).copy()
+            sorted_df["selfish_ratio"] = sorted_df["num_selfish"] / TOTAL_AGENTS
+            iter_auc = sorted_df.groupby("num_iter")["selfish_ratio"].mean()
+            return float(iter_auc.mean())
+
+        return float(df["num_selfish"].mean()) / TOTAL_AGENTS
+
+    except Exception as e:
+        print(f"  [Error] AUC score calculation failed: {e}", file=sys.stderr)
+        return 1.0
+
+def calc_peak_selfish_score(identifier: str) -> float:
+    """
+    補助候補スコア。
+
+    各 num_iter の peak selfish ratio を平均する。
+    """
+    df = read_pop_arrow(identifier)
+    if df is None:
+        return 1.0
+
+    try:
+        if "num_iter" in df.columns:
+            iter_peak = df.groupby("num_iter")["num_selfish"].max()
+            return float(iter_peak.mean()) / TOTAL_AGENTS
+
+        return float(df["num_selfish"].max()) / TOTAL_AGENTS
+
+    except Exception as e:
+        print(f"  [Error] Peak score calculation failed: {e}", file=sys.stderr)
+        return 1.0
+
+def calc_final_window_selfish_score(identifier: str) -> float:
+    """
+    補助候補スコア。
+
+    各 num_iter の最後10%または最低3ステップの selfish ratio を平均し、
+    さらに num_iter 間で平均する。
+    """
+    df = read_pop_arrow(identifier)
+    if df is None:
+        return 1.0
+
+    try:
+        if "num_iter" in df.columns and "t" in df.columns:
+            scores = []
+            for _, group in df.sort_values(["num_iter", "t"]).groupby("num_iter"):
+                n_steps = len(group)
+                final_window_steps = min(
+                    n_steps,
+                    max(MIN_FINAL_WINDOW_STEPS, math.ceil(n_steps * FINAL_WINDOW_FRACTION)),
+                )
+                selfish_ratio = group["num_selfish"].tail(final_window_steps) / TOTAL_AGENTS
+                scores.append(float(selfish_ratio.mean()))
+
+            return float(sum(scores) / len(scores)) if scores else 1.0
+
+        final_window_steps = min(
+            len(df),
+            max(MIN_FINAL_WINDOW_STEPS, math.ceil(len(df) * FINAL_WINDOW_FRACTION)),
+        )
+        return float(df["num_selfish"].tail(final_window_steps).mean()) / TOTAL_AGENTS
+
+    except Exception as e:
+        print(f"  [Error] Final-window score calculation failed: {e}", file=sys.stderr)
+        return 1.0
+
+def compute_pop_metric_report(df: pd.DataFrame) -> dict:
+    """pop.arrowの時系列から、目的関数候補と時刻長の補助指標をまとめて計算する。"""
+    report = {
+        "final_selfish_ratio": None,
+        "normalized_selfish_auc": None,
+        "peak_selfish_ratio": None,
+        "final_window_selfish_mean": None,
+        "n_rows": int(len(df)),
+        "n_iter": None,
+        "mean_n_steps": None,
+        "min_n_steps": None,
+        "max_n_steps": None,
+        "mean_t_max": None,
+        "min_t_max": None,
+        "max_t_max": None,
+    }
+
+    if len(df) == 0 or "num_selfish" not in df.columns:
+        return report
+
+    if "num_iter" in df.columns and "t" in df.columns:
+        ordered = df.sort_values(["num_iter", "t"]).copy()
+        ordered["selfish_ratio"] = ordered["num_selfish"] / TOTAL_AGENTS
+        grouped = ordered.groupby("num_iter", sort=True)
+
+        n_steps = grouped.size()
+        t_max = grouped["t"].max()
+        final_rows = grouped.tail(1)
+
+        final_window_scores = []
+        for _, group in grouped:
+            n = len(group)
+            final_window_steps = min(
+                n,
+                max(MIN_FINAL_WINDOW_STEPS, math.ceil(n * FINAL_WINDOW_FRACTION)),
+            )
+            final_window_scores.append(float(group["selfish_ratio"].tail(final_window_steps).mean()))
+
+        report.update({
+            "final_selfish_ratio": float(final_rows["selfish_ratio"].mean()),
+            "normalized_selfish_auc": float(grouped["selfish_ratio"].mean().mean()),
+            "peak_selfish_ratio": float(grouped["selfish_ratio"].max().mean()),
+            "final_window_selfish_mean": float(sum(final_window_scores) / len(final_window_scores)),
+            "n_iter": int(grouped.ngroups),
+            "mean_n_steps": float(n_steps.mean()),
+            "min_n_steps": int(n_steps.min()),
+            "max_n_steps": int(n_steps.max()),
+            "mean_t_max": float(t_max.mean()),
+            "min_t_max": int(t_max.min()),
+            "max_t_max": int(t_max.max()),
+        })
+        return report
+
+    selfish_ratio = df["num_selfish"] / TOTAL_AGENTS
+    final_window_steps = min(
+        len(df),
+        max(MIN_FINAL_WINDOW_STEPS, math.ceil(len(df) * FINAL_WINDOW_FRACTION)),
+    )
+    report.update({
+        "final_selfish_ratio": float(selfish_ratio.iloc[-1]),
+        "normalized_selfish_auc": float(selfish_ratio.mean()),
+        "peak_selfish_ratio": float(selfish_ratio.max()),
+        "final_window_selfish_mean": float(selfish_ratio.tail(final_window_steps).mean()),
+        "n_iter": 1,
+        "mean_n_steps": float(len(df)),
+        "min_n_steps": int(len(df)),
+        "max_n_steps": int(len(df)),
+    })
+    return report
+
+def score_key() -> str:
+    if SCORE_METRIC == "auc":
+        return "normalized_selfish_auc"
+    if SCORE_METRIC == "final":
+        return "final_selfish_ratio"
+    if SCORE_METRIC == "peak":
+        return "peak_selfish_ratio"
+    if SCORE_METRIC == "final-window":
+        return "final_window_selfish_mean"
+
+    return "score"
+
+def calc_score_report(identifier: str) -> dict:
+    """選択スコアと補助指標をまとめて返す。失敗時はscore=1.0にする。"""
+    df = read_pop_arrow(identifier)
+    if df is None:
+        return {"score": 1.0, "score_failed": True}
+
+    try:
+        report = compute_pop_metric_report(df)
+        selected = report.get(score_key())
+        report["score"] = 1.0 if selected is None else float(selected)
+        report["score_failed"] = selected is None
+        return report
+    except Exception as e:
+        print(f"  [Error] Score report calculation failed: {e}", file=sys.stderr)
+        return {"score": 1.0, "score_failed": True}
+
+def calc_score(identifier: str) -> float:
+    """選択されたscore metricで最適化用スコアを計算する。"""
+    return float(calc_score_report(identifier)["score"])
+
+def score_definition() -> str:
+    if SCORE_METRIC == "auc":
+        return "mean over num_iter of mean_t(num_selfish / total_agents)"
+    if SCORE_METRIC == "final":
+        return "original metric: mean over num_iter of final_t(num_selfish / total_agents)"
+    if SCORE_METRIC == "peak":
+        return "mean over num_iter of max_t(num_selfish / total_agents)"
+    if SCORE_METRIC == "final-window":
+        return "mean over num_iter of final-window mean(num_selfish / total_agents)"
+
+    return "unknown"
 
 def cleanup_files(identifier: str):
     """指定された identifier を持つ全一時ファイルを削除"""
@@ -247,8 +516,24 @@ def save_timing_report(study, total_elapsed_sec: float):
             "trial": t.number,
             "state": str(t.state),
             "value": t.value,
+            "score_metric": SCORE_METRIC,
+            "replicate_label": REPLICATE_LABEL or None,
+            "sampler_seed": SAMPLER_SEED,
             "certainty": t.params.get("certainty"),
             "effectiveness": t.params.get("effectiveness"),
+            "final_selfish_ratio": t.user_attrs.get("final_selfish_ratio"),
+            "normalized_selfish_auc": t.user_attrs.get("normalized_selfish_auc"),
+            "peak_selfish_ratio": t.user_attrs.get("peak_selfish_ratio"),
+            "final_window_selfish_mean": t.user_attrs.get("final_window_selfish_mean"),
+            "n_rows": t.user_attrs.get("n_rows"),
+            "n_iter": t.user_attrs.get("n_iter"),
+            "mean_n_steps": t.user_attrs.get("mean_n_steps"),
+            "min_n_steps": t.user_attrs.get("min_n_steps"),
+            "max_n_steps": t.user_attrs.get("max_n_steps"),
+            "mean_t_max": t.user_attrs.get("mean_t_max"),
+            "min_t_max": t.user_attrs.get("min_t_max"),
+            "max_t_max": t.user_attrs.get("max_t_max"),
+            "score_failed": t.user_attrs.get("score_failed"),
             "trial_elapsed_sec": t.user_attrs.get("trial_elapsed_sec"),
             "simulation_elapsed_sec": t.user_attrs.get("simulation_elapsed_sec"),
             "score_elapsed_sec": t.user_attrs.get("score_elapsed_sec"),
@@ -260,9 +545,17 @@ def save_timing_report(study, total_elapsed_sec: float):
 
     complete_df = df[df["state"].str.contains("COMPLETE", na=False)].copy()
 
+    best_trial_attrs = study.best_trial.user_attrs if len(complete_df) > 0 else {}
+
     summary = {
         "method": METHOD_NAME,
+        "method_dir_name": METHOD_DIR_NAME,
         "network": NETWORK_NAME,
+        "score_metric": SCORE_METRIC,
+        "score_definition": score_definition(),
+        "replicate_label": REPLICATE_LABEL or None,
+        "sampler_seed": SAMPLER_SEED,
+        "run_dir": str(NETWORK_OUTPUT_DIR),
         "total_agents": TOTAL_AGENTS,
         "n_trials_total": len(df),
         "n_trials_complete": len(complete_df),
@@ -272,6 +565,18 @@ def save_timing_report(study, total_elapsed_sec: float):
         "mean_score_sec": None if complete_df.empty else float(complete_df["score_elapsed_sec"].mean()),
         "best_score": study.best_value if len(study.trials) > 0 else None,
         "best_params": study.best_params if len(study.trials) > 0 else None,
+        "best_trial_metrics": {
+            "final_selfish_ratio": best_trial_attrs.get("final_selfish_ratio"),
+            "normalized_selfish_auc": best_trial_attrs.get("normalized_selfish_auc"),
+            "peak_selfish_ratio": best_trial_attrs.get("peak_selfish_ratio"),
+            "final_window_selfish_mean": best_trial_attrs.get("final_window_selfish_mean"),
+            "mean_n_steps": best_trial_attrs.get("mean_n_steps"),
+            "min_n_steps": best_trial_attrs.get("min_n_steps"),
+            "max_n_steps": best_trial_attrs.get("max_n_steps"),
+            "mean_t_max": best_trial_attrs.get("mean_t_max"),
+            "min_t_max": best_trial_attrs.get("min_t_max"),
+            "max_t_max": best_trial_attrs.get("max_t_max"),
+        },
         "timing_csv": str(csv_path),
     }
 
@@ -282,22 +587,22 @@ def save_timing_report(study, total_elapsed_sec: float):
     print(f"\n[Timing] Trial log saved to: {csv_path}")
     print(f"[Timing] Summary saved to: {json_path}")
 
-def create_sampler(method_name: str):
+def create_sampler(method_name: str, seed: int):
     """手法名に応じて Optuna Sampler を返す"""
     name = method_name.upper()
 
     if name == "GPR":
-        return BoTorchSampler(n_startup_trials=N_STARTUP_TRIALS, seed=42)
+        return BoTorchSampler(n_startup_trials=N_STARTUP_TRIALS, seed=seed)
 
     elif name == "RANDOM":
-        return optuna.samplers.RandomSampler(seed=42)
+        return optuna.samplers.RandomSampler(seed=seed)
 
     elif name == "CMAES":
-        return optuna.samplers.CmaEsSampler(seed=42)
+        return optuna.samplers.CmaEsSampler(seed=seed)
 
     elif name == "GA":
         # 仮置き。必要ならここを正式な GA 実装に差し替える
-        return optuna.samplers.NSGAIISampler(seed=42)
+        return optuna.samplers.NSGAIISampler(seed=seed)
 
     else:
         raise ValueError(f"Unsupported METHOD_NAME: {method_name}")
@@ -324,8 +629,12 @@ def objective(trial):
         sim_elapsed = time.perf_counter() - sim_start
 
         score_start = time.perf_counter()
-        score = calc_score(identifier)
+        score_report = calc_score_report(identifier)
+        score = score_report["score"]
         score_elapsed = time.perf_counter() - score_start
+
+        for key, value in score_report.items():
+            trial.set_user_attr(key, value)
 
         return score
 
@@ -368,14 +677,23 @@ if __name__ == "__main__":
         except PermissionError:
             print(f"Warning: Could not delete {DB_PATH}. Is it open?")
 
-    print(f"=== Start Optimization (Network: {NETWORK_NAME}, Method: {METHOD_NAME}, Agents: {TOTAL_AGENTS}) ===")
+    print(
+        "=== Start Optimization "
+        f"(Network: {NETWORK_NAME}, Method: {METHOD_NAME}, "
+        f"Score: {SCORE_METRIC}, Agents: {TOTAL_AGENTS}, "
+        f"Replicate: {REPLICATE_LABEL or 'none'}) ==="
+    )
+    print(f"Score definition: {score_definition()}")
+    print(f"Sampler seed    : {SAMPLER_SEED}")
+    print(f"Method dir      : {METHOD_DIR_NAME}")
+    print(f"Output dir      : {NETWORK_OUTPUT_DIR}")
 
     optuna.logging.set_verbosity(optuna.logging.WARNING)
 
-    sampler = create_sampler(METHOD_NAME)
+    sampler = create_sampler(METHOD_NAME, SAMPLER_SEED)
 
     study = optuna.create_study(
-        study_name=f"optimize_test_{NETWORK_NAME}_{METHOD_NAME.lower()}",
+        study_name=f"optimize_test_{NETWORK_NAME}_{METHOD_NAME.lower()}_{SCORE_METRIC.replace('-', '_')}",
         direction="minimize",
         sampler=sampler,
         storage=DB_URL,
@@ -396,6 +714,8 @@ if __name__ == "__main__":
         opt_elapsed = time.perf_counter() - opt_start
 
     print("\n=== Optimization Finished ===")
+    print(f"Score Metric: {SCORE_METRIC}")
+    print(f"Sampler Seed: {SAMPLER_SEED}")
     print(f"Best Params: {study.best_params}")
     print(f"Best Score : {study.best_value}")
     print(f"Total Time : {opt_elapsed:.2f} sec")

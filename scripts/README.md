@@ -18,10 +18,44 @@
 | `run_lfr_community_strategy.sh` | LFRのコミュニティ混合度を変えた実験 | `experiments/2026-06-02_lfr_community/strategy_runs/` |
 | `run_lfr_facebook_pool_strategy.sh` | LFR strongでsupport level候補プールの偏りを変えた実験 | `experiments/2026-06-02_lfr_facebook_pool/strategy_runs/` |
 | `run_lfr_rust_target_pool_strategy.sh` | LFR mu=0.02でFacebook Rust実順序target pool配置を使う実験 | `experiments/2026-06-03_lfr_rust_target_pool/strategy_runs/` |
-| `run_optimize.sh` | BA1000 / Facebook / Wiki-vote の最適化実験 | `experiments/optimization_*/optimize_runs/` |
-| `run_ba_1000.sh` | `run_optimize.sh ba_1000` のショートカット | `experiments/optimization_ba1000/optimize_runs/` |
-| `run_facebook.sh` | `run_optimize.sh facebook` のショートカット | `experiments/optimization_facebook/optimize_runs/` |
-| `run_wiki_vote.sh` | `run_optimize.sh wiki-vote` のショートカット | `experiments/optimization_wiki_vote/optimize_runs/` |
+| `run_all_optimize.sh` | BA1000 / Facebook / Wiki-vote の最適化実験をまとめて実行 | `experiments/optimization_*/optimize_runs_auc/` |
+| `run_optimize.sh` | BA1000 / Facebook / Wiki-vote の最適化実験。デフォルトはAUC基準 | `experiments/optimization_*/optimize_runs_auc/` |
+| `run_ba_1000.sh` | `run_optimize.sh ba_1000` のショートカット | `experiments/optimization_ba1000/optimize_runs_auc/` |
+| `run_facebook.sh` | `run_optimize.sh facebook` のショートカット | `experiments/optimization_facebook/optimize_runs_auc/` |
+| `run_wiki_vote.sh` | `run_optimize.sh wiki-vote` のショートカット | `experiments/optimization_wiki_vote/optimize_runs_auc/` |
+
+全グラフ、全手法、3 Optuna seedをまとめて回す場合は、以下を使う。
+
+```bash
+./scripts/run_all_optimize.sh 100 auc 20260617 3
+```
+
+これは、`3グラフ × 4手法 × 3 Optuna seed = 36実験`を順番に実行する。
+
+旧指標の最終時刻スコアで再実行する場合は、第3引数に`final`を指定する。
+
+```bash
+./scripts/run_optimize.sh facebook 100 final
+```
+
+同じAUC実験を別ディレクトリに保存したい場合は、第4引数にrun labelを指定する。
+
+```bash
+./scripts/run_optimize.sh facebook 100 auc 20260617
+```
+
+この場合、出力先は`experiments/optimization_facebook/optimize_runs_auc_20260617/`になる。
+デフォルトでは、各手法を3つのOptuna seedで実行する。出力先は同じrunディレクトリ内で、
+`gpr_optseed1/`、`gpr_optseed2/`、`gpr_optseed3/`のように分ける。
+
+試験的に1 seedだけ実行したい場合は、第5引数に`1`を指定する。
+
+```bash
+./scripts/run_optimize.sh facebook 10 auc test 1
+```
+
+最適化samplerのseedは、手法間・Optuna seed間で探索点が被りにくいように別の値を使い、`summary_*.json`と`timing_*.csv`に記録する。
+現在の設定は、`optseed1`が`4201`から`4204`、`optseed2`が`5201`から`5204`、`optseed3`が`6201`から`6204`で、末尾の`1..4`をそれぞれ`GPR / CMAES / RANDOM / GA`に対応させる。
 
 ## 実験セット作成
 
