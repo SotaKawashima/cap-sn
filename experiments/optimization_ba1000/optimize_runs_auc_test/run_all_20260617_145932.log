@@ -1,0 +1,151 @@
+=== Start batch experiment ===
+Network : ba_1000
+Trials  : 10
+Score   : auc
+RunLabel: test
+OptSeeds: 1
+Methods : GPR CMAES RANDOM GA
+Time    : 2026年  6月 17日 水曜日 14:59:32 JST
+
+========================================
+Start: METHOD=GPR, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed1, SAMPLER_SEED=4201
+Time : 2026年  6月 17日 水曜日 14:59:32 JST
+========================================
+=== Start Optimization (Network: ba_1000, Method: GPR, Score: auc, Agents: 1000, Replicate: optseed1) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 4201
+Method dir      : gpr_optseed1
+Output dir      : /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test
+Running trials...
+Optimization Progress:   0%|          | 0/10 [00:00<?, ?trial/s]Optimization Progress:  10%|█         | 1/10 [00:05<00:49,  5.52s/trial]Optimization Progress:  10%|█         | 1/10 [00:05<00:49,  5.52s/trial, Best Score=0.02272]Optimization Progress:  20%|██        | 2/10 [00:11<00:45,  5.66s/trial, Best Score=0.02272]Optimization Progress:  20%|██        | 2/10 [00:11<00:45,  5.66s/trial, Best Score=0.02149]Optimization Progress:  30%|███       | 3/10 [00:16<00:38,  5.52s/trial, Best Score=0.02149]Optimization Progress:  30%|███       | 3/10 [00:16<00:38,  5.52s/trial, Best Score=0.02149]Optimization Progress:  40%|████      | 4/10 [00:21<00:32,  5.44s/trial, Best Score=0.02149]Optimization Progress:  40%|████      | 4/10 [00:21<00:32,  5.44s/trial, Best Score=0.02149]Optimization Progress:  50%|█████     | 5/10 [00:27<00:27,  5.51s/trial, Best Score=0.02149]Optimization Progress:  50%|█████     | 5/10 [00:27<00:27,  5.51s/trial, Best Score=0.02149]Optimization Progress:  60%|██████    | 6/10 [00:33<00:22,  5.67s/trial, Best Score=0.02149]Optimization Progress:  60%|██████    | 6/10 [00:33<00:22,  5.67s/trial, Best Score=0.02149]Optimization Progress:  70%|███████   | 7/10 [00:38<00:16,  5.50s/trial, Best Score=0.02149]Optimization Progress:  70%|███████   | 7/10 [00:38<00:16,  5.50s/trial, Best Score=0.02149]Optimization Progress:  80%|████████  | 8/10 [00:44<00:11,  5.54s/trial, Best Score=0.02149]Optimization Progress:  80%|████████  | 8/10 [00:44<00:11,  5.54s/trial, Best Score=0.02149]Optimization Progress:  90%|█████████ | 9/10 [00:49<00:05,  5.52s/trial, Best Score=0.02149]Optimization Progress:  90%|█████████ | 9/10 [00:49<00:05,  5.52s/trial, Best Score=0.02149]Optimization Progress: 100%|██████████| 10/10 [00:55<00:00,  5.57s/trial, Best Score=0.02149]Optimization Progress: 100%|██████████| 10/10 [00:55<00:00,  5.57s/trial, Best Score=0.02149]Optimization Progress: 100%|██████████| 10/10 [00:55<00:00,  5.55s/trial, Best Score=0.02149]
+initialising...
+started.
+0
+|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 4201
+Best Params: {'certainty': 0.6613957813778645, 'effectiveness': 0.9188017433946274}
+Best Score : 0.021492054826881067
+Total Time : 55.47 sec
+Avg Time/Trial : 5.55 sec
+
+[Timing] Trial log saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/gpr_optseed1/logs/timing_gpr.csv
+[Timing] Summary saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/gpr_optseed1/logs/summary_gpr.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/gpr_optseed1/result
+
+Finished: METHOD=GPR, NETWORK=ba_1000, REPLICATE=optseed1, SAMPLER_SEED=4201
+Time    : 2026年  6月 17日 水曜日 15:00:38 JST
+
+========================================
+Start: METHOD=CMAES, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed1, SAMPLER_SEED=4202
+Time : 2026年  6月 17日 水曜日 15:00:38 JST
+========================================
+=== Start Optimization (Network: ba_1000, Method: CMAES, Score: auc, Agents: 1000, Replicate: optseed1) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 4202
+Method dir      : cmaes_optseed1
+Output dir      : /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test
+Running trials...
+Optimization Progress:   0%|          | 0/10 [00:00<?, ?trial/s]Optimization Progress:  10%|█         | 1/10 [00:05<00:49,  5.54s/trial]Optimization Progress:  10%|█         | 1/10 [00:05<00:49,  5.54s/trial, Best Score=0.02135]Optimization Progress:  20%|██        | 2/10 [00:10<00:42,  5.33s/trial, Best Score=0.02135]Optimization Progress:  20%|██        | 2/10 [00:10<00:42,  5.33s/trial, Best Score=0.02135]Optimization Progress:  30%|███       | 3/10 [00:16<00:38,  5.47s/trial, Best Score=0.02135]Optimization Progress:  30%|███       | 3/10 [00:16<00:38,  5.47s/trial, Best Score=0.02135]Optimization Progress:  40%|████      | 4/10 [00:21<00:32,  5.36s/trial, Best Score=0.02135]Optimization Progress:  40%|████      | 4/10 [00:21<00:32,  5.36s/trial, Best Score=0.02135]Optimization Progress:  50%|█████     | 5/10 [00:27<00:27,  5.44s/trial, Best Score=0.02135]Optimization Progress:  50%|█████     | 5/10 [00:27<00:27,  5.44s/trial, Best Score=0.02135]Optimization Progress:  60%|██████    | 6/10 [00:32<00:22,  5.51s/trial, Best Score=0.02135]Optimization Progress:  60%|██████    | 6/10 [00:32<00:22,  5.51s/trial, Best Score=0.02135]Optimization Progress:  70%|███████   | 7/10 [00:38<00:16,  5.60s/trial, Best Score=0.02135]Optimization Progress:  70%|███████   | 7/10 [00:38<00:16,  5.60s/trial, Best Score=0.02106]Optimization Progress:  80%|████████  | 8/10 [00:44<00:11,  5.57s/trial, Best Score=0.02106]Optimization Progress:  80%|████████  | 8/10 [00:44<00:11,  5.57s/trial, Best Score=0.02106]Optimization Progress:  90%|█████████ | 9/10 [00:49<00:05,  5.66s/trial, Best Score=0.02106]Optimization Progress:  90%|█████████ | 9/10 [00:49<00:05,  5.66s/trial, Best Score=0.02106]Optimization Progress: 100%|██████████| 10/10 [00:55<00:00,  5.63s/trial, Best Score=0.02106]Optimization Progress: 100%|██████████| 10/10 [00:55<00:00,  5.63s/trial, Best Score=0.02106]Optimization Progress: 100%|██████████| 10/10 [00:55<00:00,  5.55s/trial, Best Score=0.02106]
+initialising...
+started.
+0
+|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 4202
+Best Params: {'certainty': 0.7631859945247923, 'effectiveness': 0.921790255085007}
+Best Score : 0.021063317864239303
+Total Time : 55.47 sec
+Avg Time/Trial : 5.55 sec
+
+[Timing] Trial log saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/cmaes_optseed1/logs/timing_cmaes.csv
+[Timing] Summary saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/cmaes_optseed1/logs/summary_cmaes.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/cmaes_optseed1/result
+
+Finished: METHOD=CMAES, NETWORK=ba_1000, REPLICATE=optseed1, SAMPLER_SEED=4202
+Time    : 2026年  6月 17日 水曜日 15:01:43 JST
+
+========================================
+Start: METHOD=RANDOM, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed1, SAMPLER_SEED=4203
+Time : 2026年  6月 17日 水曜日 15:01:43 JST
+========================================
+=== Start Optimization (Network: ba_1000, Method: RANDOM, Score: auc, Agents: 1000, Replicate: optseed1) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 4203
+Method dir      : random_optseed1
+Output dir      : /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test
+Running trials...
+Optimization Progress:   0%|          | 0/10 [00:00<?, ?trial/s]Optimization Progress:  10%|█         | 1/10 [00:05<00:50,  5.63s/trial]Optimization Progress:  10%|█         | 1/10 [00:05<00:50,  5.63s/trial, Best Score=0.02195]Optimization Progress:  20%|██        | 2/10 [00:11<00:45,  5.63s/trial, Best Score=0.02195]Optimization Progress:  20%|██        | 2/10 [00:11<00:45,  5.63s/trial, Best Score=0.02165]Optimization Progress:  30%|███       | 3/10 [00:16<00:39,  5.63s/trial, Best Score=0.02165]Optimization Progress:  30%|███       | 3/10 [00:16<00:39,  5.63s/trial, Best Score=0.02081]Optimization Progress:  40%|████      | 4/10 [00:22<00:33,  5.59s/trial, Best Score=0.02081]Optimization Progress:  40%|████      | 4/10 [00:22<00:33,  5.59s/trial, Best Score=0.02081]Optimization Progress:  50%|█████     | 5/10 [00:28<00:28,  5.66s/trial, Best Score=0.02081]Optimization Progress:  50%|█████     | 5/10 [00:28<00:28,  5.66s/trial, Best Score=0.02081]Optimization Progress:  60%|██████    | 6/10 [00:33<00:22,  5.69s/trial, Best Score=0.02081]Optimization Progress:  60%|██████    | 6/10 [00:33<00:22,  5.69s/trial, Best Score=0.02081]Optimization Progress:  70%|███████   | 7/10 [00:40<00:17,  5.84s/trial, Best Score=0.02081]Optimization Progress:  70%|███████   | 7/10 [00:40<00:17,  5.84s/trial, Best Score=0.02073]Optimization Progress:  80%|████████  | 8/10 [00:46<00:11,  5.87s/trial, Best Score=0.02073]Optimization Progress:  80%|████████  | 8/10 [00:46<00:11,  5.87s/trial, Best Score=0.02073]Optimization Progress:  90%|█████████ | 9/10 [00:51<00:05,  5.68s/trial, Best Score=0.02073]Optimization Progress:  90%|█████████ | 9/10 [00:51<00:05,  5.68s/trial, Best Score=0.02073]Optimization Progress: 100%|██████████| 10/10 [00:56<00:00,  5.60s/trial, Best Score=0.02073]Optimization Progress: 100%|██████████| 10/10 [00:56<00:00,  5.60s/trial, Best Score=0.02073]Optimization Progress: 100%|██████████| 10/10 [00:56<00:00,  5.67s/trial, Best Score=0.02073]
+initialising...
+started.
+0
+|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 4203
+Best Params: {'certainty': 0.6812762350125556, 'effectiveness': 0.9570946716533871}
+Best Score : 0.020728595256051134
+Total Time : 56.71 sec
+Avg Time/Trial : 5.67 sec
+
+[Timing] Trial log saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/random_optseed1/logs/timing_random.csv
+[Timing] Summary saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/random_optseed1/logs/summary_random.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/random_optseed1/result
+
+Finished: METHOD=RANDOM, NETWORK=ba_1000, REPLICATE=optseed1, SAMPLER_SEED=4203
+Time    : 2026年  6月 17日 水曜日 15:02:48 JST
+
+========================================
+Start: METHOD=GA, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed1, SAMPLER_SEED=4204
+Time : 2026年  6月 17日 水曜日 15:02:48 JST
+========================================
+=== Start Optimization (Network: ba_1000, Method: GA, Score: auc, Agents: 1000, Replicate: optseed1) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 4204
+Method dir      : ga_optseed1
+Output dir      : /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test
+Running trials...
+Optimization Progress:   0%|          | 0/10 [00:00<?, ?trial/s]Optimization Progress:  10%|█         | 1/10 [00:05<00:51,  5.67s/trial]Optimization Progress:  10%|█         | 1/10 [00:05<00:51,  5.67s/trial, Best Score=0.02285]Optimization Progress:  20%|██        | 2/10 [00:11<00:45,  5.74s/trial, Best Score=0.02285]Optimization Progress:  20%|██        | 2/10 [00:11<00:45,  5.74s/trial, Best Score=0.02089]Optimization Progress:  30%|███       | 3/10 [00:16<00:39,  5.59s/trial, Best Score=0.02089]Optimization Progress:  30%|███       | 3/10 [00:16<00:39,  5.59s/trial, Best Score=0.02089]Optimization Progress:  40%|████      | 4/10 [00:22<00:33,  5.59s/trial, Best Score=0.02089]Optimization Progress:  40%|████      | 4/10 [00:22<00:33,  5.59s/trial, Best Score=0.02089]Optimization Progress:  50%|█████     | 5/10 [00:28<00:28,  5.75s/trial, Best Score=0.02089]Optimization Progress:  50%|█████     | 5/10 [00:28<00:28,  5.75s/trial, Best Score=0.02089]Optimization Progress:  60%|██████    | 6/10 [00:34<00:23,  5.85s/trial, Best Score=0.02089]Optimization Progress:  60%|██████    | 6/10 [00:34<00:23,  5.85s/trial, Best Score=0.02089]Optimization Progress:  70%|███████   | 7/10 [00:40<00:17,  5.90s/trial, Best Score=0.02089]Optimization Progress:  70%|███████   | 7/10 [00:40<00:17,  5.90s/trial, Best Score=0.02083]Optimization Progress:  80%|████████  | 8/10 [00:46<00:11,  5.93s/trial, Best Score=0.02083]Optimization Progress:  80%|████████  | 8/10 [00:46<00:11,  5.93s/trial, Best Score=0.02083]Optimization Progress:  90%|█████████ | 9/10 [00:52<00:05,  5.80s/trial, Best Score=0.02083]Optimization Progress:  90%|█████████ | 9/10 [00:52<00:05,  5.80s/trial, Best Score=0.02046]Optimization Progress: 100%|██████████| 10/10 [00:58<00:00,  5.86s/trial, Best Score=0.02046]Optimization Progress: 100%|██████████| 10/10 [00:58<00:00,  5.86s/trial, Best Score=0.02046]Optimization Progress: 100%|██████████| 10/10 [00:58<00:00,  5.80s/trial, Best Score=0.02046]
+initialising...
+started.
+0
+|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 4204
+Best Params: {'certainty': 0.54665780245505, 'effectiveness': 0.9972081992056128}
+Best Score : 0.020464437877481995
+Total Time : 58.04 sec
+Avg Time/Trial : 5.80 sec
+
+[Timing] Trial log saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/ga_optseed1/logs/timing_ga.csv
+[Timing] Summary saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/ga_optseed1/logs/summary_ga.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_test/ga_optseed1/result
+
+Finished: METHOD=GA, NETWORK=ba_1000, REPLICATE=optseed1, SAMPLER_SEED=4204
+Time    : 2026年  6月 17日 水曜日 15:03:55 JST
+
+=== All experiments finished ===
+Master log: experiments/optimization_ba1000/optimize_runs_auc_test/run_all_20260617_145932.log
