@@ -1,0 +1,35 @@
+{
+  "method": "GA",
+  "method_dir_name": "ga_optseed1",
+  "network": "wiki-vote",
+  "score_metric": "auc",
+  "score_definition": "mean over num_iter of mean_t(num_selfish / total_agents)",
+  "replicate_label": "optseed1",
+  "sampler_seed": 4204,
+  "run_dir": "/home/e25m5333/cap-sn/experiments/optimization_wiki_vote/optimize_runs_auc_test2",
+  "total_agents": 7115,
+  "n_trials_total": 10,
+  "n_trials_complete": 10,
+  "total_optimization_sec": 228.66014122706838,
+  "mean_trial_sec": 22.84264278879855,
+  "mean_simulation_sec": 22.773770567774772,
+  "mean_score_sec": 0.015634445194154977,
+  "best_score": 0.0062499321163455406,
+  "best_params": {
+    "certainty": 0.54665780245505,
+    "effectiveness": 0.9972081992056128
+  },
+  "best_trial_metrics": {
+    "final_selfish_ratio": 1.9676739283204498e-05,
+    "normalized_selfish_auc": 0.0062499321163455406,
+    "peak_selfish_ratio": 0.03022628250175685,
+    "final_window_selfish_mean": 0.00010541110330288125,
+    "mean_n_steps": 14.89,
+    "min_n_steps": 10,
+    "max_n_steps": 26,
+    "mean_t_max": 13.89,
+    "min_t_max": 9,
+    "max_t_max": 25
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/experiments/optimization_wiki_vote/optimize_runs_auc_test2/ga_optseed1/logs/timing_ga.csv"
+}

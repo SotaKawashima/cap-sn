@@ -1,0 +1,35 @@
+{
+  "method": "GPR",
+  "method_dir_name": "gpr_optseed1",
+  "network": "wiki-vote",
+  "score_metric": "auc",
+  "score_definition": "mean over num_iter of mean_t(num_selfish / total_agents)",
+  "replicate_label": "optseed1",
+  "sampler_seed": 4201,
+  "run_dir": "/home/e25m5333/cap-sn/experiments/optimization_wiki_vote/optimize_runs_auc_test2",
+  "total_agents": 7115,
+  "n_trials_total": 10,
+  "n_trials_complete": 10,
+  "total_optimization_sec": 220.62594767508563,
+  "mean_trial_sec": 22.040204232989346,
+  "mean_simulation_sec": 21.973155120294543,
+  "mean_score_sec": 0.014092522126156836,
+  "best_score": 0.0062580159446222194,
+  "best_params": {
+    "certainty": 0.6613957813778645,
+    "effectiveness": 0.9188017433946274
+  },
+  "best_trial_metrics": {
+    "final_selfish_ratio": 2.5298664792691498e-05,
+    "normalized_selfish_auc": 0.0062580159446222194,
+    "peak_selfish_ratio": 0.030375263527758264,
+    "final_window_selfish_mean": 8.280627781681893e-05,
+    "mean_n_steps": 15.03,
+    "min_n_steps": 10,
+    "max_n_steps": 32,
+    "mean_t_max": 14.03,
+    "min_t_max": 9,
+    "max_t_max": 31
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/experiments/optimization_wiki_vote/optimize_runs_auc_test2/gpr_optseed1/logs/timing_gpr.csv"
+}
