@@ -1,0 +1,35 @@
+{
+  "method": "RANDOM",
+  "method_dir_name": "random_optseed2",
+  "network": "ba_1000",
+  "score_metric": "auc",
+  "score_definition": "mean over num_iter of mean_t(num_selfish / total_agents)",
+  "replicate_label": "optseed2",
+  "sampler_seed": 5203,
+  "run_dir": "/home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_20260618",
+  "total_agents": 1000,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 566.4665963640437,
+  "mean_trial_sec": 5.643516283474164,
+  "mean_simulation_sec": 5.585057503887219,
+  "mean_score_sec": 0.014287810125388205,
+  "best_score": 0.020719543028265165,
+  "best_params": {
+    "certainty": 0.9516738993258589,
+    "effectiveness": 0.9615834263354199
+  },
+  "best_trial_metrics": {
+    "final_selfish_ratio": 6e-05,
+    "normalized_selfish_auc": 0.020719543028265165,
+    "peak_selfish_ratio": 0.09558,
+    "final_window_selfish_mean": 0.0003766666666666667,
+    "mean_n_steps": 13.43,
+    "min_n_steps": 9,
+    "max_n_steps": 22,
+    "mean_t_max": 12.43,
+    "min_t_max": 8,
+    "max_t_max": 21
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_20260618/random_optseed2/logs/timing_random.csv"
+}
