@@ -25,3 +25,10 @@ strategy_correlation_analysis/
 # Pythonキャッシュ
 __pycache__/
 *.pyc
+
+# Notebook/plot runtime caches
+.cache/
+.jupyter_config/
+.jupyter_data/
+.jupyter_runtime/
+.mplconfig/

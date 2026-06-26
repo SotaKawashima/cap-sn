@@ -1,0 +1,37 @@
+{
+  "method": "GPR",
+  "method_dir_name": "gpr_optseed4",
+  "network": "ba_1000",
+  "score_metric": "auc",
+  "score_definition": "mean over num_iter of mean_t(num_selfish / total_agents)",
+  "replicate_label": "optseed4",
+  "sampler_seed": 7201,
+  "keep_trial_raw": "all",
+  "trial_raw_dir": "result/trials",
+  "run_dir": "/Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest",
+  "total_agents": 1000,
+  "n_trials_total": 1,
+  "n_trials_complete": 1,
+  "total_optimization_sec": 14.045450625009835,
+  "mean_trial_sec": 14.024223375017755,
+  "mean_simulation_sec": 13.996828792005545,
+  "mean_score_sec": 0.009507832990493625,
+  "best_score": 0.021508465539792167,
+  "best_params": {
+    "certainty": 0.5855298891422647,
+    "effectiveness": 0.8481570078427235
+  },
+  "best_trial_metrics": {
+    "final_selfish_ratio": 5e-05,
+    "normalized_selfish_auc": 0.021508465539792167,
+    "peak_selfish_ratio": 0.09747,
+    "final_window_selfish_mean": 0.00034,
+    "mean_n_steps": 13.19,
+    "min_n_steps": 9,
+    "max_n_steps": 21,
+    "mean_t_max": 12.19,
+    "min_t_max": 8,
+    "max_t_max": 20
+  },
+  "timing_csv": "/Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/gpr_optseed4/logs/timing_gpr.csv"
+}

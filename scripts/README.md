@@ -32,6 +32,14 @@
 
 これは、`3グラフ × 4手法 × 3 Optuna seed = 36実験`を順番に実行する。
 
+全trialのraw Arrowを保存し、optseed4-6で追加実験する場合は、以下を使う。
+
+```bash
+KEEP_TRIAL_RAW=all ./scripts/run_all_optimize.sh 100 auc raw_20260626 3 4
+```
+
+この場合、各trialの `info.arrow`、`pop.arrow`、`agent.arrow` は各runの `result/trials/` に保存される。
+
 旧指標の最終時刻スコアで再実行する場合は、第3引数に`final`を指定する。
 
 ```bash
@@ -54,8 +62,24 @@
 ./scripts/run_optimize.sh facebook 10 auc test 1
 ```
 
+optseedの開始番号を変える場合は、第6引数に開始番号を指定する。
+
+```bash
+./scripts/run_optimize.sh facebook 100 auc raw_20260626 3 4
+```
+
+これは `optseed4`、`optseed5`、`optseed6` を実行する。
+
 最適化samplerのseedは、手法間・Optuna seed間で探索点が被りにくいように別の値を使い、`summary_*.json`と`timing_*.csv`に記録する。
-現在の設定は、`optseed1`が`4201`から`4204`、`optseed2`が`5201`から`5204`、`optseed3`が`6201`から`6204`で、末尾の`1..4`をそれぞれ`GPR / CMAES / RANDOM / GA`に対応させる。
+現在の設定は、`optseed1`が`4201`から`4204`、`optseed2`が`5201`から`5204`、`optseed3`が`6201`から`6204`で、末尾の`1..4`をそれぞれ`GPR / CMAES / RANDOM / GA`に対応させる。`optseed4`以降も同じ規則で、`optseed4`は`7201`から`7204`になる。
+
+raw Arrow保存モードは環境変数`KEEP_TRIAL_RAW`で指定する。
+
+| 値 | 保存内容 |
+| --- | --- |
+| `none` | 従来通り、各trialのArrowを削除 |
+| `info-pop` | 各trialの`info.arrow`と`pop.arrow`を保存 |
+| `all` | 各trialの`info.arrow`、`pop.arrow`、`agent.arrow`を保存 |
 
 ## 実験セット作成
 

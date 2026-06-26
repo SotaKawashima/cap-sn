@@ -1,0 +1,161 @@
+=== Start batch experiment ===
+Network : ba_1000
+Trials  : 1
+Score   : auc
+RunLabel: raw_smoketest
+OptSeeds: 1
+SeedStart: 4
+KeepRaw : all
+Methods : GPR CMAES RANDOM GA
+Time    : Fri Jun 26 11:30:22 JST 2026
+
+========================================
+Start: METHOD=GPR, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed4, SAMPLER_SEED=7201
+Time : Fri Jun 26 11:30:22 JST 2026
+========================================
+=== Start Optimization (Network: ba_1000, Method: GPR, Score: auc, Agents: 1000, Replicate: optseed4) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 7201
+Method dir      : gpr_optseed4
+Output dir      : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest
+Keep trial raw  : all
+Trial raw dir   : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/gpr_optseed4/result/trials
+Running trials...
+Optimization Progress:   0%|          | 0/1 [00:00<?, ?trial/s]Optimization Progress: 100%|██████████| 1/1 [00:14<00:00, 14.04s/trial]Optimization Progress: 100%|██████████| 1/1 [00:14<00:00, 14.04s/trial, Best Score=0.02151]Optimization Progress: 100%|██████████| 1/1 [00:14<00:00, 14.05s/trial, Best Score=0.02151]
+initialising...
+started..
+0
+|.........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 7201
+Best Params: {'certainty': 0.5855298891422647, 'effectiveness': 0.8481570078427235}
+Best Score : 0.021508465539792167
+Total Time : 14.05 sec
+Avg Time/Trial : 14.05 sec
+
+[Timing] Trial log saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/gpr_optseed4/logs/timing_gpr.csv
+[Timing] Summary saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/gpr_optseed4/logs/summary_gpr.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/gpr_optseed4/result
+
+Finished: METHOD=GPR, NETWORK=ba_1000, REPLICATE=optseed4, SAMPLER_SEED=7201
+Time    : Fri Jun 26 11:30:52 JST 2026
+
+========================================
+Start: METHOD=CMAES, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed4, SAMPLER_SEED=7202
+Time : Fri Jun 26 11:30:52 JST 2026
+========================================
+=== Start Optimization (Network: ba_1000, Method: CMAES, Score: auc, Agents: 1000, Replicate: optseed4) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 7202
+Method dir      : cmaes_optseed4
+Output dir      : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest
+Keep trial raw  : all
+Trial raw dir   : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/cmaes_optseed4/result/trials
+Running trials...
+Optimization Progress:   0%|          | 0/1 [00:00<?, ?trial/s]Optimization Progress: 100%|██████████| 1/1 [00:13<00:00, 13.39s/trial]Optimization Progress: 100%|██████████| 1/1 [00:13<00:00, 13.39s/trial, Best Score=0.02211]Optimization Progress: 100%|██████████| 1/1 [00:13<00:00, 13.39s/trial, Best Score=0.02211]
+initialising...
+started..
+0
+|.........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 7202
+Best Params: {'certainty': 0.7713962710945015, 'effectiveness': 0.7918205204963198}
+Best Score : 0.02211400801339856
+Total Time : 13.39 sec
+Avg Time/Trial : 13.39 sec
+
+[Timing] Trial log saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/cmaes_optseed4/logs/timing_cmaes.csv
+[Timing] Summary saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/cmaes_optseed4/logs/summary_cmaes.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/cmaes_optseed4/result
+
+Finished: METHOD=CMAES, NETWORK=ba_1000, REPLICATE=optseed4, SAMPLER_SEED=7202
+Time    : Fri Jun 26 11:31:21 JST 2026
+
+========================================
+Start: METHOD=RANDOM, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed4, SAMPLER_SEED=7203
+Time : Fri Jun 26 11:31:21 JST 2026
+========================================
+=== Start Optimization (Network: ba_1000, Method: RANDOM, Score: auc, Agents: 1000, Replicate: optseed4) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 7203
+Method dir      : random_optseed4
+Output dir      : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest
+Keep trial raw  : all
+Trial raw dir   : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/random_optseed4/result/trials
+Running trials...
+Optimization Progress:   0%|          | 0/1 [00:00<?, ?trial/s]Optimization Progress: 100%|██████████| 1/1 [00:16<00:00, 16.09s/trial]Optimization Progress: 100%|██████████| 1/1 [00:16<00:00, 16.09s/trial, Best Score=0.02151]Optimization Progress: 100%|██████████| 1/1 [00:16<00:00, 16.09s/trial, Best Score=0.02151]
+initialising...
+started.
+0
+.|.........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 7203
+Best Params: {'certainty': 0.7275401597518691, 'effectiveness': 0.8898969385626896}
+Best Score : 0.02151396637594432
+Total Time : 16.09 sec
+Avg Time/Trial : 16.09 sec
+
+[Timing] Trial log saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/random_optseed4/logs/timing_random.csv
+[Timing] Summary saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/random_optseed4/logs/summary_random.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/random_optseed4/result
+
+Finished: METHOD=RANDOM, NETWORK=ba_1000, REPLICATE=optseed4, SAMPLER_SEED=7203
+Time    : Fri Jun 26 11:31:55 JST 2026
+
+========================================
+Start: METHOD=GA, NETWORK=ba_1000, SCORE=auc, REPLICATE=optseed4, SAMPLER_SEED=7204
+Time : Fri Jun 26 11:31:55 JST 2026
+========================================
+=== Start Optimization (Network: ba_1000, Method: GA, Score: auc, Agents: 1000, Replicate: optseed4) ===
+Score definition: mean over num_iter of mean_t(num_selfish / total_agents)
+Sampler seed    : 7204
+Method dir      : ga_optseed4
+Output dir      : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest
+Keep trial raw  : all
+Trial raw dir   : /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/ga_optseed4/result/trials
+Running trials...
+Optimization Progress:   0%|          | 0/1 [00:00<?, ?trial/s]Optimization Progress: 100%|██████████| 1/1 [00:14<00:00, 14.86s/trial]Optimization Progress: 100%|██████████| 1/1 [00:14<00:00, 14.86s/trial, Best Score=0.02249]Optimization Progress: 100%|██████████| 1/1 [00:14<00:00, 14.86s/trial, Best Score=0.02249]
+initialising...
+started.
+0
+|..........|..........|..........|..........|..........|..........|..........|..........|..........|..........
+done.
+
+=== Optimization Finished ===
+Score Metric: auc
+Sampler Seed: 7204
+Best Params: {'certainty': 0.9023699804193133, 'effectiveness': 0.6991565544771198}
+Best Score : 0.02248585493584354
+Total Time : 14.86 sec
+Avg Time/Trial : 14.86 sec
+
+[Timing] Trial log saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/ga_optseed4/logs/timing_ga.csv
+[Timing] Summary saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/ga_optseed4/logs/summary_ga.json
+
+=== Re-running Best Configuration ===
+
+[Success] Results saved to: /Users/sota/projects/cap-sn/experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/ga_optseed4/result
+
+Finished: METHOD=GA, NETWORK=ba_1000, REPLICATE=optseed4, SAMPLER_SEED=7204
+Time    : Fri Jun 26 11:32:27 JST 2026
+
+=== All experiments finished ===
+Master log: experiments/optimization_ba1000/optimize_runs_auc_raw_smoketest/run_all_20260626_113022.log

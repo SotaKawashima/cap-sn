@@ -79,6 +79,18 @@ def parse_args():
         default="",
         help="Optional label appended to the method directory, e.g. optseed1."
     )
+    parser.add_argument(
+        "--keep-trial-raw",
+        type=str,
+        default="none",
+        choices=["none", "info-pop", "all"],
+        help=(
+            "Keep raw Arrow files for every optimization trial. "
+            "'none' deletes trial Arrow files after scoring, "
+            "'info-pop' keeps info/pop Arrow files, "
+            "'all' keeps info/pop/agent Arrow files."
+        )
+    )
     return parser.parse_args()
 
 
@@ -95,6 +107,7 @@ N_TRIALS = args.trials
 SCORE_METRIC = args.score_metric
 RUN_LABEL = args.run_label.strip()
 REPLICATE_LABEL = args.replicate_label.strip()
+KEEP_TRIAL_RAW = args.keep_trial_raw
 
 BASE_DIR = Path(__file__).resolve().parent
 ENV_ROOT = BASE_DIR / "v2" / "test_2"
@@ -164,6 +177,7 @@ if REPLICATE_LABEL:
 METHOD_DIR = NETWORK_OUTPUT_DIR / METHOD_DIR_NAME
 
 RESULT_DIR = METHOD_DIR / "result"
+TRIAL_RAW_DIR = RESULT_DIR / "trials"
 CSV_DIR = METHOD_DIR / "csv"
 LOG_DIR = METHOD_DIR / "logs"
 
@@ -190,6 +204,52 @@ def setup_directories():
     """必要なディレクトリを一括作成"""
     for d in [NETWORK_OUTPUT_DIR, METHOD_DIR, RESULT_DIR, CSV_DIR, LOG_DIR]:
         d.mkdir(parents=True, exist_ok=True)
+    if KEEP_TRIAL_RAW != "none":
+        TRIAL_RAW_DIR.mkdir(parents=True, exist_ok=True)
+
+def kept_trial_arrow_kinds() -> tuple[str, ...]:
+    """全trial保存対象のArrow種別を返す"""
+    if KEEP_TRIAL_RAW == "info-pop":
+        return ("info", "pop")
+    if KEEP_TRIAL_RAW == "all":
+        return ("info", "pop", "agent")
+    return ()
+
+def format_run_path(path: Path | None) -> str | None:
+    """runディレクトリ内の相対パスに整形する。存在しない場合はNone。"""
+    if path is None:
+        return None
+    try:
+        return path.relative_to(METHOD_DIR).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+def preserve_trial_raw_arrows(identifier: str, trial_number: int) -> dict[str, str | None]:
+    """
+    指定trialのArrowを result/trials/ に移動して保存する。
+    戻り値は timing CSV に保存するための相対パス。
+    """
+    saved = {
+        "trial_info_arrow": None,
+        "trial_pop_arrow": None,
+        "trial_agent_arrow": None,
+    }
+    if KEEP_TRIAL_RAW == "none":
+        return saved
+
+    TRIAL_RAW_DIR.mkdir(parents=True, exist_ok=True)
+    raw_stem = f"trial_{trial_number:04d}"
+
+    for kind in kept_trial_arrow_kinds():
+        src = RESULT_DIR / f"{identifier}_{kind}.arrow"
+        if not src.exists():
+            continue
+        dst = TRIAL_RAW_DIR / f"{raw_stem}_{kind}.arrow"
+        dst.unlink(missing_ok=True)
+        src.replace(dst)
+        saved[f"trial_{kind}_arrow"] = format_run_path(dst)
+
+    return saved
 
 def resolve_path_in_toml(rel_path: str, base_file: Path) -> str:
     """TOML内の相対パスを絶対パス文字列に変換"""
@@ -537,6 +597,9 @@ def save_timing_report(study, total_elapsed_sec: float):
             "trial_elapsed_sec": t.user_attrs.get("trial_elapsed_sec"),
             "simulation_elapsed_sec": t.user_attrs.get("simulation_elapsed_sec"),
             "score_elapsed_sec": t.user_attrs.get("score_elapsed_sec"),
+            "trial_info_arrow": t.user_attrs.get("trial_info_arrow"),
+            "trial_pop_arrow": t.user_attrs.get("trial_pop_arrow"),
+            "trial_agent_arrow": t.user_attrs.get("trial_agent_arrow"),
         })
 
     df = pd.DataFrame(rows)
@@ -555,6 +618,8 @@ def save_timing_report(study, total_elapsed_sec: float):
         "score_definition": score_definition(),
         "replicate_label": REPLICATE_LABEL or None,
         "sampler_seed": SAMPLER_SEED,
+        "keep_trial_raw": KEEP_TRIAL_RAW,
+        "trial_raw_dir": None if KEEP_TRIAL_RAW == "none" else format_run_path(TRIAL_RAW_DIR),
         "run_dir": str(NETWORK_OUTPUT_DIR),
         "total_agents": TOTAL_AGENTS,
         "n_trials_total": len(df),
@@ -651,6 +716,10 @@ def objective(trial):
         if score_elapsed is not None:
             trial.set_user_attr("score_elapsed_sec", score_elapsed)
 
+        raw_paths = preserve_trial_raw_arrows(identifier, trial.number)
+        for key, value in raw_paths.items():
+            trial.set_user_attr(key, value)
+
         cleanup_files(identifier)
 
 
@@ -687,6 +756,9 @@ if __name__ == "__main__":
     print(f"Sampler seed    : {SAMPLER_SEED}")
     print(f"Method dir      : {METHOD_DIR_NAME}")
     print(f"Output dir      : {NETWORK_OUTPUT_DIR}")
+    print(f"Keep trial raw  : {KEEP_TRIAL_RAW}")
+    if KEEP_TRIAL_RAW != "none":
+        print(f"Trial raw dir   : {TRIAL_RAW_DIR}")
 
     optuna.logging.set_verbosity(optuna.logging.WARNING)
 
