@@ -1,0 +1,37 @@
+{
+  "method": "CMAES",
+  "method_dir_name": "cmaes_optseed4",
+  "network": "facebook",
+  "score_metric": "auc",
+  "score_definition": "mean over num_iter of mean_t(num_selfish / total_agents)",
+  "replicate_label": "optseed4",
+  "sampler_seed": 7202,
+  "keep_trial_raw": "all",
+  "trial_raw_dir": "result/trials",
+  "run_dir": "/home/e25m5333/cap-sn/experiments/optimization_facebook/optimize_runs_auc_raw_20260626",
+  "total_agents": 4039,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 3541.2118208119646,
+  "mean_trial_sec": 35.38394566237228,
+  "mean_simulation_sec": 35.3157104326901,
+  "mean_score_sec": 0.015623475417960435,
+  "best_score": 0.016156502257790042,
+  "best_params": {
+    "certainty": 0.847881689108533,
+    "effectiveness": 0.7922290628022162
+  },
+  "best_trial_metrics": {
+    "final_selfish_ratio": 3.9613765783609805e-05,
+    "normalized_selfish_auc": 0.016156502257790042,
+    "peak_selfish_ratio": 0.06899975241396385,
+    "final_window_selfish_mean": 0.00031691012626887844,
+    "mean_n_steps": 16.41,
+    "min_n_steps": 10,
+    "max_n_steps": 30,
+    "mean_t_max": 15.41,
+    "min_t_max": 9,
+    "max_t_max": 29
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/experiments/optimization_facebook/optimize_runs_auc_raw_20260626/cmaes_optseed4/logs/timing_cmaes.csv"
+}

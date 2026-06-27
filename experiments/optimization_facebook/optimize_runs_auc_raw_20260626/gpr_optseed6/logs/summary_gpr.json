@@ -1,0 +1,37 @@
+{
+  "method": "GPR",
+  "method_dir_name": "gpr_optseed6",
+  "network": "facebook",
+  "score_metric": "auc",
+  "score_definition": "mean over num_iter of mean_t(num_selfish / total_agents)",
+  "replicate_label": "optseed6",
+  "sampler_seed": 9201,
+  "keep_trial_raw": "all",
+  "trial_raw_dir": "result/trials",
+  "run_dir": "/home/e25m5333/cap-sn/experiments/optimization_facebook/optimize_runs_auc_raw_20260626",
+  "total_agents": 4039,
+  "n_trials_total": 100,
+  "n_trials_complete": 100,
+  "total_optimization_sec": 3625.0781758918893,
+  "mean_trial_sec": 36.22164471900789,
+  "mean_simulation_sec": 35.68513034666423,
+  "mean_score_sec": 0.012496654442511499,
+  "best_score": 0.01594910583047592,
+  "best_params": {
+    "certainty": 0.9999999999999999,
+    "effectiveness": 0.9798028809029369
+  },
+  "best_trial_metrics": {
+    "final_selfish_ratio": 4.951720722951226e-05,
+    "normalized_selfish_auc": 0.01594910583047592,
+    "peak_selfish_ratio": 0.06835107699925723,
+    "final_window_selfish_mean": 0.0003086572583972931,
+    "mean_n_steps": 16.7,
+    "min_n_steps": 10,
+    "max_n_steps": 35,
+    "mean_t_max": 15.7,
+    "min_t_max": 9,
+    "max_t_max": 34
+  },
+  "timing_csv": "/home/e25m5333/cap-sn/experiments/optimization_facebook/optimize_runs_auc_raw_20260626/gpr_optseed6/logs/timing_gpr.csv"
+}
