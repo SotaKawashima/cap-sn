@@ -5,6 +5,111 @@
 
 ## 実験実行
 
+### 夏休み研究プロトコルの新実行系
+
+夏休み以降の固定条件実験と単目的最適化には、リポジトリ直下の次の実行ファイルを用いる。
+
+| 実行ファイル | 用途 |
+| --- | --- |
+| `run_fixed_condition.py` | 固定した確実性・有効性、または無介入条件の実行 |
+| `optimize_single_objective.py` | `bo_gp`、`cma_es`、`random_search`による単目的最適化 |
+
+両者は`analysis/optimization_metrics.py`の共通関数を使用し、累積利己的行動実行者割合`cumulative_selfish_fraction`を計算する。春学期の処理を保存するため、`optimize_test.py`と従来のshellスクリプトは変更せず残す。
+
+無介入条件の実行例：
+
+```bash
+.venv/bin/python run_fixed_condition.py \
+  --stage stage2_existing_reanalysis \
+  --experiment-id 20260810_130000_none_check_v01 \
+  --network ba1000 \
+  --no-intervention \
+  --simulator-seed 101 \
+  --iterations 100 \
+  --raw-level all
+```
+
+固定介入条件の実行例：
+
+```bash
+.venv/bin/python run_fixed_condition.py \
+  --stage stage2_existing_reanalysis \
+  --experiment-id 20260810_131000_fixed_check_v01 \
+  --network ba1000 \
+  --condition-id fixed_c0800_e0800 \
+  --certainty 0.8 \
+  --effectiveness 0.8 \
+  --simulator-seed 101 \
+  --iterations 100 \
+  --raw-level all
+```
+
+単目的最適化の実行例：
+
+```bash
+.venv/bin/python optimize_single_objective.py \
+  --stage stage6_optimization \
+  --experiment-id 20260810_140000_ba_random_v01 \
+  --network ba1000 \
+  --method random_search \
+  --optimizer-replicate 1 \
+  --optimizer-seed 4203 \
+  --simulator-seed 101 \
+  --iterations 100 \
+  --trials 100 \
+  --raw-level all
+```
+
+`--network`には`ba1000`、`facebook`、`wiki_vote`を指定する。実行単位のディレクトリは上書きされないため、再実行時は新しい実験IDまたはversionを使用する。標準の出力先は次のとおりである。
+
+```text
+experiments/summer_2026/<stage>/<experiment_id>/
+```
+
+各実行ではruntime、strategy、設定ハッシュ、seed、目的値、処理時間、rawと集計ファイルの場所を`manifest.json`へ保存する。無介入条件は設計変数の下限値とは区別され、Rust実行時に行動誘導情報を有効化する`-e`を付けない。失敗した最適化試行は目的値`1.0`へ置換せず、Optuna上の`FAIL`として記録する。
+
+#### 第3段階のpilot実験
+
+第3段階では、[`stage3_pilot_v1.json`](../experiment_protocols/stage3_pilot_v1.json)を[`run_stage3_pilot.py`](../run_stage3_pilot.py)で実行する。MacBookでは`--dry-run`とテストだけを行い、実際のpilotはGitHubへ同期したcleanなcommitを共用PCで取得してから実行する。
+
+反復数pilotの実行例：
+
+```bash
+.venv/bin/python run_stage3_pilot.py \
+  --phase precision \
+  --experiment-id 20260812_120000_pilot_precision_v01
+```
+
+集計は最初に`--delta-min`なしで行い、推定誤差と効果量を確認して指導教員と値を固定した後、新しいanalysis IDで再集計する。
+
+```bash
+.venv/bin/python analyze_stage3_pilot.py \
+  --phase precision \
+  --experiment-root experiments/summer_2026/stage3_pilot/<precision_experiment_id> \
+  --analysis-id analysis_with_delta_v01 \
+  --delta-min <delta_min>
+```
+
+決定した反復数`<M>`を使って、BA1000における3手法・各3 runの評価回数pilotを実行する。
+
+```bash
+.venv/bin/python run_stage3_pilot.py \
+  --phase optimization_budget \
+  --iterations <M> \
+  --experiment-id 20260812_130000_pilot_optimization_budget_v01
+
+.venv/bin/python analyze_stage3_pilot.py \
+  --phase optimization_budget \
+  --experiment-root experiments/summer_2026/stage3_pilot/<optimization_experiment_id> \
+  --analysis-id analysis_v01 \
+  --iterations <M> \
+  --delta-min <delta_min>
+```
+
+実験出力は`.gitignore`の対象であり、GitHubには同期されない。分析と可視化には[`第3段階_pilot実験の反復数と評価予算.ipynb`](../notebooks/第3段階_pilot実験の反復数と評価予算.ipynb)を用いる。
+
+以下は春学期までの旧実行系である。
+
 | スクリプト | 内容 | 出力先 |
 | --- | --- | --- |
 | `run_ba1000_topology_strategy.sh` | BA1000 の4種類トポロジー比較 | `experiments/2026-05_baseline_ba1000_topology/strategy_runs/` |

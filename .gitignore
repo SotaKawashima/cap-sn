@@ -32,3 +32,9 @@ __pycache__/
 .jupyter_data/
 .jupyter_runtime/
 .mplconfig/
+
+# Summer research experiment outputs are generated locally or on the shared PC.
+experiments/summer_2026/
+
+# Generated figures and tables from the June 2026 raw-information analysis.
+experiments/optimization_auc_raw_info_analysis_20260626/

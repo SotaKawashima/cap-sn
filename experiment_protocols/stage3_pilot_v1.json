@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage3_pilot_v1",
+  "stage": "stage3_pilot",
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize"
+  },
+  "precision_phase": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      10001,
+      10002,
+      10003,
+      10004,
+      10005
+    ],
+    "max_iterations_per_block": 200,
+    "prefix_iterations": [
+      20,
+      50,
+      100,
+      200
+    ],
+    "raw_level": "all",
+    "conditions": [
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "role": "no_intervention_baseline"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "role": "prior_study_high_persuasion"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "role": "spring_research_reference"
+      },
+      {
+        "id": "low_effectiveness",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 0.5,
+        "role": "effectiveness_contrast_low"
+      },
+      {
+        "id": "high_effectiveness",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 1.0,
+        "role": "effectiveness_contrast_high"
+      },
+      {
+        "id": "stage2_good",
+        "enabled": true,
+        "role": "stage2_best_random_response_surface_cell_midpoint",
+        "parameters_by_network": {
+          "ba1000": {
+            "certainty": 0.85,
+            "effectiveness": 0.95
+          },
+          "facebook": {
+            "certainty": 0.85,
+            "effectiveness": 0.85
+          },
+          "wiki_vote": {
+            "certainty": 0.95,
+            "effectiveness": 0.75
+          }
+        }
+      }
+    ],
+    "primary_comparisons": [
+      {
+        "id": "high_vs_low_effectiveness",
+        "reference": "low_effectiveness",
+        "candidate": "high_effectiveness"
+      },
+      {
+        "id": "prior_high_vs_none",
+        "reference": "none",
+        "candidate": "prior_high"
+      },
+      {
+        "id": "legacy_balance_vs_none",
+        "reference": "none",
+        "candidate": "legacy_balance"
+      },
+      {
+        "id": "stage2_good_vs_none",
+        "reference": "none",
+        "candidate": "stage2_good"
+      }
+    ],
+    "bootstrap": {
+      "repetitions": 10000,
+      "seed": 90001,
+      "method": "hierarchical_paired_percentile"
+    },
+    "decision_rule": {
+      "ci_half_width_fraction_of_delta_min": 0.5,
+      "minimum_median_rank_spearman": 0.9,
+      "minimum_best_condition_agreement": 0.8,
+      "action_if_no_prefix_passes": "increase_iterations_or_seed_blocks_before_stage4"
+    }
+  },
+  "optimization_budget_phase": {
+    "network": "ba1000",
+    "methods": [
+      "bo_gp",
+      "cma_es",
+      "random_search"
+    ],
+    "simulator_seed": 10001,
+    "iterations": "set_from_precision_phase",
+    "optimizer_replicates": [
+      1,
+      2,
+      3
+    ],
+    "optimizer_seeds": {
+      "bo_gp": [
+        70101,
+        70201,
+        70301
+      ],
+      "cma_es": [
+        70102,
+        70202,
+        70302
+      ],
+      "random_search": [
+        70103,
+        70203,
+        70303
+      ]
+    },
+    "startup_trials": 10,
+    "max_trials": 100,
+    "checkpoints": [
+      50,
+      75,
+      100
+    ],
+    "raw_level": "pop",
+    "decision_rule": {
+      "late_improvement_fraction_of_delta_min": 0.5,
+      "action_if_75_to_100_improvement_exceeds_threshold": "amend_protocol_and_extend_pilot_beyond_100"
+    }
+  }
+}
