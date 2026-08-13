@@ -13,16 +13,20 @@ import pandas as pd
 
 from analysis.pilot_analysis import (
     assess_optimization_budget,
+    assess_optimization_budget_by_tolerance,
     build_best_so_far,
     build_condition_precision,
     build_paired_differences,
     build_prefix_estimates,
     build_rank_stability,
     build_resource_summary,
+    build_selection_regret,
     load_optimization_pilot,
+    load_precision_analysis_snapshot,
     load_precision_pilot,
     project_future_resources,
     recommend_iteration_count,
+    recommend_iteration_count_by_selection_regret,
 )
 from experiment_runtime import (
     REPO_ROOT,
@@ -67,6 +71,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         required=True,
     )
     parser.add_argument("--experiment-root", type=Path, required=True)
+    parser.add_argument(
+        "--source-analysis-root",
+        type=Path,
+        default=None,
+        help=(
+            "Completed precision analysis containing iteration_metrics.parquet "
+            "and run_inventory.csv; use when raw run directories are elsewhere."
+        ),
+    )
     parser.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL_PATH)
     parser.add_argument("--analysis-id", default="analysis_v01")
     parser.add_argument("--delta-min", type=float, default=None)
@@ -101,6 +114,7 @@ def analyze(args: argparse.Namespace) -> Path:
             "sha256": sha256_file(protocol_path),
         },
         "pilot_experiment_root": experiment_root.as_posix(),
+        "source_analysis": None,
         "delta_min": args.delta_min,
         "outputs": {},
         "decision": None,
@@ -112,7 +126,25 @@ def analyze(args: argparse.Namespace) -> Path:
         if args.phase == "precision":
             phase = protocol["precision_phase"]
             specs = build_precision_specs(protocol)
-            data = load_precision_pilot(experiment_root, expected_specs=specs)
+            if args.source_analysis_root is None:
+                data = load_precision_pilot(experiment_root, expected_specs=specs)
+            else:
+                source_analysis_root = args.source_analysis_root.resolve()
+                data = load_precision_analysis_snapshot(
+                    source_analysis_root,
+                    expected_specs=specs,
+                )
+                source_manifest = source_analysis_root / "analysis_manifest.json"
+                source_iterations = (
+                    source_analysis_root / "tables" / "iteration_metrics.parquet"
+                )
+                source_runs = source_analysis_root / "tables" / "run_inventory.csv"
+                manifest["source_analysis"] = {
+                    "path": source_analysis_root.as_posix(),
+                    "analysis_manifest_sha256": sha256_file(source_manifest),
+                    "iteration_metrics_sha256": sha256_file(source_iterations),
+                    "run_inventory_sha256": sha256_file(source_runs),
+                }
             prefixes = [int(value) for value in phase["prefix_iterations"]]
             repetitions = int(
                 args.bootstrap_repetitions
@@ -143,21 +175,61 @@ def analyze(args: argparse.Namespace) -> Path:
             )
             resources = build_resource_summary(data.runs)
             decision_rule = phase["decision_rule"]
-            decision = recommend_iteration_count(
-                paired_differences,
-                rank_summary,
-                prefixes=prefixes,
-                delta_min=args.delta_min,
-                ci_fraction=float(
-                    decision_rule["ci_half_width_fraction_of_delta_min"]
-                ),
-                minimum_median_rank_spearman=float(
-                    decision_rule["minimum_median_rank_spearman"]
-                ),
-                minimum_best_condition_agreement=float(
-                    decision_rule["minimum_best_condition_agreement"]
-                ),
+            decision_method = decision_rule.get(
+                "method", "legacy_delta_min_precision_and_rank"
             )
+            selection_regret_detail = None
+            selection_regret_summary = None
+            if (
+                decision_method
+                == "leave_one_simulator_seed_block_out_selection_regret"
+            ):
+                tolerance = float(decision_rule["selection_regret_tolerance"])
+                selection_regret_detail, selection_regret_summary = (
+                    build_selection_regret(
+                        data.iterations,
+                        prefixes=prefixes,
+                        tolerance=tolerance,
+                    )
+                )
+                decision = recommend_iteration_count_by_selection_regret(
+                    selection_regret_summary,
+                    prefixes=prefixes,
+                    tolerance=tolerance,
+                    minimum_block_pass_rate_per_network=float(
+                        decision_rule["minimum_block_pass_rate_per_network"]
+                    ),
+                )
+                selected_iterations = decision_rule.get("selected_iterations")
+                if (
+                    selected_iterations is not None
+                    and decision.get("recommended_iterations")
+                    != int(selected_iterations)
+                ):
+                    raise ValueError(
+                        "protocol-selected iterations do not match the "
+                        "selection-regret recommendation"
+                    )
+            elif decision_method == "legacy_delta_min_precision_and_rank":
+                decision = recommend_iteration_count(
+                    paired_differences,
+                    rank_summary,
+                    prefixes=prefixes,
+                    delta_min=args.delta_min,
+                    ci_fraction=float(
+                        decision_rule["ci_half_width_fraction_of_delta_min"]
+                    ),
+                    minimum_median_rank_spearman=float(
+                        decision_rule["minimum_median_rank_spearman"]
+                    ),
+                    minimum_best_condition_agreement=float(
+                        decision_rule["minimum_best_condition_agreement"]
+                    ),
+                )
+            else:
+                raise ValueError(
+                    f"unsupported precision decision method: {decision_method}"
+                )
 
             outputs = {
                 "run_inventory": _write_csv(data.runs, tables_dir, "run_inventory"),
@@ -180,6 +252,17 @@ def analyze(args: argparse.Namespace) -> Path:
                     resources, tables_dir, "resource_summary"
                 ),
             }
+            if selection_regret_detail is not None:
+                outputs["selection_regret_detail"] = _write_csv(
+                    selection_regret_detail,
+                    tables_dir,
+                    "selection_regret_detail",
+                )
+                outputs["selection_regret_summary"] = _write_csv(
+                    selection_regret_summary,
+                    tables_dir,
+                    "selection_regret_summary",
+                )
             iteration_path = tables_dir / "iteration_metrics.parquet"
             data.iterations.to_parquet(iteration_path, index=False)
             outputs["iteration_metrics"] = iteration_path.name
@@ -205,8 +288,13 @@ def analyze(args: argparse.Namespace) -> Path:
                 "bootstrap_repetitions": repetitions,
                 "bootstrap_seed": int(phase["bootstrap"]["seed"]),
                 "optimization_evaluations": args.optimization_evaluations,
+                "decision_method": decision_method,
             }
         else:
+            if args.source_analysis_root is not None:
+                raise ValueError(
+                    "--source-analysis-root is only supported for precision analysis"
+                )
             if args.iterations is None:
                 raise ValueError("optimization analysis requires --iterations")
             phase = protocol["optimization_budget_phase"]
@@ -216,16 +304,45 @@ def analyze(args: argparse.Namespace) -> Path:
             best_so_far, checkpoint_table, improvement_summary = build_best_so_far(
                 data.trials, checkpoints=checkpoints
             )
-            decision = assess_optimization_budget(
-                checkpoint_table,
-                checkpoints=checkpoints,
-                delta_min=args.delta_min,
-                late_improvement_fraction=float(
-                    phase["decision_rule"][
-                        "late_improvement_fraction_of_delta_min"
-                    ]
-                ),
+            decision_rule = phase["decision_rule"]
+            decision_method = decision_rule.get(
+                "method", "legacy_fraction_of_delta_min"
             )
+            if (
+                decision_method
+                == "best_so_far_improvement_to_final_checkpoint"
+            ):
+                decision = assess_optimization_budget_by_tolerance(
+                    checkpoint_table,
+                    checkpoints=checkpoints,
+                    improvement_tolerance=float(
+                        decision_rule["absolute_improvement_tolerance"]
+                    ),
+                    # Accept v2 only for reproducibility of its dry-run design.
+                    minimum_passing_replicates_per_network_method=int(
+                        decision_rule.get(
+                            "minimum_passing_replicates_per_network_method",
+                            decision_rule.get(
+                                "minimum_passing_replicates_per_method"
+                            ),
+                        )
+                    ),
+                )
+            elif decision_method == "legacy_fraction_of_delta_min":
+                decision = assess_optimization_budget(
+                    checkpoint_table,
+                    checkpoints=checkpoints,
+                    delta_min=args.delta_min,
+                    late_improvement_fraction=float(
+                        decision_rule[
+                            "late_improvement_fraction_of_delta_min"
+                        ]
+                    ),
+                )
+            else:
+                raise ValueError(
+                    f"unsupported optimization decision method: {decision_method}"
+                )
             outputs = {
                 "run_inventory": _write_csv(data.runs, tables_dir, "run_inventory"),
                 "best_so_far": _write_csv(best_so_far, tables_dir, "best_so_far"),
@@ -239,6 +356,7 @@ def analyze(args: argparse.Namespace) -> Path:
             manifest["analysis_settings"] = {
                 "iterations": int(args.iterations),
                 "checkpoints": checkpoints,
+                "decision_method": decision_method,
             }
 
         decision_path = output_dir / "decision.json"

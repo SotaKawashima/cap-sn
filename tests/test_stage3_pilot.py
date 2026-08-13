@@ -10,11 +10,14 @@ from analysis.pilot_analysis import (
     _manifest_mismatches,
     _optimization_mismatches,
     assess_optimization_budget,
+    assess_optimization_budget_by_tolerance,
     build_best_so_far,
     build_paired_differences,
     build_prefix_estimates,
     build_rank_stability,
+    build_selection_regret,
     recommend_iteration_count,
+    recommend_iteration_count_by_selection_regret,
 )
 from run_stage3_pilot import (
     build_optimization_specs,
@@ -36,6 +39,31 @@ class Stage3ProtocolTests(unittest.TestCase):
         self.assertEqual(len({spec.key for spec in specs}), len(specs))
         self.assertTrue(all(spec.iterations == 200 for spec in specs))
         self.assertTrue(all(spec.raw_level == "all" for spec in specs))
+
+    def test_amended_protocol_fixes_selection_and_budget_rules(self):
+        self.assertEqual(self.protocol["protocol_id"], "stage3_pilot_v3")
+        self.assertEqual(
+            self.protocol["amendment"]["parent_protocol_id"],
+            "stage3_pilot_v2",
+        )
+        precision_rule = self.protocol["precision_phase"]["decision_rule"]
+        self.assertEqual(precision_rule["selected_iterations"], 100)
+        self.assertEqual(precision_rule["selection_regret_tolerance"], 0.005)
+        budget = self.protocol["optimization_budget_phase"]
+        self.assertEqual(
+            budget["networks"], ["ba1000", "facebook", "wiki_vote"]
+        )
+        self.assertEqual(budget["iterations"], 100)
+        self.assertEqual(
+            budget["decision_rule"]["absolute_improvement_tolerance"],
+            0.005,
+        )
+        self.assertEqual(
+            budget["decision_rule"][
+                "minimum_passing_replicates_per_network_method"
+            ],
+            2,
+        )
 
     def test_stage2_good_is_network_specific(self):
         specs = [
@@ -77,15 +105,34 @@ class Stage3ProtocolTests(unittest.TestCase):
         position = command.index("--output-root")
         self.assertEqual(command[position + 1], output_root.resolve().as_posix())
 
-    def test_optimization_protocol_has_three_methods_and_replicates(self):
+    def test_optimization_protocol_has_three_networks_methods_and_replicates(self):
         specs = build_optimization_specs(self.protocol, iterations=100)
 
-        self.assertEqual(len(specs), 9)
+        self.assertEqual(len(specs), 27)
+        self.assertEqual(
+            {spec.network for spec in specs},
+            {"ba1000", "facebook", "wiki_vote"},
+        )
         self.assertEqual(
             {spec.method for spec in specs},
             {"bo_gp", "cma_es", "random_search"},
         )
+        self.assertEqual(len({spec.key for spec in specs}), 27)
         self.assertEqual(len({spec.optimizer_seed for spec in specs}), 9)
+        self.assertTrue(
+            all(
+                len(
+                    {
+                        spec.optimizer_replicate
+                        for spec in specs
+                        if spec.network == network and spec.method == method
+                    }
+                )
+                == 3
+                for network in {spec.network for spec in specs}
+                for method in {spec.method for spec in specs}
+            )
+        )
         self.assertTrue(all(spec.trials == 100 for spec in specs))
 
     def test_optimization_iterations_must_come_from_precision_prefix(self):
@@ -246,6 +293,60 @@ class Stage3AnalysisTests(unittest.TestCase):
         self.assertEqual(decision["status"], "recommended")
         self.assertEqual(decision["recommended_iterations"], 2)
 
+    def test_selection_regret_recommends_smallest_passing_prefix(self):
+        detail, summary = build_selection_regret(
+            self._iteration_data(), prefixes=[2, 4], tolerance=0.005
+        )
+        decision = recommend_iteration_count_by_selection_regret(
+            summary,
+            prefixes=[2, 4],
+            tolerance=0.005,
+            minimum_block_pass_rate_per_network=1.0,
+        )
+
+        self.assertTrue((detail["selection_regret"] == 0).all())
+        self.assertTrue((summary["block_pass_rate"] == 1).all())
+        self.assertEqual(decision["status"], "recommended")
+        self.assertEqual(decision["recommended_iterations"], 2)
+
+    def test_selection_regret_rule_rejects_an_excessive_prefix(self):
+        summary = pd.DataFrame(
+            [
+                {
+                    "network": "ba1000",
+                    "prefix_iterations": 50,
+                    "max_regret": 0.006,
+                    "block_pass_rate": 0.8,
+                },
+                {
+                    "network": "facebook",
+                    "prefix_iterations": 50,
+                    "max_regret": 0.0,
+                    "block_pass_rate": 1.0,
+                },
+                {
+                    "network": "ba1000",
+                    "prefix_iterations": 100,
+                    "max_regret": 0.004,
+                    "block_pass_rate": 1.0,
+                },
+                {
+                    "network": "facebook",
+                    "prefix_iterations": 100,
+                    "max_regret": 0.003,
+                    "block_pass_rate": 1.0,
+                },
+            ]
+        )
+        decision = recommend_iteration_count_by_selection_regret(
+            summary,
+            prefixes=[50, 100],
+            tolerance=0.005,
+            minimum_block_pass_rate_per_network=1.0,
+        )
+
+        self.assertEqual(decision["recommended_iterations"], 100)
+
     def test_best_so_far_and_budget_assessment(self):
         rows = []
         for method in ("bo_gp", "cma_es", "random_search"):
@@ -254,6 +355,7 @@ class Stage3AnalysisTests(unittest.TestCase):
                     rows.append(
                         {
                             "run_key": f"{method}:{replicate}",
+                            "network": "ba1000",
                             "method": method,
                             "optimizer_replicate": replicate,
                             "trial": trial,
@@ -275,6 +377,86 @@ class Stage3AnalysisTests(unittest.TestCase):
         self.assertEqual(len(checkpoints), 27)
         self.assertTrue((improvements["median"] == 0).all())
         self.assertEqual(decision["recommended_evaluations"], 50)
+
+        amended_decision = assess_optimization_budget_by_tolerance(
+            checkpoints,
+            checkpoints=[50, 75, 100],
+            improvement_tolerance=0.005,
+            minimum_passing_replicates_per_network_method=2,
+        )
+        self.assertEqual(amended_decision["status"], "recommended")
+        self.assertEqual(amended_decision["recommended_evaluations"], 50)
+
+    def test_budget_assessment_requires_extension_when_two_runs_do_not_pass(self):
+        rows = []
+        for method in ("bo_gp", "cma_es", "random_search"):
+            for replicate, improvement in zip((1, 2, 3), (0.001, 0.010, 0.020)):
+                for checkpoint in (50, 75, 100):
+                    rows.append(
+                        {
+                            "run_key": f"{method}:{replicate}",
+                            "network": "ba1000",
+                            "method": method,
+                            "optimizer_replicate": replicate,
+                            "checkpoint": checkpoint,
+                            "best_so_far": (
+                                0.20 + improvement if checkpoint < 100 else 0.20
+                            ),
+                        }
+                    )
+        decision = assess_optimization_budget_by_tolerance(
+            pd.DataFrame(rows),
+            checkpoints=[50, 75, 100],
+            improvement_tolerance=0.005,
+            minimum_passing_replicates_per_network_method=2,
+        )
+
+        self.assertEqual(decision["status"], "extend_beyond_tested_maximum")
+        self.assertIsNone(decision["recommended_evaluations"])
+
+    def test_budget_assessment_requires_every_network_method_to_pass(self):
+        rows = []
+        networks = ("ba1000", "facebook", "wiki_vote")
+        methods = ("bo_gp", "cma_es", "random_search")
+        for network in networks:
+            for method in methods:
+                improvements = (0.001, 0.002, 0.003)
+                if network == "facebook" and method == "random_search":
+                    improvements = (0.001, 0.010, 0.020)
+                for replicate, improvement in zip((1, 2, 3), improvements):
+                    for checkpoint in (50, 75, 100):
+                        rows.append(
+                            {
+                                "run_key": f"{network}:{method}:{replicate}",
+                                "network": network,
+                                "method": method,
+                                "optimizer_replicate": replicate,
+                                "checkpoint": checkpoint,
+                                "best_so_far": (
+                                    0.20 + improvement
+                                    if checkpoint < 100
+                                    else 0.20
+                                ),
+                            }
+                        )
+
+        decision = assess_optimization_budget_by_tolerance(
+            pd.DataFrame(rows),
+            checkpoints=[50, 75, 100],
+            improvement_tolerance=0.005,
+            minimum_passing_replicates_per_network_method=2,
+        )
+
+        self.assertEqual(decision["status"], "extend_beyond_tested_maximum")
+        failed = [
+            row
+            for row in decision["diagnostics"][0]["network_methods"]
+            if not row["passes"]
+        ]
+        self.assertEqual(
+            [(row["network"], row["method"]) for row in failed],
+            [("facebook", "random_search")],
+        )
 
 
 if __name__ == "__main__":

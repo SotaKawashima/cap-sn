@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage3_pilot_v2",
+  "stage": "stage3_pilot",
+  "amendment": {
+    "parent_protocol_id": "stage3_pilot_v1",
+    "date": "2026-08-13",
+    "scope": "Decision rules only; the Phase A execution design and generated data are unchanged.",
+    "reasons": [
+      "Exact condition ranks were unstable because practically similar conditions exchanged order across simulator seed blocks.",
+      "The optimization goal is to avoid selecting a materially inferior condition, so leave-one-block-out selection regret replaces exact rank agreement as the primary iteration-count criterion.",
+      "No externally justified minimum important effect is available, so delta_min is removed from pilot pass/fail decisions. Final effects will be reported continuously by network."
+    ],
+    "phase_a_reuse": "The completed Phase A data may be reanalyzed because no execution condition, simulator seed, intervention condition, or recorded outcome changed."
+  },
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize"
+  },
+  "precision_phase": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      10001,
+      10002,
+      10003,
+      10004,
+      10005
+    ],
+    "max_iterations_per_block": 200,
+    "prefix_iterations": [
+      20,
+      50,
+      100,
+      200
+    ],
+    "raw_level": "all",
+    "conditions": [
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "role": "no_intervention_baseline"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "role": "prior_study_high_persuasion"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "role": "spring_research_reference"
+      },
+      {
+        "id": "low_effectiveness",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 0.5,
+        "role": "effectiveness_contrast_low"
+      },
+      {
+        "id": "high_effectiveness",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 1.0,
+        "role": "effectiveness_contrast_high"
+      },
+      {
+        "id": "stage2_good",
+        "enabled": true,
+        "role": "stage2_best_random_response_surface_cell_midpoint",
+        "parameters_by_network": {
+          "ba1000": {
+            "certainty": 0.85,
+            "effectiveness": 0.95
+          },
+          "facebook": {
+            "certainty": 0.85,
+            "effectiveness": 0.85
+          },
+          "wiki_vote": {
+            "certainty": 0.95,
+            "effectiveness": 0.75
+          }
+        }
+      }
+    ],
+    "primary_comparisons": [
+      {
+        "id": "high_vs_low_effectiveness",
+        "reference": "low_effectiveness",
+        "candidate": "high_effectiveness"
+      },
+      {
+        "id": "prior_high_vs_none",
+        "reference": "none",
+        "candidate": "prior_high"
+      },
+      {
+        "id": "legacy_balance_vs_none",
+        "reference": "none",
+        "candidate": "legacy_balance"
+      },
+      {
+        "id": "stage2_good_vs_none",
+        "reference": "none",
+        "candidate": "stage2_good"
+      }
+    ],
+    "bootstrap": {
+      "repetitions": 10000,
+      "seed": 90001,
+      "method": "hierarchical_paired_percentile"
+    },
+    "decision_rule": {
+      "method": "leave_one_simulator_seed_block_out_selection_regret",
+      "selection_regret_tolerance": 0.005,
+      "minimum_block_pass_rate_per_network": 1.0,
+      "selected_iterations": 100,
+      "rank_stability_role": "diagnostic_only",
+      "confidence_interval_role": "report_estimation_uncertainty_only",
+      "action_if_no_prefix_passes": "increase_iterations_or_revise_the_precision_design_before_stage4"
+    },
+    "effect_reporting": {
+      "minimum_important_effect_threshold": null,
+      "by_network": true,
+      "measures": [
+        "no_intervention_cumulative_selfish_fraction",
+        "absolute_suppression",
+        "relative_suppression",
+        "equivalent_agent_count",
+        "paired_hierarchical_confidence_interval"
+      ],
+      "post_hoc_practical_interpretation": "exploratory_only"
+    }
+  },
+  "optimization_budget_phase": {
+    "network": "ba1000",
+    "methods": [
+      "bo_gp",
+      "cma_es",
+      "random_search"
+    ],
+    "simulator_seed": 10001,
+    "iterations": 100,
+    "optimizer_replicates": [
+      1,
+      2,
+      3
+    ],
+    "optimizer_seeds": {
+      "bo_gp": [
+        70101,
+        70201,
+        70301
+      ],
+      "cma_es": [
+        70102,
+        70202,
+        70302
+      ],
+      "random_search": [
+        70103,
+        70203,
+        70303
+      ]
+    },
+    "startup_trials": 10,
+    "max_trials": 100,
+    "checkpoints": [
+      50,
+      75,
+      100
+    ],
+    "raw_level": "pop",
+    "decision_rule": {
+      "method": "best_so_far_improvement_to_final_checkpoint",
+      "absolute_improvement_tolerance": 0.005,
+      "minimum_passing_replicates_per_method": 2,
+      "replicate_decision": "at_least_2_of_3_within_tolerance",
+      "diagnostic_summary": "median",
+      "selection": "smallest_nonfinal_checkpoint_passing_for_every_method",
+      "action_if_no_checkpoint_passes": "amend_protocol_and_extend_pilot_beyond_100",
+      "interpretation": "Budget selection only; final candidate performance requires independent simulator seed blocks."
+    }
+  }
+}

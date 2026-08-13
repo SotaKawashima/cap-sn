@@ -70,7 +70,7 @@ experiments/summer_2026/<stage>/<experiment_id>/
 
 #### 第3段階のpilot実験
 
-第3段階では、[`stage3_pilot_v1.json`](../experiment_protocols/stage3_pilot_v1.json)を[`run_stage3_pilot.py`](../run_stage3_pilot.py)で実行する。MacBookでは`--dry-run`とテストだけを行い、実際のpilotはGitHubへ同期したcleanなcommitを共用PCで取得してから実行する。
+第3段階では、[`run_stage3_pilot.py`](../run_stage3_pilot.py)を使用する。Phase A実行時の旧規則は[`stage3_pilot_v1.json`](../experiment_protocols/stage3_pilot_v1.json)、Phase Aの正式判定は[`stage3_pilot_v2.json`](../experiment_protocols/stage3_pilot_v2.json)に保存している。Phase Bは3ネットワークを対象とする[`stage3_pilot_v3.json`](../experiment_protocols/stage3_pilot_v3.json)を使用する。MacBookでは`--dry-run`とテストだけを行い、実際のpilotはGitHubへ同期したcleanなcommitを共用PCで取得してから実行する。
 
 反復数pilotの実行例：
 
@@ -80,31 +80,35 @@ experiments/summer_2026/<stage>/<experiment_id>/
   --experiment-id 20260812_120000_pilot_precision_v01
 ```
 
-集計は最初に`--delta-min`なしで行い、推定誤差と効果量を確認して指導教員と値を固定した後、新しいanalysis IDで再集計する。
+Phase Aでは、leave-one-seed-block-out selection regretが全ネットワーク・全seedブロックで`0.005`以下となる最小の反復数を採用する。保存済みanalysisの完全な反復表を入力にする場合は、`--source-analysis-root`を指定する。入力表はprotocolの90 runおよび18,000反復と照合される。
 
 ```bash
 .venv/bin/python analyze_stage3_pilot.py \
   --phase precision \
   --experiment-root experiments/summer_2026/stage3_pilot/<precision_experiment_id> \
-  --analysis-id analysis_with_delta_v01 \
-  --delta-min <delta_min>
+  --source-analysis-root experiments/summer_2026/stage3_pilot/<precision_experiment_id>/<source_analysis_id> \
+  --protocol experiment_protocols/stage3_pilot_v2.json \
+  --analysis-id precision_selection_regret_v03
 ```
 
-決定した反復数`<M>`を使って、BA1000における3手法・各3 runの評価回数pilotを実行する。
+Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネットワークで、3手法・各3 runの評価回数pilotを実行する。実行単位は`3ネットワーク × 3手法 × 3 run = 27 run`である。
 
 ```bash
 .venv/bin/python run_stage3_pilot.py \
   --phase optimization_budget \
-  --iterations <M> \
-  --experiment-id 20260812_130000_pilot_optimization_budget_v01
+  --iterations 100 \
+  --protocol experiment_protocols/stage3_pilot_v3.json \
+  --experiment-id <optimization_experiment_id>
 
 .venv/bin/python analyze_stage3_pilot.py \
   --phase optimization_budget \
   --experiment-root experiments/summer_2026/stage3_pilot/<optimization_experiment_id> \
-  --analysis-id analysis_v01 \
-  --iterations <M> \
-  --delta-min <delta_min>
+  --protocol experiment_protocols/stage3_pilot_v3.json \
+  --analysis-id optimization_budget_v03 \
+  --iterations 100
 ```
+
+評価回数は50、75、100回時点のbest-so-farを比較する。各非最終時点から100回時点までの改善量について、各ネットワーク・各手法の3 run中2 run以上が`0.005`以下となる最小時点を採用する。3 runではこれは中央値が`0.005`以下であることと等価であり、中央値も診断値として出力する。9つのネットワーク×手法の組のうち1つでも75回時点を通過しない場合は100回で十分とはせず、protocolを改訂して100回を超えるpilotへ延長する。この判定は探索予算を決めるためだけに使用し、候補の最終性能は独立したシミュレータseedブロックで評価する。
 
 実験出力は`.gitignore`の対象であり、GitHubには同期されない。分析と可視化には[`第3段階_pilot実験の反復数と評価予算.ipynb`](../notebooks/第3段階_pilot実験の反復数と評価予算.ipynb)を用いる。
 

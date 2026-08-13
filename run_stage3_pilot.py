@@ -28,7 +28,7 @@ from experiment_runtime import (
 )
 
 
-DEFAULT_PROTOCOL_PATH = REPO_ROOT / "experiment_protocols" / "stage3_pilot_v1.json"
+DEFAULT_PROTOCOL_PATH = REPO_ROOT / "experiment_protocols" / "stage3_pilot_v3.json"
 STAGE = "stage3_pilot"
 PHASES = ("precision", "optimization_budget")
 
@@ -132,36 +132,48 @@ def build_optimization_specs(
         raise ExperimentConfigurationError(
             "optimization pilot iterations must be one of the precision prefixes"
         )
+    protocol_iterations = phase.get("iterations")
+    if isinstance(protocol_iterations, int) and iterations != protocol_iterations:
+        raise ExperimentConfigurationError(
+            "optimization pilot iterations do not match the protocol-selected value"
+        )
 
-    network = phase["network"]
+    # v2 remains readable so its BA1000-only dry-run can be reproduced.
+    networks = phase.get("networks")
+    if networks is None:
+        networks = [phase["network"]]
+
     specs: list[PilotRunSpec] = []
-    for method in phase["methods"]:
-        seeds = phase["optimizer_seeds"].get(method)
-        replicates = phase["optimizer_replicates"]
-        if seeds is None or len(seeds) != len(replicates):
-            raise ExperimentConfigurationError(
-                f"optimizer seed count does not match replicates for {method}"
-            )
-        for replicate, optimizer_seed in zip(replicates, seeds, strict=True):
-            specs.append(
-                PilotRunSpec(
-                    key=f"{network}:{method}:optseed{replicate}",
-                    phase="optimization_budget",
-                    run_type="single_objective_optimization",
-                    relative_run_dir=(
-                        f"{network}/{method}/optseed_{int(replicate)}"
-                    ),
-                    network=network,
-                    simulator_seed=int(phase["simulator_seed"]),
-                    iterations=iterations,
-                    method=method,
-                    optimizer_replicate=int(replicate),
-                    optimizer_seed=int(optimizer_seed),
-                    trials=int(phase["max_trials"]),
-                    startup_trials=int(phase["startup_trials"]),
-                    raw_level=phase["raw_level"],
+    for network in networks:
+        if network not in NETWORKS:
+            raise ExperimentConfigurationError(f"unsupported network: {network}")
+        for method in phase["methods"]:
+            seeds = phase["optimizer_seeds"].get(method)
+            replicates = phase["optimizer_replicates"]
+            if seeds is None or len(seeds) != len(replicates):
+                raise ExperimentConfigurationError(
+                    f"optimizer seed count does not match replicates for {method}"
                 )
-            )
+            for replicate, optimizer_seed in zip(replicates, seeds, strict=True):
+                specs.append(
+                    PilotRunSpec(
+                        key=f"{network}:{method}:optseed{replicate}",
+                        phase="optimization_budget",
+                        run_type="single_objective_optimization",
+                        relative_run_dir=(
+                            f"{network}/{method}/optseed_{int(replicate)}"
+                        ),
+                        network=network,
+                        simulator_seed=int(phase["simulator_seed"]),
+                        iterations=iterations,
+                        method=method,
+                        optimizer_replicate=int(replicate),
+                        optimizer_seed=int(optimizer_seed),
+                        trials=int(phase["max_trials"]),
+                        startup_trials=int(phase["startup_trials"]),
+                        raw_level=phase["raw_level"],
+                    )
+                )
     return specs
 
 

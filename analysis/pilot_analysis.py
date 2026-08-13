@@ -227,6 +227,148 @@ def load_precision_pilot(
     )
 
 
+def load_precision_analysis_snapshot(
+    source_analysis_root: str | Path,
+    *,
+    expected_specs: Sequence[Any],
+) -> PrecisionPilotData:
+    """Load and validate the complete iteration table from a prior analysis."""
+    source_analysis_root = Path(source_analysis_root).resolve()
+    manifest_path = source_analysis_root / "analysis_manifest.json"
+    if not manifest_path.is_file():
+        raise ValueError(
+            f"source analysis manifest does not exist: {manifest_path}"
+        )
+    manifest = _read_json(manifest_path)
+    if manifest.get("status") != "completed":
+        raise ValueError("source precision analysis is not completed")
+    if (
+        manifest.get("stage") != "stage3_pilot"
+        or manifest.get("phase") != "precision"
+    ):
+        raise ValueError("source analysis is not a Stage 3 precision analysis")
+
+    outputs = manifest.get("outputs", {})
+
+    def output_path(key: str) -> Path:
+        relative = outputs.get(key)
+        if not isinstance(relative, str):
+            raise ValueError(f"source analysis output is missing: {key}")
+        path = (source_analysis_root / relative).resolve()
+        if source_analysis_root not in path.parents:
+            raise ValueError(f"source analysis output escapes its directory: {key}")
+        if not path.is_file():
+            raise ValueError(f"source analysis output does not exist: {path}")
+        return path
+
+    iterations = pd.read_parquet(output_path("iteration_metrics"))
+    runs = pd.read_csv(output_path("run_inventory"))
+    required_iteration_columns = {
+        "run_key",
+        "network",
+        "condition_id",
+        "simulator_seed",
+        "num_iter",
+        OBJECTIVE_COLUMN,
+    }
+    if not required_iteration_columns.issubset(iterations.columns):
+        missing = sorted(required_iteration_columns - set(iterations.columns))
+        raise ValueError(f"source iteration table is missing columns: {missing}")
+    required_run_columns = {
+        "run_key",
+        "network",
+        "condition_id",
+        "simulator_seed",
+        "iterations",
+        "certainty",
+        "effectiveness",
+        "objective",
+    }
+    if not required_run_columns.issubset(runs.columns):
+        missing = sorted(required_run_columns - set(runs.columns))
+        raise ValueError(f"source run inventory is missing columns: {missing}")
+
+    expected_by_key = {spec.key: spec for spec in expected_specs}
+    if len(expected_by_key) != len(expected_specs):
+        raise ValueError("expected precision run keys are not unique")
+    observed_run_keys = set(runs["run_key"].astype(str))
+    observed_iteration_keys = set(iterations["run_key"].astype(str))
+    expected_run_keys = set(expected_by_key)
+    if observed_run_keys != expected_run_keys:
+        raise ValueError("source run inventory does not match the protocol run keys")
+    if observed_iteration_keys != expected_run_keys:
+        raise ValueError("source iteration table does not match the protocol run keys")
+    if runs["run_key"].duplicated().any():
+        raise ValueError("source run inventory contains duplicate run keys")
+
+    errors: list[str] = []
+    runs_by_key = runs.set_index("run_key", drop=False)
+    for run_key, spec in expected_by_key.items():
+        run = runs_by_key.loc[run_key]
+        group = iterations[iterations["run_key"] == run_key]
+        expected_iterations = int(spec.iterations)
+        observed_ids = set(pd.to_numeric(group["num_iter"]).astype(int))
+        if len(group) != expected_iterations or observed_ids != set(
+            range(expected_iterations)
+        ):
+            errors.append(f"iteration IDs do not match for {run_key}")
+            continue
+        expected_fields = {
+            "network": spec.network,
+            "condition_id": str(spec.condition_id),
+            "simulator_seed": int(spec.simulator_seed),
+            "iterations": expected_iterations,
+        }
+        for field, expected in expected_fields.items():
+            observed = run[field]
+            if field in {"simulator_seed", "iterations"}:
+                observed = int(observed)
+            else:
+                observed = str(observed)
+            if observed != expected:
+                errors.append(
+                    f"{field} does not match for {run_key}: "
+                    f"{observed!r} != {expected!r}"
+                )
+        for field in ("network", "condition_id", "simulator_seed"):
+            values = group[field].drop_duplicates().tolist()
+            expected = expected_fields[field]
+            if field == "simulator_seed":
+                values = [int(value) for value in values]
+            else:
+                values = [str(value) for value in values]
+            if values != [expected]:
+                errors.append(f"iteration {field} does not match for {run_key}")
+        objective_values = pd.to_numeric(group[OBJECTIVE_COLUMN], errors="coerce")
+        if objective_values.isna().any() or not math.isclose(
+            float(objective_values.mean()),
+            float(run["objective"]),
+            rel_tol=0.0,
+            abs_tol=1e-12,
+        ):
+            errors.append(f"objective values do not match for {run_key}")
+        for field in ("certainty", "effectiveness"):
+            expected = getattr(spec, field)
+            observed = run[field]
+            if expected is None:
+                if not pd.isna(observed):
+                    errors.append(f"{field} should be empty for {run_key}")
+            elif pd.isna(observed) or not math.isclose(
+                float(observed), float(expected), rel_tol=0.0, abs_tol=1e-12
+            ):
+                errors.append(f"{field} does not match for {run_key}")
+
+    if errors:
+        raise ValueError(
+            "source precision analysis does not match the protocol:\n"
+            + "\n".join(errors)
+        )
+    return PrecisionPilotData(
+        iterations=iterations.reset_index(drop=True),
+        runs=runs.reset_index(drop=True),
+    )
+
+
 def load_optimization_pilot(
     experiment_root: str | Path,
     *,
@@ -543,6 +685,151 @@ def build_rank_stability(
     return detail, summary
 
 
+def build_selection_regret(
+    iterations: pd.DataFrame,
+    *,
+    prefixes: Sequence[int],
+    tolerance: float,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Measure held-out loss from selecting a condition within one seed block."""
+    if not math.isfinite(tolerance) or tolerance < 0:
+        raise ValueError("selection regret tolerance must be nonnegative")
+    max_prefix = max(int(prefix) for prefix in prefixes)
+    rows: list[dict[str, Any]] = []
+    for network, network_data in iterations.groupby("network", sort=True):
+        seeds = sorted(network_data["simulator_seed"].unique())
+        for seed in seeds:
+            reference = (
+                network_data[
+                    (network_data["simulator_seed"] != seed)
+                    & (network_data["num_iter"] < max_prefix)
+                ]
+                .groupby("condition_id")[OBJECTIVE_COLUMN]
+                .mean()
+            )
+            if reference.empty:
+                raise ValueError(
+                    f"selection regret has no reference blocks for {network}"
+                )
+            reference_best_condition = str(reference.idxmin())
+            reference_best_value = float(reference.min())
+            for prefix in prefixes:
+                estimate = (
+                    network_data[
+                        (network_data["simulator_seed"] == seed)
+                        & (network_data["num_iter"] < int(prefix))
+                    ]
+                    .groupby("condition_id")[OBJECTIVE_COLUMN]
+                    .mean()
+                )
+                if set(estimate.index) != set(reference.index):
+                    raise ValueError(
+                        "selection regret condition sets do not match for "
+                        f"{network}, seed {seed}, prefix {prefix}"
+                    )
+                selected_condition = str(estimate.idxmin())
+                selected_reference_value = float(reference[selected_condition])
+                regret = max(0.0, selected_reference_value - reference_best_value)
+                rows.append(
+                    {
+                        "network": network,
+                        "simulator_seed": int(seed),
+                        "prefix_iterations": int(prefix),
+                        "selected_condition": selected_condition,
+                        "reference_best_condition": reference_best_condition,
+                        "selected_reference_value": selected_reference_value,
+                        "reference_best_value": reference_best_value,
+                        "selection_regret": regret,
+                        "tolerance": float(tolerance),
+                        "within_tolerance": regret <= tolerance,
+                        "reference_definition": "other_blocks_at_max_prefix",
+                    }
+                )
+    detail = pd.DataFrame(rows)
+    summary = (
+        detail.groupby(["network", "prefix_iterations"], sort=True)
+        .agg(
+            n_blocks=("simulator_seed", "nunique"),
+            median_regret=("selection_regret", "median"),
+            max_regret=("selection_regret", "max"),
+            block_pass_rate=("within_tolerance", "mean"),
+        )
+        .reset_index()
+    )
+    summary["tolerance"] = float(tolerance)
+    return detail, summary
+
+
+def recommend_iteration_count_by_selection_regret(
+    selection_regret_summary: pd.DataFrame,
+    *,
+    prefixes: Sequence[int],
+    tolerance: float,
+    minimum_block_pass_rate_per_network: float,
+) -> dict[str, Any]:
+    """Choose the smallest prefix that avoids material held-out selection loss."""
+    if not math.isfinite(tolerance) or tolerance < 0:
+        raise ValueError("selection regret tolerance must be nonnegative")
+    if not 0 < minimum_block_pass_rate_per_network <= 1:
+        raise ValueError("minimum block pass rate must be in (0, 1]")
+    diagnostics: list[dict[str, Any]] = []
+    for prefix in prefixes:
+        rows = selection_regret_summary[
+            selection_regret_summary["prefix_iterations"] == int(prefix)
+        ]
+        if rows.empty:
+            raise ValueError(f"selection regret summary is missing prefix {prefix}")
+        network_diagnostics = []
+        for _, row in rows.sort_values("network").iterrows():
+            network_passes = bool(
+                float(row["block_pass_rate"])
+                >= minimum_block_pass_rate_per_network
+            )
+            network_diagnostics.append(
+                {
+                    "network": str(row["network"]),
+                    "max_regret": float(row["max_regret"]),
+                    "block_pass_rate": float(row["block_pass_rate"]),
+                    "passes": network_passes,
+                }
+            )
+        diagnostics.append(
+            {
+                "prefix_iterations": int(prefix),
+                "tolerance": float(tolerance),
+                "minimum_block_pass_rate_per_network": float(
+                    minimum_block_pass_rate_per_network
+                ),
+                "max_regret_across_networks": max(
+                    row["max_regret"] for row in network_diagnostics
+                ),
+                "passes": all(row["passes"] for row in network_diagnostics),
+                "networks": network_diagnostics,
+            }
+        )
+    passing = [row for row in diagnostics if row["passes"]]
+    if passing:
+        return {
+            "status": "recommended",
+            "recommended_iterations": passing[0]["prefix_iterations"],
+            "method": "leave_one_simulator_seed_block_out_selection_regret",
+            "selection_regret_tolerance": float(tolerance),
+            "diagnostics": diagnostics,
+            "reason": (
+                "Smallest tested prefix satisfying the selection-regret rule "
+                "in every network."
+            ),
+        }
+    return {
+        "status": "insufficient_selection_precision",
+        "recommended_iterations": None,
+        "method": "leave_one_simulator_seed_block_out_selection_regret",
+        "selection_regret_tolerance": float(tolerance),
+        "diagnostics": diagnostics,
+        "reason": "No tested prefix satisfies the selection-regret rule.",
+    }
+
+
 def recommend_iteration_count(
     paired_differences: pd.DataFrame,
     rank_summary: pd.DataFrame,
@@ -723,8 +1010,8 @@ def build_best_so_far(
     data["best_so_far"] = data.groupby("run_key")["value"].cummin()
 
     checkpoint_rows: list[dict[str, Any]] = []
-    for (run_key, method, replicate), group in data.groupby(
-        ["run_key", "method", "optimizer_replicate"], sort=True
+    for (run_key, network, method, replicate), group in data.groupby(
+        ["run_key", "network", "method", "optimizer_replicate"], sort=True
     ):
         for checkpoint in checkpoints:
             eligible = group[group["evaluation"] <= int(checkpoint)]
@@ -735,6 +1022,7 @@ def build_best_so_far(
             checkpoint_rows.append(
                 {
                     "run_key": run_key,
+                    "network": network,
                     "method": method,
                     "optimizer_replicate": int(replicate),
                     "checkpoint": int(checkpoint),
@@ -743,7 +1031,7 @@ def build_best_so_far(
             )
     checkpoint_table = pd.DataFrame(checkpoint_rows)
     wide = checkpoint_table.pivot(
-        index=["run_key", "method", "optimizer_replicate"],
+        index=["run_key", "network", "method", "optimizer_replicate"],
         columns="checkpoint",
         values="best_so_far",
     ).reset_index()
@@ -754,6 +1042,7 @@ def build_best_so_far(
             improvement_rows.append(
                 {
                     "run_key": row["run_key"],
+                    "network": row["network"],
                     "method": row["method"],
                     "optimizer_replicate": int(row["optimizer_replicate"]),
                     "from_checkpoint": first,
@@ -764,7 +1053,7 @@ def build_best_so_far(
     improvements = pd.DataFrame(improvement_rows)
     summary = (
         improvements.groupby(
-            ["method", "from_checkpoint", "to_checkpoint"], sort=True
+            ["network", "method", "from_checkpoint", "to_checkpoint"], sort=True
         )["improvement"]
         .agg(
             n="count",
@@ -794,21 +1083,23 @@ def assess_optimization_budget(
     checkpoints = sorted(int(value) for value in checkpoints)
     final_checkpoint = checkpoints[-1]
     wide = checkpoint_table.pivot(
-        index=["run_key", "method", "optimizer_replicate"],
+        index=["run_key", "network", "method", "optimizer_replicate"],
         columns="checkpoint",
         values="best_so_far",
     ).reset_index()
     diagnostics: list[dict[str, Any]] = []
     for checkpoint in checkpoints[:-1]:
-        by_method = wide.assign(
+        by_network_method = wide.assign(
             improvement_to_final=wide[checkpoint] - wide[final_checkpoint]
-        ).groupby("method")["improvement_to_final"].median()
-        passes = bool((by_method <= threshold).all())
+        ).groupby(["network", "method"])["improvement_to_final"].median()
+        passes = bool((by_network_method <= threshold).all())
         diagnostics.append(
             {
                 "checkpoint": checkpoint,
                 "threshold": threshold,
-                "max_method_median_improvement_to_final": float(by_method.max()),
+                "max_network_method_median_improvement_to_final": float(
+                    by_network_method.max()
+                ),
                 "passes": passes,
             }
         )
@@ -825,4 +1116,103 @@ def assess_optimization_budget(
         "recommended_evaluations": None,
         "tested_maximum": final_checkpoint,
         "diagnostics": diagnostics,
+    }
+
+
+def assess_optimization_budget_by_tolerance(
+    checkpoint_table: pd.DataFrame,
+    *,
+    checkpoints: Sequence[int],
+    improvement_tolerance: float,
+    minimum_passing_replicates_per_network_method: int,
+) -> dict[str, Any]:
+    """Select an optimization checkpoint using an absolute lost-gain tolerance."""
+    if not math.isfinite(improvement_tolerance) or improvement_tolerance < 0:
+        raise ValueError("optimization improvement tolerance must be nonnegative")
+    if minimum_passing_replicates_per_network_method <= 0:
+        raise ValueError("minimum passing replicates must be positive")
+    checkpoints = sorted(int(value) for value in checkpoints)
+    final_checkpoint = checkpoints[-1]
+    wide = checkpoint_table.pivot(
+        index=["run_key", "network", "method", "optimizer_replicate"],
+        columns="checkpoint",
+        values="best_so_far",
+    ).reset_index()
+    network_method_sizes = wide.groupby(["network", "method"])[
+        "optimizer_replicate"
+    ].nunique()
+    if (
+        network_method_sizes < minimum_passing_replicates_per_network_method
+    ).any():
+        raise ValueError(
+            "minimum passing replicates exceeds the available runs for a "
+            "network-method combination"
+        )
+
+    diagnostics: list[dict[str, Any]] = []
+    for checkpoint in checkpoints[:-1]:
+        improvements = wide.assign(
+            improvement_to_final=wide[checkpoint] - wide[final_checkpoint]
+        )
+        network_method_diagnostics: list[dict[str, Any]] = []
+        for (network, method), group in improvements.groupby(
+            ["network", "method"], sort=True
+        ):
+            values = group["improvement_to_final"].astype(float)
+            passing_replicates = int((values <= improvement_tolerance).sum())
+            median_improvement = float(values.median())
+            network_method_passes = bool(
+                passing_replicates
+                >= minimum_passing_replicates_per_network_method
+            )
+            network_method_diagnostics.append(
+                {
+                    "network": str(network),
+                    "method": str(method),
+                    "n_replicates": int(len(values)),
+                    "passing_replicates": passing_replicates,
+                    "median_improvement_to_final": median_improvement,
+                    "max_improvement_to_final": float(values.max()),
+                    "passes": network_method_passes,
+                }
+            )
+        diagnostics.append(
+            {
+                "checkpoint": int(checkpoint),
+                "final_checkpoint": final_checkpoint,
+                "improvement_tolerance": float(improvement_tolerance),
+                "minimum_passing_replicates_per_network_method": int(
+                    minimum_passing_replicates_per_network_method
+                ),
+                "passes": all(
+                    row["passes"] for row in network_method_diagnostics
+                ),
+                "network_methods": network_method_diagnostics,
+            }
+        )
+    passing = [row for row in diagnostics if row["passes"]]
+    if passing:
+        return {
+            "status": "recommended",
+            "recommended_evaluations": passing[0]["checkpoint"],
+            "tested_maximum": final_checkpoint,
+            "method": "best_so_far_improvement_to_final_checkpoint",
+            "improvement_tolerance": float(improvement_tolerance),
+            "diagnostics": diagnostics,
+            "reason": (
+                "Smallest nonfinal checkpoint whose lost improvement is within "
+                "tolerance for every network-method combination."
+            ),
+        }
+    return {
+        "status": "extend_beyond_tested_maximum",
+        "recommended_evaluations": None,
+        "tested_maximum": final_checkpoint,
+        "method": "best_so_far_improvement_to_final_checkpoint",
+        "improvement_tolerance": float(improvement_tolerance),
+        "diagnostics": diagnostics,
+        "reason": (
+            "The last nonfinal checkpoint did not satisfy the stopping rule; "
+            "the pilot must be extended beyond the tested maximum."
+        ),
     }
