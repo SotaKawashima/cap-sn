@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage4_fixed_confirmation_v1",
+  "stage": "stage4_fixed_confirmation",
+  "status": "frozen_before_execution",
+  "frozen_at": "2026-08-17",
+  "source_decision": {
+    "protocol_id": "stage3_pilot_v4",
+    "path": "experiment_protocols/stage3_pilot_v4.json",
+    "sha256_at_freeze": "856c7f5ef7ecef7b6dfd1c09ec0f93ce7c6a15410f6f60f6322d9023de426bf8",
+    "selected_iterations_per_seed_block": 100,
+    "selected_optimization_evaluations": 50
+  },
+  "purpose": {
+    "primary": "Estimate intervention effects and fixed-design parameter effects on unused simulator seed blocks.",
+    "secondary": "Decide whether the objective has sufficient structure and improvement headroom to justify Stage 6 reoptimization.",
+    "not_in_scope": [
+      "finding or claiming a global optimum",
+      "comparing optimizer efficiency",
+      "selecting a final candidate",
+      "making a final generalization claim with the reserved final-test seeds"
+    ]
+  },
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize"
+  },
+  "design": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      20001,
+      20002,
+      20003,
+      20004,
+      20005
+    ],
+    "iterations_per_seed_block": 100,
+    "raw_level": "all",
+    "conditions": [
+      {
+        "id": "grid_c050_e050",
+        "enabled": true,
+        "certainty": 0.5,
+        "effectiveness": 0.5,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c050_e075",
+        "enabled": true,
+        "certainty": 0.5,
+        "effectiveness": 0.75,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c050_e100",
+        "enabled": true,
+        "certainty": 0.5,
+        "effectiveness": 1.0,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c075_e050",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 0.5,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c075_e075",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 0.75,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c075_e100",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 1.0,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c100_e050",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.5,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c100_e075",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.75,
+        "role": "factorial_grid"
+      },
+      {
+        "id": "grid_c100_e100",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 1.0,
+        "role": "factorial_grid_high_high"
+      },
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "role": "no_intervention_baseline"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "role": "prior_study_high_persuasion"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "role": "spring_research_reference"
+      },
+      {
+        "id": "legacy_certainty_high",
+        "enabled": true,
+        "certainty": 0.9,
+        "effectiveness": 0.5,
+        "role": "legacy_directional_contrast_certainty"
+      },
+      {
+        "id": "legacy_effectiveness_high",
+        "enabled": true,
+        "certainty": 0.5,
+        "effectiveness": 0.9,
+        "role": "legacy_directional_contrast_effectiveness"
+      }
+    ],
+    "expected_condition_count_per_network": 14,
+    "expected_run_count": 210,
+    "expected_simulation_iterations": 21000
+  },
+  "pre_registered_questions": [
+    {
+      "id": "q1_intervention_effect",
+      "question": "How much does each pre-fixed intervention condition change the objective relative to no intervention in each network?",
+      "directional_assumption": "none"
+    },
+    {
+      "id": "q2_effectiveness_effect",
+      "question": "How do the direction and magnitude of the low-to-high effectiveness contrast vary by network and certainty level?",
+      "directional_assumption": "none because Phase A did not support a universal direction"
+    },
+    {
+      "id": "q3_certainty_effect",
+      "question": "How do the direction and magnitude of the low-to-high certainty contrast vary by network and effectiveness level?",
+      "directional_assumption": "none"
+    },
+    {
+      "id": "q4_interaction",
+      "question": "Does the effectiveness contrast change between low and high certainty, indicating a certainty-effectiveness interaction?",
+      "directional_assumption": "none"
+    },
+    {
+      "id": "q5_reoptimization_headroom",
+      "question": "Do fixed-design differences and improvements over representative conditions provide enough empirical headroom to justify Stage 6 reoptimization?",
+      "directional_assumption": "none"
+    }
+  ],
+  "primary_comparisons": [
+    {
+      "id": "prior_high_vs_none",
+      "reference": "none",
+      "candidate": "prior_high",
+      "estimand": "intervention_effect_of_prior_study_condition"
+    },
+    {
+      "id": "legacy_balance_vs_none",
+      "reference": "none",
+      "candidate": "legacy_balance",
+      "estimand": "intervention_effect_of_spring_reference_condition"
+    },
+    {
+      "id": "grid_high_high_vs_none",
+      "reference": "none",
+      "candidate": "grid_c100_e100",
+      "estimand": "intervention_effect_of_prefixed_high_high_condition"
+    },
+    {
+      "id": "grid_high_high_vs_legacy_balance",
+      "reference": "legacy_balance",
+      "candidate": "grid_c100_e100",
+      "estimand": "fixed_design_improvement_over_spring_reference"
+    },
+    {
+      "id": "legacy_effectiveness_vs_certainty_high",
+      "reference": "legacy_certainty_high",
+      "candidate": "legacy_effectiveness_high",
+      "estimand": "legacy_directional_contrast"
+    }
+  ],
+  "factorial_contrasts": {
+    "effectiveness_low_to_high": [
+      {
+        "id": "effectiveness_at_c050",
+        "reference": "grid_c050_e050",
+        "candidate": "grid_c050_e100"
+      },
+      {
+        "id": "effectiveness_at_c075",
+        "reference": "grid_c075_e050",
+        "candidate": "grid_c075_e100"
+      },
+      {
+        "id": "effectiveness_at_c100",
+        "reference": "grid_c100_e050",
+        "candidate": "grid_c100_e100"
+      }
+    ],
+    "certainty_low_to_high": [
+      {
+        "id": "certainty_at_e050",
+        "reference": "grid_c050_e050",
+        "candidate": "grid_c100_e050"
+      },
+      {
+        "id": "certainty_at_e075",
+        "reference": "grid_c050_e075",
+        "candidate": "grid_c100_e075"
+      },
+      {
+        "id": "certainty_at_e100",
+        "reference": "grid_c050_e100",
+        "candidate": "grid_c100_e100"
+      }
+    ],
+    "corner_interaction": {
+      "id": "certainty_by_effectiveness_corner_interaction",
+      "effectiveness_contrast_at_low_certainty": {
+        "reference": "grid_c050_e050",
+        "candidate": "grid_c050_e100"
+      },
+      "effectiveness_contrast_at_high_certainty": {
+        "reference": "grid_c100_e050",
+        "candidate": "grid_c100_e100"
+      },
+      "estimand": "difference_between_the_two_paired_effectiveness_contrasts"
+    }
+  },
+  "secondary_reporting": {
+    "all_enabled_conditions_vs_none": true,
+    "status": "descriptive_with_confidence_intervals",
+    "post_hoc_best_condition": "exploratory_only_and_not_an_unbiased_performance_estimate",
+    "information_diffusion_metrics": "secondary_process_explanation_only"
+  },
+  "inference": {
+    "pairing": "same_network_same_simulator_seed_same_iteration_index",
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "levels": [
+        "simulator_seed_block",
+        "iteration_within_seed_block"
+      ],
+      "repetitions": 10000,
+      "seed": 90001,
+      "confidence_level": 0.95
+    },
+    "effect_measures": [
+      "cumulative_selfish_fraction",
+      "absolute_suppression",
+      "relative_suppression",
+      "equivalent_agent_count"
+    ],
+    "absolute_suppression_definition": "reference_minus_candidate",
+    "relative_suppression_definition": "reference_minus_candidate_divided_by_reference",
+    "minimum_important_effect_threshold": null,
+    "multiplicity_policy": "Do not perform all-pairs significance testing. Treat listed primary and factorial estimands as pre-specified; label all other contrasts exploratory.",
+    "reporting_language": {
+      "estimate_positive_ci_above_zero": "reduction relative to reference",
+      "estimate_positive_ci_contains_zero": "reduction tendency with uncertainty",
+      "estimate_nonpositive": "no reduction observed or increase relative to reference"
+    }
+  },
+  "seed_policy": {
+    "stage4_role": "fixed_confirmation_and_development",
+    "stage4_seeds_must_not_be_reused_for_candidate_validation_or_final_test": true,
+    "reserved_future_groups": {
+      "stage6_optimization": [
+        30001,
+        30002,
+        30003,
+        30004,
+        30005
+      ],
+      "candidate_validation": [
+        40001,
+        40002,
+        40003
+      ],
+      "final_test": [
+        50001,
+        50002,
+        50003,
+        50004,
+        50005
+      ]
+    }
+  },
+  "execution": {
+    "required_clean_git_worktree": true,
+    "required_release_simulator": true,
+    "resume_requires_same_protocol_sha256": true,
+    "output_directory": "experiments/summer_2026/stage4_fixed_confirmation/<experiment_id>",
+    "run_directory": "<network>/<condition_id>/simseed_<simulator_seed>"
+  }
+}

@@ -89,6 +89,145 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def _resource_projection_settings(
+    protocol: dict[str, Any],
+    *,
+    recommended_iterations: int,
+    requested_optimization_evaluations: int | None,
+) -> tuple[int | None, dict[str, int], dict[str, Any] | None]:
+    """Resolve future-experiment scale from the finalized protocol amendment."""
+
+    plan = protocol.get("finalized_experiment_plan")
+    if plan is None:
+        if (
+            requested_optimization_evaluations is not None
+            and requested_optimization_evaluations <= 0
+        ):
+            raise ValueError("optimization evaluations must be positive")
+        return requested_optimization_evaluations, {}, None
+
+    selected_iterations = int(plan["iterations_per_evaluation"])
+    if selected_iterations != int(recommended_iterations):
+        raise ValueError(
+            "finalized experiment-plan iterations do not match the "
+            "precision recommendation"
+        )
+    selected_evaluations = int(plan["optimization_evaluations"])
+    if selected_evaluations <= 0:
+        raise ValueError("finalized optimization evaluations must be positive")
+    if (
+        requested_optimization_evaluations is not None
+        and int(requested_optimization_evaluations) != selected_evaluations
+    ):
+        raise ValueError(
+            "requested optimization evaluations do not match the finalized "
+            "experiment plan"
+        )
+
+    stage4 = plan["stage4_fixed_confirmation"]
+    stage6 = plan["stage6_optimization"]
+    expected_networks = list(protocol["precision_phase"]["networks"])
+    if list(stage4["networks"]) != expected_networks:
+        raise ValueError(
+            "finalized Stage 4 networks must match the precision networks"
+        )
+    if list(stage6["networks"]) != expected_networks:
+        raise ValueError(
+            "finalized Stage 6 networks must match the precision networks"
+        )
+    if stage4["raw_level"] != "all":
+        raise ValueError(
+            "finalized Stage 4 resource projection requires raw_level=all"
+        )
+    if stage6["raw_level"] != "pop":
+        raise ValueError(
+            "finalized Stage 6 resource projection requires raw_level=pop"
+        )
+    conditions = stage4["conditions"]
+    condition_ids = [str(condition["id"]) for condition in conditions]
+    if len(condition_ids) != len(set(condition_ids)):
+        raise ValueError("finalized Stage 4 condition IDs must be unique")
+    fixed_seeds = [int(seed) for seed in stage4["simulator_seeds"]]
+    if len(fixed_seeds) != len(set(fixed_seeds)):
+        raise ValueError("finalized Stage 4 simulator seeds must be unique")
+
+    stage6_simulator_seeds = {int(stage6["simulator_seed"])}
+    stage6_simulator_seeds.update(
+        int(seed) for seed in stage6["reserve_simulator_seeds"]
+    )
+    future_seed_groups = {
+        "stage4": set(fixed_seeds),
+        "stage6": stage6_simulator_seeds,
+        "candidate_validation": {
+            int(seed)
+            for seed in plan["candidate_validation"]["simulator_seeds"]
+        },
+        "final_test": {
+            int(seed) for seed in plan["final_test"]["simulator_seeds"]
+        },
+    }
+    used_seeds = {
+        int(seed) for seed in protocol["precision_phase"]["simulator_seeds"]
+    }
+    used_seeds.add(int(protocol["optimization_budget_phase"]["simulator_seed"]))
+    for name, seeds in future_seed_groups.items():
+        if used_seeds.intersection(seeds):
+            raise ValueError(
+                f"finalized simulator seed group overlaps an earlier role: {name}"
+            )
+        used_seeds.update(seeds)
+
+    methods = [str(method) for method in stage6["methods"]]
+    optimizer_seeds = stage6["optimizer_seeds"]
+    if set(methods) != set(optimizer_seeds):
+        raise ValueError(
+            "finalized Stage 6 methods and optimizer seed groups must match"
+        )
+    replicate_counts = {len(optimizer_seeds[method]) for method in methods}
+    if len(replicate_counts) != 1:
+        raise ValueError(
+            "finalized Stage 6 methods must use the same replicate count"
+        )
+    optimization_replicates = replicate_counts.pop()
+    if optimization_replicates <= 0:
+        raise ValueError("finalized optimizer replicate count must be positive")
+    replicate_ids = [int(value) for value in stage6["optimizer_replicates"]]
+    if (
+        len(replicate_ids) != optimization_replicates
+        or len(replicate_ids) != len(set(replicate_ids))
+    ):
+        raise ValueError(
+            "finalized optimizer replicate IDs must be unique and match seed counts"
+        )
+    flattened_optimizer_seeds = [
+        int(seed)
+        for method in methods
+        for seed in optimizer_seeds[method]
+    ]
+    if len(flattened_optimizer_seeds) != len(set(flattened_optimizer_seeds)):
+        raise ValueError("finalized optimizer seeds must be unique")
+
+    settings = {
+        "fixed_conditions": len(conditions),
+        "fixed_seed_blocks": len(fixed_seeds),
+        "optimization_methods": len(methods),
+        "optimization_replicates": optimization_replicates,
+    }
+    metadata = {
+        "iterations_per_evaluation": selected_iterations,
+        "optimization_evaluations": selected_evaluations,
+        **settings,
+        "stage4_raw_level": stage4["raw_level"],
+        "stage6_raw_level": stage6["raw_level"],
+        "stage6_simulator_seed_blocks": 1,
+        "candidate_validation_seed_blocks": len(
+            future_seed_groups["candidate_validation"]
+        ),
+        "final_test_seed_blocks": len(future_seed_groups["final_test"]),
+    }
+    return selected_evaluations, settings, metadata
+
+
 def analyze(args: argparse.Namespace) -> Path:
     protocol_path = args.protocol.resolve()
     protocol = load_protocol(protocol_path)
@@ -268,17 +407,24 @@ def analyze(args: argparse.Namespace) -> Path:
             outputs["iteration_metrics"] = iteration_path.name
 
             recommended = decision.get("recommended_iterations")
+            projection_metadata = None
             if recommended is not None:
-                optimization_evaluations = args.optimization_evaluations
-                if (
-                    optimization_evaluations is not None
-                    and optimization_evaluations <= 0
-                ):
-                    raise ValueError("optimization evaluations must be positive")
+                (
+                    optimization_evaluations,
+                    projection_settings,
+                    projection_metadata,
+                ) = _resource_projection_settings(
+                    protocol,
+                    recommended_iterations=int(recommended),
+                    requested_optimization_evaluations=(
+                        args.optimization_evaluations
+                    ),
+                )
                 projection = project_future_resources(
                     resources,
                     iterations=int(recommended),
                     optimization_evaluations=optimization_evaluations,
+                    **projection_settings,
                 )
                 outputs["future_resource_projection"] = _write_csv(
                     projection, tables_dir, "future_resource_projection"
@@ -287,7 +433,12 @@ def analyze(args: argparse.Namespace) -> Path:
                 "prefixes": prefixes,
                 "bootstrap_repetitions": repetitions,
                 "bootstrap_seed": int(phase["bootstrap"]["seed"]),
-                "optimization_evaluations": args.optimization_evaluations,
+                "optimization_evaluations": (
+                    projection_metadata["optimization_evaluations"]
+                    if projection_metadata is not None
+                    else args.optimization_evaluations
+                ),
+                "resource_projection": projection_metadata,
                 "decision_method": decision_method,
             }
         else:
@@ -342,6 +493,16 @@ def analyze(args: argparse.Namespace) -> Path:
             else:
                 raise ValueError(
                     f"unsupported optimization decision method: {decision_method}"
+                )
+            selected_evaluations = decision_rule.get("selected_evaluations")
+            if (
+                selected_evaluations is not None
+                and decision.get("recommended_evaluations")
+                != int(selected_evaluations)
+            ):
+                raise ValueError(
+                    "protocol-selected evaluations do not match the "
+                    "optimization-budget recommendation"
                 )
             outputs = {
                 "run_inventory": _write_csv(data.runs, tables_dir, "run_inventory"),

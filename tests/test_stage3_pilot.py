@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from analyze_stage3_pilot import _resource_projection_settings
 from analysis.pilot_analysis import (
     _fixed_condition_mismatches,
     _manifest_mismatches,
@@ -16,6 +17,7 @@ from analysis.pilot_analysis import (
     build_prefix_estimates,
     build_rank_stability,
     build_selection_regret,
+    project_future_resources,
     recommend_iteration_count,
     recommend_iteration_count_by_selection_regret,
 )
@@ -41,10 +43,10 @@ class Stage3ProtocolTests(unittest.TestCase):
         self.assertTrue(all(spec.raw_level == "all" for spec in specs))
 
     def test_amended_protocol_fixes_selection_and_budget_rules(self):
-        self.assertEqual(self.protocol["protocol_id"], "stage3_pilot_v3")
+        self.assertEqual(self.protocol["protocol_id"], "stage3_pilot_v4")
         self.assertEqual(
             self.protocol["amendment"]["parent_protocol_id"],
-            "stage3_pilot_v2",
+            "stage3_pilot_v3",
         )
         precision_rule = self.protocol["precision_phase"]["decision_rule"]
         self.assertEqual(precision_rule["selected_iterations"], 100)
@@ -64,6 +66,67 @@ class Stage3ProtocolTests(unittest.TestCase):
             ],
             2,
         )
+        self.assertEqual(
+            budget["decision_rule"]["selected_evaluations"], 50
+        )
+
+    def test_finalized_plan_fixes_conditions_and_role_specific_seeds(self):
+        plan = self.protocol["finalized_experiment_plan"]
+        stage4 = plan["stage4_fixed_confirmation"]
+        stage6 = plan["stage6_optimization"]
+
+        self.assertEqual(plan["iterations_per_evaluation"], 100)
+        self.assertEqual(plan["optimization_evaluations"], 50)
+        self.assertEqual(len(stage4["conditions"]), 14)
+        self.assertEqual(len(stage4["simulator_seeds"]), 5)
+        self.assertEqual(stage6["simulator_seed"], 30001)
+        self.assertEqual(len(stage6["methods"]), 3)
+        self.assertTrue(
+            all(
+                len(stage6["optimizer_seeds"][method]) == 6
+                for method in stage6["methods"]
+            )
+        )
+        self.assertEqual(
+            len(plan["candidate_validation"]["simulator_seeds"]), 3
+        )
+        self.assertEqual(len(plan["final_test"]["simulator_seeds"]), 5)
+
+        future_seed_groups = [
+            set(stage4["simulator_seeds"]),
+            {
+                stage6["simulator_seed"],
+                *stage6["reserve_simulator_seeds"],
+            },
+            set(plan["candidate_validation"]["simulator_seeds"]),
+            set(plan["final_test"]["simulator_seeds"]),
+        ]
+        for index, seeds in enumerate(future_seed_groups):
+            for other in future_seed_groups[index + 1 :]:
+                self.assertTrue(seeds.isdisjoint(other))
+
+    def test_finalized_plan_drives_resource_projection_settings(self):
+        evaluations, settings, metadata = _resource_projection_settings(
+            self.protocol,
+            recommended_iterations=100,
+            requested_optimization_evaluations=None,
+        )
+
+        self.assertEqual(evaluations, 50)
+        self.assertEqual(
+            settings,
+            {
+                "fixed_conditions": 14,
+                "fixed_seed_blocks": 5,
+                "optimization_methods": 3,
+                "optimization_replicates": 6,
+            },
+        )
+        self.assertEqual(metadata["stage4_raw_level"], "all")
+        self.assertEqual(metadata["stage6_raw_level"], "pop")
+        self.assertEqual(metadata["stage6_simulator_seed_blocks"], 1)
+        self.assertEqual(metadata["candidate_validation_seed_blocks"], 3)
+        self.assertEqual(metadata["final_test_seed_blocks"], 5)
 
     def test_stage2_good_is_network_specific(self):
         specs = [
@@ -457,6 +520,41 @@ class Stage3AnalysisTests(unittest.TestCase):
             [(row["network"], row["method"]) for row in failed],
             [("facebook", "random_search")],
         )
+
+    def test_future_resource_projection_uses_final_experiment_scale(self):
+        resources = pd.DataFrame(
+            [
+                {
+                    "network": "ba1000",
+                    "median_simulation_sec_per_iteration": 0.1,
+                    "p90_simulation_sec_per_iteration": 0.2,
+                    "median_pop_bytes_per_iteration": 1.0,
+                    "median_info_bytes_per_iteration": 2.0,
+                    "median_agent_bytes_per_iteration": 3.0,
+                }
+            ]
+        )
+        projection = project_future_resources(
+            resources,
+            iterations=100,
+            optimization_evaluations=50,
+            fixed_conditions=14,
+            fixed_seed_blocks=5,
+            optimization_methods=3,
+            optimization_replicates=6,
+        ).set_index("phase")
+
+        stage4 = projection.loc["stage4_fixed_confirmation"]
+        self.assertEqual(stage4["simulation_evaluations"], 70)
+        self.assertEqual(stage4["projected_simulation_sec"], 700.0)
+        self.assertEqual(stage4["projected_simulation_sec_p90"], 1400.0)
+        self.assertEqual(stage4["projected_retained_raw_bytes"], 42000.0)
+
+        stage6 = projection.loc["stage6_optimization"]
+        self.assertEqual(stage6["simulation_evaluations"], 900)
+        self.assertEqual(stage6["projected_simulation_sec"], 9000.0)
+        self.assertEqual(stage6["projected_simulation_sec_p90"], 18000.0)
+        self.assertEqual(stage6["projected_retained_raw_bytes"], 90000.0)
 
 
 if __name__ == "__main__":

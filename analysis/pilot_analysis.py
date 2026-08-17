@@ -948,9 +948,26 @@ def project_future_resources(
     """Project Stage 4 and Stage 6 simulator time and retained raw size."""
 
     iterations = int(iterations)
+    if iterations <= 0:
+        raise ValueError("iterations must be positive")
+    integer_settings = {
+        "fixed_conditions": fixed_conditions,
+        "fixed_seed_blocks": fixed_seed_blocks,
+        "optimization_methods": optimization_methods,
+        "optimization_replicates": optimization_replicates,
+    }
+    for name, value in integer_settings.items():
+        if int(value) <= 0:
+            raise ValueError(f"{name} must be positive")
+    if (
+        optimization_evaluations is not None
+        and int(optimization_evaluations) <= 0
+    ):
+        raise ValueError("optimization_evaluations must be positive")
+
     rows: list[dict[str, Any]] = []
     for _, network in resource_summary.iterrows():
-        fixed_runs = fixed_conditions * fixed_seed_blocks
+        fixed_runs = int(fixed_conditions) * int(fixed_seed_blocks)
         rows.append(
             {
                 "phase": "stage4_fixed_confirmation",
@@ -959,6 +976,11 @@ def project_future_resources(
                 "iterations_per_evaluation": iterations,
                 "projected_simulation_sec": float(
                     network["median_simulation_sec_per_iteration"]
+                    * fixed_runs
+                    * iterations
+                ),
+                "projected_simulation_sec_p90": float(
+                    network["p90_simulation_sec_per_iteration"]
                     * fixed_runs
                     * iterations
                 ),
@@ -976,8 +998,8 @@ def project_future_resources(
         )
         if optimization_evaluations is not None:
             evaluations = (
-                optimization_methods
-                * optimization_replicates
+                int(optimization_methods)
+                * int(optimization_replicates)
                 * int(optimization_evaluations)
             )
             rows.append(
@@ -988,6 +1010,11 @@ def project_future_resources(
                     "iterations_per_evaluation": iterations,
                     "projected_simulation_sec": float(
                         network["median_simulation_sec_per_iteration"]
+                        * evaluations
+                        * iterations
+                    ),
+                    "projected_simulation_sec_p90": float(
+                        network["p90_simulation_sec_per_iteration"]
                         * evaluations
                         * iterations
                     ),

@@ -70,7 +70,7 @@ experiments/summer_2026/<stage>/<experiment_id>/
 
 #### 第3段階のpilot実験
 
-第3段階では、[`run_stage3_pilot.py`](../run_stage3_pilot.py)を使用する。Phase A実行時の旧規則は[`stage3_pilot_v1.json`](../experiment_protocols/stage3_pilot_v1.json)、Phase Aの正式判定は[`stage3_pilot_v2.json`](../experiment_protocols/stage3_pilot_v2.json)に保存している。Phase Bは3ネットワークを対象とする[`stage3_pilot_v3.json`](../experiment_protocols/stage3_pilot_v3.json)を使用する。MacBookでは`--dry-run`とテストだけを行い、実際のpilotはGitHubへ同期したcleanなcommitを共用PCで取得してから実行する。
+第3段階では、[`run_stage3_pilot.py`](../run_stage3_pilot.py)を使用する。Phase A実行時の旧規則は[`stage3_pilot_v1.json`](../experiment_protocols/stage3_pilot_v1.json)、Phase Aの正式判定は[`stage3_pilot_v2.json`](../experiment_protocols/stage3_pilot_v2.json)に保存している。Phase Bの実行条件と判断規則は[`stage3_pilot_v3.json`](../experiment_protocols/stage3_pilot_v3.json)、Phase A・Bの採用結果と第4段階以降のseed分割は[`stage3_pilot_v4.json`](../experiment_protocols/stage3_pilot_v4.json)に固定している。MacBookでは`--dry-run`とテストだけを行い、実際のpilotはGitHubへ同期したcleanなcommitを共用PCで取得してから実行する。
 
 反復数pilotの実行例：
 
@@ -110,7 +110,51 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
 
 評価回数は50、75、100回時点のbest-so-farを比較する。各非最終時点から100回時点までの改善量について、各ネットワーク・各手法の3 run中2 run以上が`0.005`以下となる最小時点を採用する。3 runではこれは中央値が`0.005`以下であることと等価であり、中央値も診断値として出力する。9つのネットワーク×手法の組のうち1つでも75回時点を通過しない場合は100回で十分とはせず、protocolを改訂して100回を超えるpilotへ延長する。この判定は探索予算を決めるためだけに使用し、候補の最終性能は独立したシミュレータseedブロックで評価する。
 
+正式結果では$M=100$、$K=50$を採用した。Phase Aの保存済み反復表から第4段階と再最適化の資源量を再計算する場合は、最終protocol v4を指定する。`--optimization-evaluations`を省略すると、v4に固定した50評価が使われる。
+
+```bash
+.venv/bin/python analyze_stage3_pilot.py \
+  --phase precision \
+  --experiment-root experiments/summer_2026/stage3_pilot/20260812_134236_pilot_precision_v01 \
+  --source-analysis-root experiments/summer_2026/stage3_pilot/20260812_134236_pilot_precision_v01/precision_without_delta_v01 \
+  --protocol experiment_protocols/stage3_pilot_v4.json \
+  --analysis-id final_resource_projection_v04
+```
+
+この投影は、第4段階を14条件×5 simulator seed、再最適化を3手法×6 optimizer seed×50評価として計算する。時間はPhase Aのネットワーク別1反復当たり中央値とp90、容量は保存Arrowの中央値に基づく。候補検証と最終テストは候補数が未確定のため、この合計には含めない。
+
 実験出力は`.gitignore`の対象であり、GitHubには同期されない。分析と可視化には[`第3段階_pilot実験の反復数と評価予算.ipynb`](../notebooks/第3段階_pilot実験の反復数と評価予算.ipynb)を用いる。
+
+#### 第4段階の固定確認実験
+
+第4段階では、[`stage4_fixed_confirmation_v1.json`](../experiment_protocols/stage4_fixed_confirmation_v1.json)に固定した3ネットワーク、14条件、5 simulator seedを、[`run_stage4_fixed_confirmation.py`](../run_stage4_fixed_confirmation.py)で順次実行する。1 runは1ネットワーク、1条件、1 simulator seedからなり、各runで100反復を行う。全体は210 run、21,000反復である。
+
+実行前のdry-runは次のように行う。
+
+```bash
+.venv/bin/python run_stage4_fixed_confirmation.py \
+  --experiment-id <fixed_confirmation_experiment_id> \
+  --dry-run
+```
+
+`full_run_count`と`selected_run_count`がともに210であることを確認してから、cleanなGit worktreeとrelease版Rust binaryがある共用PCで実行する。
+
+```bash
+.venv/bin/python -u run_stage4_fixed_confirmation.py \
+  --experiment-id <fixed_confirmation_experiment_id> \
+  2>&1 | tee "$HOME/<fixed_confirmation_experiment_id>.log"
+```
+
+中断した場合は、同じGit commit、protocol、experiment IDで再開する。
+
+```bash
+.venv/bin/python -u run_stage4_fixed_confirmation.py \
+  --experiment-id <fixed_confirmation_experiment_id> \
+  --resume \
+  2>&1 | tee -a "$HOME/<fixed_confirmation_experiment_id>.log"
+```
+
+実行計画と進捗は`experiments/summer_2026/stage4_fixed_confirmation/<experiment_id>/fixed_confirmation_execution_plan.json`に記録される。条件、ネットワーク、seedを限定するオプションは確認や分割実行用であり、正式実験の構成自体はprotocolから変更しない。
 
 以下は春学期までの旧実行系である。
 

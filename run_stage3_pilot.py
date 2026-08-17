@@ -28,7 +28,7 @@ from experiment_runtime import (
 )
 
 
-DEFAULT_PROTOCOL_PATH = REPO_ROOT / "experiment_protocols" / "stage3_pilot_v3.json"
+DEFAULT_PROTOCOL_PATH = REPO_ROOT / "experiment_protocols" / "stage3_pilot_v4.json"
 STAGE = "stage3_pilot"
 PHASES = ("precision", "optimization_budget")
 
