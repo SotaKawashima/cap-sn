@@ -215,6 +215,56 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
   --analysis-id fixed_confirmation_prior_high_corrected_v05
 ```
 
+### 第6段階：新目的関数による再最適化
+
+第6段階では、累積利己的行動率`cumulative_selfish_fraction`を目的関数として、BA1000、Facebook、Wiki-voteを個別に再最適化する。正式な実験仕様は[`stage6_reoptimization_v1.json`](../experiment_protocols/stage6_reoptimization_v1.json)へ固定している。
+
+- 1評価当たりのシミュレーション反復数：`M=100`
+- 1実行当たりの評価回数：`K=50`
+- 手法：GPベースのベイズ最適化、CMA-ES、ランダムサーチ
+- optimizer replicate：各手法6個
+- 探索用simulator seed：`30001`
+- 保存するraw：各試行の`pop.arrow`
+- 合計：`3ネットワーク × 3手法 × 6反復 = 54実行、2700試行`
+
+実行には[`run_stage6_reoptimization.py`](../run_stage6_reoptimization.py)を用いる。まずdry-runを実行する。
+
+```bash
+.venv/bin/python run_stage6_reoptimization.py \
+  --experiment-id <stage6_experiment_id> \
+  --dry-run
+```
+
+`full_run_count`と`selected_run_count`がともに54であることを確認後、cleanなGit worktreeとrelease版Rust binaryがある共用PCで実行する。
+
+```bash
+.venv/bin/python -u run_stage6_reoptimization.py \
+  --experiment-id <stage6_experiment_id> \
+  2>&1 | tee "$HOME/<stage6_experiment_id>.log"
+```
+
+中断後、すでに完了した実行を飛ばして続ける場合は、同じGit commit、protocol、experiment IDで`--resume`を指定する。
+
+```bash
+.venv/bin/python -u run_stage6_reoptimization.py \
+  --experiment-id <stage6_experiment_id> \
+  --resume \
+  2>&1 | tee -a "$HOME/<stage6_experiment_id>.log"
+```
+
+`--resume`が自動的に飛ばすのは、50試行すべてが正常完了したrunだけである。中断中だったrunや失敗試行を含むrunは上書きせず停止するため、その場合は保存済みデータを確認してから再実行方法を決める。
+
+実行結果をMacBookへ転送した後、[`analyze_stage6_reoptimization.py`](../analyze_stage6_reoptimization.py)で正式監査と集計を行う。
+
+```bash
+.venv/bin/python analyze_stage6_reoptimization.py \
+  --experiment-root experiments/summer_2026/stage6_reoptimization/<stage6_experiment_id> \
+  --protocol experiment_protocols/stage6_reoptimization_v1.json \
+  --analysis-id reoptimization_analysis_v01
+```
+
+分析処理は、全54 run、全2700試行、全270,000反復について、manifestとprotocolの一致、試行完遂、適用パラメータ、raw保存方針を検査する。各試行の`pop.arrow`から目的関数を再計算し、保存値と一致した場合だけ収束表と候補プールを出力する。候補プールには各runの最良試行を1件ずつ残す。探索用seedだけで最終候補や抑制効果を確定せず、未使用seedによる候補検証は第7段階で行う。
+
 以下は春学期までの旧実行系である。
 
 | スクリプト | 内容 | 出力先 |

@@ -217,6 +217,7 @@ def run_optimization(args: argparse.Namespace) -> Path:
             "optimizer_seed": optimizer_seed,
             "n_trials_requested": n_trials,
             "startup_trials": startup_trials if args.method == "bo_gp" else None,
+            "raw_level": args.raw_level,
         },
         "objective": {
             "name": OBJECTIVE_NAME,
@@ -459,6 +460,20 @@ def run_optimization(args: argparse.Namespace) -> Path:
             "type": "NoCompleteTrials",
             "message": "no optimization trial completed successfully",
         }
+    elif (
+        len(complete_trials) != n_trials
+        or failed_trials
+        or pruned_trials
+    ):
+        manifest["status"] = "failed"
+        manifest["failure"] = {
+            "stage": "optimization",
+            "type": "IncompleteOptimizationBudget",
+            "message": (
+                "the requested optimization budget was not completed without "
+                "failed or pruned trials"
+            ),
+        }
     else:
         manifest["status"] = "completed"
     write_json(manifest_path, manifest)
@@ -474,6 +489,8 @@ def run_optimization(args: argparse.Namespace) -> Path:
         raise fatal_error
     if not complete_trials:
         raise RuntimeError("optimization produced no complete trials")
+    if manifest["status"] != "completed":
+        raise RuntimeError("optimization did not complete the requested trial budget")
     return run_dir
 
 

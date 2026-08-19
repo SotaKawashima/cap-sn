@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage6_reoptimization_v1",
+  "stage": "stage6_reoptimization",
+  "status": "frozen_before_execution",
+  "created_date": "2026-08-19",
+  "purpose": "Generate a reproducible candidate pool by minimizing cumulative selfish behavior separately on three networks under one common optimization specification.",
+  "decision_sources": [
+    {
+      "role": "iteration_count_evaluation_budget_and_seed_plan",
+      "path": "experiment_protocols/stage3_pilot_v6_prior_high_corrected_decision.json",
+      "sha256": "8ed18acf197d2ed709662c9e604d555ae4f4054ca903909d5c38d1078460d88f"
+    },
+    {
+      "role": "fixed_confirmation_design",
+      "path": "experiment_protocols/stage4_fixed_confirmation_v1.json",
+      "sha256": "7d6d13c036b75415d5659e05d0d2b74772a96d46d57894132c25bcc83407a8d9"
+    },
+    {
+      "role": "corrected_fixed_confirmation_decision",
+      "path": "experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01/fixed_confirmation_prior_high_corrected_v05/decision.json",
+      "sha256": "e72d4e8ab6d9dfd5ffff21821e85c0e7734b1576cb4594c09b6db74f836412be"
+    },
+    {
+      "role": "corrected_fixed_confirmation_primary_comparisons",
+      "path": "experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01/fixed_confirmation_prior_high_corrected_v05/tables/primary_comparisons.csv",
+      "sha256": "57cbf665f992ba01e32507d3e222d7407437dc77cd1b4a74a083edc23a7e093a"
+    }
+  ],
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize",
+    "scope": "Optimize each network separately; do not combine networks into one objective."
+  },
+  "design_variables": {
+    "certainty": {
+      "lower": 0.5,
+      "upper": 1.0
+    },
+    "effectiveness": {
+      "lower": 0.5,
+      "upper": 1.0
+    },
+    "application_precision_decimal_places": 4,
+    "fixed_condition_policy": "Keep every non-optimized intervention, agent, information, timing, and source-selection setting unchanged from the current prior-study-based configuration."
+  },
+  "execution": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "methods": [
+      "bo_gp",
+      "cma_es",
+      "random_search"
+    ],
+    "iterations_per_evaluation": 100,
+    "evaluations_per_run": 50,
+    "simulator_seed": 30001,
+    "reserve_simulator_seeds": [
+      30002,
+      30003,
+      30004,
+      30005
+    ],
+    "optimizer_replicates": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "optimizer_seeds": {
+      "bo_gp": [
+        60101,
+        60201,
+        60301,
+        60401,
+        60501,
+        60601
+      ],
+      "cma_es": [
+        60102,
+        60202,
+        60302,
+        60402,
+        60502,
+        60602
+      ],
+      "random_search": [
+        60103,
+        60203,
+        60303,
+        60403,
+        60503,
+        60603
+      ]
+    },
+    "bo_gp_startup_trials": 10,
+    "raw_level": "pop",
+    "expected_run_count": 54,
+    "expected_trial_count": 2700,
+    "expected_simulation_iteration_count": 270000
+  },
+  "fairness_rules": [
+    "Use the same objective, bounds, iterations, evaluations, optimizer replicate count, simulator seed, and retained raw level for every network and method.",
+    "Count the BO-GP startup trials inside the 50-evaluation budget.",
+    "Use distinct optimizer seeds across methods while preserving the same six replicate identifiers.",
+    "Record method-specific initialization rather than changing an algorithm to imitate another method.",
+    "Do not replace failed trials with a favorable value or an ordinary worst-case objective value.",
+    "Require all 50 trials in every run to complete before the Stage 6 analysis is accepted."
+  ],
+  "analysis_plan": {
+    "quality_gate": {
+      "required_completed_runs": 54,
+      "required_complete_trials_per_run": 50,
+      "allowed_failed_trials": 0,
+      "allowed_pruned_trials": 0,
+      "recalculate_objective_from_pop_arrow": true,
+      "numeric_tolerance": 1e-12
+    },
+    "convergence": {
+      "curve": "best_so_far_by_evaluation",
+      "across_optimizer_replicates": [
+        "median",
+        "q1",
+        "q3",
+        "minimum",
+        "maximum"
+      ],
+      "final_best_first_reached_at": true
+    },
+    "method_comparison": {
+      "report_final_search_best_distribution": true,
+      "report_optimizer_replicate_variability": true,
+      "report_simulation_metric_and_optimizer_overhead_separately": true,
+      "inferential_winner_test": false,
+      "reason": "Stage 6 is candidate generation on one exploration simulator-seed block, not an independent final-performance test."
+    },
+    "candidate_pool": {
+      "source": "The best complete trial from every network-method-optimizer-replicate run.",
+      "expected_rows_before_deduplication": 54,
+      "deduplication_key": [
+        "network",
+        "applied_certainty",
+        "applied_effectiveness"
+      ],
+      "selection_policy": "Preserve all run-level best candidates and provenance. Candidate clustering and shortlisting are deferred to Stage 7."
+    },
+    "target_attainment": {
+      "status": "not_predefined",
+      "policy": "Do not invent a post-hoc objective threshold. Report the evaluation where each run first found its own final incumbent; define cross-candidate acceptance using independent validation in Stage 7."
+    }
+  },
+  "interpretation_limits": [
+    "Search values from simulator seed 30001 are exploratory and are not final suppression-effect estimates.",
+    "A condition is not called suppressive until it is compared with no intervention on independent paired simulator-seed blocks.",
+    "The exact prior_high CSV is a prior-study package benchmark and is not assumed to be reachable by changing only certainty and effectiveness in the generated intervention family.",
+    "Stage 6 selects a candidate pool; Stage 7 performs independent validation and candidate selection."
+  ],
+  "output": {
+    "stage_directory": "stage6_reoptimization",
+    "run_directory": "<network>/<method>/optseed_<optimizer_replicate>",
+    "execution_plan": "reoptimization_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}

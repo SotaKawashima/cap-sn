@@ -246,6 +246,72 @@ class ExecutionPipelineTests(unittest.TestCase):
             self.assertEqual(manifest["status"], "failed")
             self.assertEqual(manifest["counts"]["failed"], 1)
 
+    def test_partial_optimization_budget_is_not_marked_completed(self):
+        call_count = 0
+
+        def fail_then_succeed(**kwargs):
+            nonlocal call_count
+            call_count += 1
+            if call_count == 1:
+                raise SimulationExecutionError(
+                    "intentional first-trial failure",
+                    stage="simulation",
+                    exit_code=7,
+                )
+            return fake_successful_simulator(**kwargs)
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch.object(
+            optimization_module,
+            "run_simulator",
+            side_effect=fail_then_succeed,
+        ):
+            args = optimization_module.parse_args(
+                [
+                    "--experiment-id",
+                    EXPERIMENT_ID,
+                    "--network",
+                    "ba1000",
+                    "--method",
+                    "random_search",
+                    "--optimizer-replicate",
+                    "1",
+                    "--optimizer-seed",
+                    "31",
+                    "--simulator-seed",
+                    "32",
+                    "--iterations",
+                    "2",
+                    "--trials",
+                    "2",
+                    "--output-root",
+                    temp_dir,
+                ]
+            )
+
+            with self.assertRaisesRegex(RuntimeError, "requested trial budget"):
+                optimization_module.run_optimization(args)
+
+            run_dir = (
+                Path(temp_dir)
+                / "stage1_metric_validation"
+                / EXPERIMENT_ID
+                / "ba1000"
+                / "random_search"
+                / "optseed_1"
+            )
+            with (run_dir / "manifest.json").open(encoding="utf-8") as handle:
+                manifest = json.load(handle)
+
+            self.assertEqual(manifest["status"], "failed")
+            self.assertEqual(
+                manifest["counts"],
+                {"complete": 1, "failed": 1, "pruned": 0},
+            )
+            self.assertEqual(
+                manifest["failure"]["type"],
+                "IncompleteOptimizationBudget",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
