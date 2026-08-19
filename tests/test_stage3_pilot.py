@@ -11,6 +11,7 @@ from analysis.pilot_analysis import (
     _fixed_condition_mismatches,
     _manifest_mismatches,
     _optimization_mismatches,
+    apply_operational_iteration_selection,
     assess_optimization_budget,
     assess_optimization_budget_by_tolerance,
     build_best_so_far,
@@ -251,6 +252,34 @@ class Stage3ProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "SHA-256"):
             build_precision_specs(protocol)
 
+    def test_corrected_decision_protocol_keeps_conservative_m100(self):
+        repo_root = Path(__file__).resolve().parents[1]
+        protocol_path = (
+            repo_root
+            / "experiment_protocols"
+            / "stage3_pilot_v6_prior_high_corrected_decision.json"
+        )
+        protocol = load_protocol(protocol_path)
+        rule = protocol["precision_phase"]["decision_rule"]
+
+        self.assertTrue(rule["allow_conservative_selection"])
+        self.assertEqual(rule["selected_iterations"], 100)
+        self.assertEqual(
+            protocol["pilot_results"]["precision"][
+                "minimum_passing_iterations"
+            ],
+            20,
+        )
+        execution_protocol = load_protocol(
+            repo_root
+            / "experiment_protocols"
+            / "stage3_pilot_v5_prior_high_correction.json"
+        )
+        self.assertEqual(
+            build_precision_specs(protocol),
+            build_precision_specs(execution_protocol),
+        )
+
 
 class Stage3AnalysisTests(unittest.TestCase):
     @classmethod
@@ -299,6 +328,49 @@ class Stage3AnalysisTests(unittest.TestCase):
 
         values = merged.runs.set_index("run_key")["objective"].to_dict()
         self.assertEqual(values, {"n": 0.3, "p": 0.1})
+
+    def test_conservative_operational_iteration_selection_is_explicit(self):
+        decision = {
+            "status": "recommended",
+            "recommended_iterations": 20,
+            "diagnostics": [
+                {"prefix_iterations": 20, "passes": True},
+                {"prefix_iterations": 100, "passes": True},
+            ],
+        }
+        rule = {
+            "selected_iterations": 100,
+            "allow_conservative_selection": True,
+            "selection_rationale": "Use the conservative completed-pilot value.",
+        }
+
+        result = apply_operational_iteration_selection(decision, rule)
+
+        self.assertEqual(result["minimum_passing_iterations"], 20)
+        self.assertEqual(result["recommended_iterations"], 100)
+        self.assertEqual(result["operational_selected_iterations"], 100)
+        self.assertEqual(
+            result["selection_override"]["type"],
+            "conservative_above_rule_minimum",
+        )
+
+    def test_conservative_iteration_selection_rejects_a_failing_prefix(self):
+        decision = {
+            "status": "recommended",
+            "recommended_iterations": 20,
+            "diagnostics": [
+                {"prefix_iterations": 20, "passes": True},
+                {"prefix_iterations": 100, "passes": False},
+            ],
+        }
+        rule = {
+            "selected_iterations": 100,
+            "allow_conservative_selection": True,
+            "selection_rationale": "Conservative value.",
+        }
+
+        with self.assertRaisesRegex(ValueError, "tested passing prefix"):
+            apply_operational_iteration_selection(decision, rule)
 
     def test_fixed_manifest_protocol_validation(self):
         spec = next(

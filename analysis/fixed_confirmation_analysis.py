@@ -400,7 +400,7 @@ def replace_fixed_confirmation_condition(
         audit=merged.audit.sort_values("run_key").reset_index(drop=True),
         info_runs=merged.info_runs.sort_values("run_key").reset_index(drop=True),
         info_long=merged.info_long.sort_values(
-            ["run_key", "num_iter", "info_label"]
+            ["run_key", "info_label"]
         ).reset_index(drop=True),
         pop_events=merged.pop_events.sort_values(
             ["run_key", "num_iter", "t"]

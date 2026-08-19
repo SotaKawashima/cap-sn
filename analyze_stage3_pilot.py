@@ -12,6 +12,7 @@ from typing import Any
 import pandas as pd
 
 from analysis.pilot_analysis import (
+    apply_operational_iteration_selection,
     assess_optimization_budget,
     assess_optimization_budget_by_tolerance,
     build_best_so_far,
@@ -128,6 +129,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Completed fixed-condition runs used to replace one precision condition.",
     )
     parser.add_argument("--condition-override-id", default=None)
+    parser.add_argument(
+        "--condition-override-protocol",
+        type=Path,
+        default=None,
+        help=(
+            "Protocol used to execute the replacement condition; defaults to "
+            "the main analysis protocol."
+        ),
+    )
     parser.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL_PATH)
     parser.add_argument("--analysis-id", default="analysis_v01")
     parser.add_argument("--delta-min", type=float, default=None)
@@ -336,6 +346,7 @@ def analyze(args: argparse.Namespace) -> Path:
             override_requested = (
                 args.condition_override_root is not None
                 or args.condition_override_id is not None
+                or args.condition_override_protocol is not None
             )
             if override_requested:
                 if (
@@ -353,8 +364,16 @@ def analyze(args: argparse.Namespace) -> Path:
                 override_id = validate_safe_name(
                     args.condition_override_id, "condition_override_id"
                 )
+                override_protocol_path = (
+                    args.condition_override_protocol.resolve()
+                    if args.condition_override_protocol is not None
+                    else protocol_path
+                )
+                override_protocol = load_protocol(override_protocol_path)
                 override_specs = [
-                    spec for spec in specs if spec.condition_id == override_id
+                    spec
+                    for spec in build_precision_specs(override_protocol)
+                    if spec.condition_id == override_id
                 ]
                 if not override_specs:
                     raise ValueError(
@@ -363,7 +382,7 @@ def analyze(args: argparse.Namespace) -> Path:
                 override_root = args.condition_override_root.resolve()
                 override_plan, override_study = _validate_precision_override_source(
                     override_root,
-                    protocol_path,
+                    override_protocol_path,
                     override_specs,
                 )
                 correction = load_precision_pilot(
@@ -377,6 +396,12 @@ def analyze(args: argparse.Namespace) -> Path:
                     "condition_id": override_id,
                     "experiment_root": override_root.as_posix(),
                     "run_count": len(override_specs),
+                    "protocol": {
+                        "path": override_protocol_path.relative_to(
+                            REPO_ROOT
+                        ).as_posix(),
+                        "sha256": sha256_file(override_protocol_path),
+                    },
                     "execution_plan_sha256": sha256_file(
                         override_root / "pilot_execution_plan.json"
                     ),
@@ -443,16 +468,10 @@ def analyze(args: argparse.Namespace) -> Path:
                         decision_rule["minimum_block_pass_rate_per_network"]
                     ),
                 )
-                selected_iterations = decision_rule.get("selected_iterations")
-                if (
-                    selected_iterations is not None
-                    and decision.get("recommended_iterations")
-                    != int(selected_iterations)
-                ):
-                    raise ValueError(
-                        "protocol-selected iterations do not match the "
-                        "selection-regret recommendation"
-                    )
+                decision = apply_operational_iteration_selection(
+                    decision,
+                    decision_rule,
+                )
             elif decision_method == "legacy_delta_min_precision_and_rank":
                 decision = recommend_iteration_count(
                     paired_differences,
@@ -550,6 +569,7 @@ def analyze(args: argparse.Namespace) -> Path:
                 args.source_analysis_root is not None
                 or args.condition_override_root is not None
                 or args.condition_override_id is not None
+                or args.condition_override_protocol is not None
             ):
                 raise ValueError(
                     "source and condition overrides are only supported for "

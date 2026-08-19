@@ -193,15 +193,18 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
 
 転送後の再集計では元データを上書きせず、同じrun keyの`prior_high`だけを補正runへ差し替え、新しいanalysis IDへ保存する。
 
+補正後のPhase Aではselection regret基準を満たす最小prefixは20反復である。一方、連続空間の最適化、`M=100`で実施済みのPhase Bとの整合性、対外的に保守的な評価を行う目的から、運用値は`M=100`に固定する。この区別と採用理由は[`stage3_pilot_v6_prior_high_corrected_decision.json`](../experiment_protocols/stage3_pilot_v6_prior_high_corrected_decision.json)に記録する。補正run自体はv5で実行済みであるため、分析時に`--condition-override-protocol`でv5を明示する。
+
 ```bash
 .venv/bin/python analyze_stage3_pilot.py \
   --phase precision \
   --experiment-root experiments/summer_2026/stage3_pilot/20260812_134236_pilot_precision_v01 \
   --source-analysis-root experiments/summer_2026/stage3_pilot/20260812_134236_pilot_precision_v01/precision_without_delta_v01 \
-  --protocol experiment_protocols/stage3_pilot_v5_prior_high_correction.json \
+  --protocol experiment_protocols/stage3_pilot_v6_prior_high_corrected_decision.json \
   --condition-override-id prior_high \
   --condition-override-root experiments/summer_2026/stage3_pilot/<prior_high_correction_experiment_id> \
-  --analysis-id precision_prior_high_corrected_v05
+  --condition-override-protocol experiment_protocols/stage3_pilot_v5_prior_high_correction.json \
+  --analysis-id precision_prior_high_corrected_v06
 
 .venv/bin/python analyze_stage4_fixed_confirmation.py \
   --experiment-root experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01 \
@@ -209,7 +212,7 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
   --condition-override-id prior_high \
   --condition-override-root experiments/summer_2026/stage4_fixed_confirmation/<prior_high_correction_experiment_id> \
   --condition-override-protocol experiment_protocols/stage4_fixed_confirmation_v2_prior_high_correction.json \
-  --analysis-id fixed_confirmation_prior_high_corrected_v04
+  --analysis-id fixed_confirmation_prior_high_corrected_v05
 ```
 
 以下は春学期までの旧実行系である。

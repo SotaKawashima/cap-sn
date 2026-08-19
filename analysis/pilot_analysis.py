@@ -902,6 +902,71 @@ def recommend_iteration_count_by_selection_regret(
     }
 
 
+def apply_operational_iteration_selection(
+    decision: dict[str, Any],
+    decision_rule: dict[str, Any],
+) -> dict[str, Any]:
+    """Apply a predeclared conservative count above the rule-based minimum."""
+
+    selected = decision_rule.get("selected_iterations")
+    if selected is None:
+        return decision
+    selected = int(selected)
+    minimum = decision.get("recommended_iterations")
+    if decision.get("status") != "recommended" or minimum is None:
+        raise ValueError(
+            "an operational iteration count requires a rule-based recommendation"
+        )
+    minimum = int(minimum)
+    if selected == minimum:
+        return {
+            **decision,
+            "minimum_passing_iterations": minimum,
+            "operational_selected_iterations": selected,
+        }
+    if not bool(decision_rule.get("allow_conservative_selection", False)):
+        raise ValueError(
+            "protocol-selected iterations do not match the selection-regret "
+            "recommendation"
+        )
+    if selected < minimum:
+        raise ValueError(
+            "a conservative operational iteration count cannot be below the "
+            "rule-based minimum"
+        )
+    selected_diagnostic = next(
+        (
+            row
+            for row in decision.get("diagnostics", [])
+            if int(row["prefix_iterations"]) == selected
+        ),
+        None,
+    )
+    if selected_diagnostic is None or not bool(selected_diagnostic["passes"]):
+        raise ValueError(
+            "the operational iteration count must be a tested passing prefix"
+        )
+    rationale = decision_rule.get("selection_rationale")
+    if not isinstance(rationale, str) or not rationale.strip():
+        raise ValueError(
+            "a conservative operational iteration count requires a rationale"
+        )
+    return {
+        **decision,
+        "minimum_passing_iterations": minimum,
+        "recommended_iterations": selected,
+        "operational_selected_iterations": selected,
+        "selection_override": {
+            "type": "conservative_above_rule_minimum",
+            "rationale": rationale.strip(),
+        },
+        "reason": (
+            f"The selection-regret rule first passes at {minimum} iterations; "
+            f"the predeclared conservative operational value is {selected}."
+        ),
+    }
+
+
 def recommend_iteration_count(
     paired_differences: pd.DataFrame,
     rank_summary: pd.DataFrame,

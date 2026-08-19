@@ -38,7 +38,7 @@ class Stage4ConfirmationAnalysisTests(unittest.TestCase):
                     {**common, "num_iter": 0, OBJECTIVE_NAME: value}
                 )
                 info_long_rows.append(
-                    {**common, "num_iter": 0, "info_label": 0, "count": value}
+                    {**common, "info_label": 0, "count": value}
                 )
                 pop_rows.append(
                     {**common, "num_iter": 0, "t": 0, "num_selfish": value}
