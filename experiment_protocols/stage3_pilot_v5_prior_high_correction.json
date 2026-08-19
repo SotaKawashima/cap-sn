@@ -1,0 +1,431 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage3_pilot_v5_prior_high_correction",
+  "stage": "stage3_pilot",
+  "amendment": {
+    "parent_protocol_id": "stage3_pilot_v4",
+    "date": "2026-08-19",
+    "scope": "Correct only the Phase A prior_high condition with the exact prior-study opinion CSV; all other completed runs and decision rules are reused.",
+    "reasons": [
+      "The Stage 0 protocol required prior_high to reproduce v2/test_2/strategy/inhibition_opinion/98_98.csv exactly.",
+      "The completed Phase A runs instead regenerated the same certainty and effectiveness with phi base rates fixed at 0.5 and therefore did not reproduce the prior-study condition.",
+      "Only prior_high is affected; the other 75 Phase A runs remain valid and are reused without modification.",
+      "The corrected 15 runs use the original three networks, five simulator seeds, 200 iterations, fixed conditions, and analysis rules."
+    ],
+    "phase_a_reuse": "The completed Phase A iteration snapshot is reused after replacing only the 15 prior_high runs with corrected outputs.",
+    "phase_b_reuse": "The completed Phase B execution and formal v3 analysis remain authoritative because no Phase B run condition or decision rule changed.",
+    "future_effect": "The M=100 decision must be recomputed from the merged Phase A table before Stage 5 is finalized."
+  },
+  "prior_high_correction": {
+    "condition_id": "prior_high",
+    "execution_scope": "3 networks x 5 original Phase A simulator seeds x 200 iterations",
+    "source_opinion_csv": "v2/test_2/strategy/inhibition_opinion/98_98.csv",
+    "source_opinion_sha256": "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745",
+    "expected_parameters": {
+      "certainty": 1.0,
+      "effectiveness": 0.98
+    },
+    "original_experiment_id": "20260812_134236_pilot_precision_v01",
+    "source_snapshot_analysis_id": "precision_without_delta_v01",
+    "replacement_policy": "replace prior_high by run_key; retain every other run"
+  },
+  "pilot_results": {
+    "precision": {
+      "experiment_id": "20260812_134236_pilot_precision_v01",
+      "formal_analysis_id": "precision_selection_regret_v03",
+      "selected_iterations": 100,
+      "decision_method": "leave_one_simulator_seed_block_out_selection_regret"
+    },
+    "optimization_budget": {
+      "experiment_id": "20260813_120214_pilot_optimization_budget_v03",
+      "git_commit": "b33bf1230db59263ab3bf3d386c3c6f318e0a402",
+      "formal_analysis_id": "optimization_budget_v03",
+      "source_protocol_sha256": "db4a2f1f502f966aba4eec76aa39d107445ebd7911e7f2623a6568a07babba8d",
+      "completed_runs": 27,
+      "complete_trials": 2700,
+      "selected_evaluations": 50,
+      "largest_50_to_100_improvement": 0.00373,
+      "passing_network_method_combinations": 9,
+      "total_network_method_combinations": 9,
+      "interpretation": "Budget selection only; candidate performance must be evaluated with independent simulator seed blocks."
+    }
+  },
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize"
+  },
+  "precision_phase": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      10001,
+      10002,
+      10003,
+      10004,
+      10005
+    ],
+    "max_iterations_per_block": 200,
+    "prefix_iterations": [
+      20,
+      50,
+      100,
+      200
+    ],
+    "raw_level": "all",
+    "conditions": [
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "role": "no_intervention_baseline"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "opinion_csv": "v2/test_2/strategy/inhibition_opinion/98_98.csv",
+        "opinion_sha256": "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745",
+        "role": "prior_study_high_persuasion"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "role": "spring_research_reference"
+      },
+      {
+        "id": "low_effectiveness",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 0.5,
+        "role": "effectiveness_contrast_low"
+      },
+      {
+        "id": "high_effectiveness",
+        "enabled": true,
+        "certainty": 0.75,
+        "effectiveness": 1.0,
+        "role": "effectiveness_contrast_high"
+      },
+      {
+        "id": "stage2_good",
+        "enabled": true,
+        "role": "stage2_best_random_response_surface_cell_midpoint",
+        "parameters_by_network": {
+          "ba1000": {
+            "certainty": 0.85,
+            "effectiveness": 0.95
+          },
+          "facebook": {
+            "certainty": 0.85,
+            "effectiveness": 0.85
+          },
+          "wiki_vote": {
+            "certainty": 0.95,
+            "effectiveness": 0.75
+          }
+        }
+      }
+    ],
+    "primary_comparisons": [
+      {
+        "id": "high_vs_low_effectiveness",
+        "reference": "low_effectiveness",
+        "candidate": "high_effectiveness"
+      },
+      {
+        "id": "prior_high_vs_none",
+        "reference": "none",
+        "candidate": "prior_high"
+      },
+      {
+        "id": "legacy_balance_vs_none",
+        "reference": "none",
+        "candidate": "legacy_balance"
+      },
+      {
+        "id": "stage2_good_vs_none",
+        "reference": "none",
+        "candidate": "stage2_good"
+      }
+    ],
+    "bootstrap": {
+      "repetitions": 10000,
+      "seed": 90001,
+      "method": "hierarchical_paired_percentile"
+    },
+    "decision_rule": {
+      "method": "leave_one_simulator_seed_block_out_selection_regret",
+      "selection_regret_tolerance": 0.005,
+      "minimum_block_pass_rate_per_network": 1.0,
+      "selected_iterations": 100,
+      "rank_stability_role": "diagnostic_only",
+      "confidence_interval_role": "report_estimation_uncertainty_only",
+      "action_if_no_prefix_passes": "increase_iterations_or_revise_the_precision_design_before_stage4"
+    },
+    "effect_reporting": {
+      "minimum_important_effect_threshold": null,
+      "by_network": true,
+      "measures": [
+        "no_intervention_cumulative_selfish_fraction",
+        "absolute_suppression",
+        "relative_suppression",
+        "equivalent_agent_count",
+        "paired_hierarchical_confidence_interval"
+      ],
+      "post_hoc_practical_interpretation": "exploratory_only"
+    }
+  },
+  "optimization_budget_phase": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "methods": [
+      "bo_gp",
+      "cma_es",
+      "random_search"
+    ],
+    "simulator_seed": 10001,
+    "iterations": 100,
+    "optimizer_replicates": [
+      1,
+      2,
+      3
+    ],
+    "optimizer_seeds": {
+      "bo_gp": [
+        70101,
+        70201,
+        70301
+      ],
+      "cma_es": [
+        70102,
+        70202,
+        70302
+      ],
+      "random_search": [
+        70103,
+        70203,
+        70303
+      ]
+    },
+    "startup_trials": 10,
+    "max_trials": 100,
+    "checkpoints": [
+      50,
+      75,
+      100
+    ],
+    "raw_level": "pop",
+    "decision_rule": {
+      "method": "best_so_far_improvement_to_final_checkpoint",
+      "absolute_improvement_tolerance": 0.005,
+      "minimum_passing_replicates_per_network_method": 2,
+      "replicate_decision": "at_least_2_of_3_within_tolerance_for_each_network_method",
+      "diagnostic_summary": "median",
+      "selection": "smallest_nonfinal_checkpoint_passing_for_every_network_method",
+      "selected_evaluations": 50,
+      "action_if_no_checkpoint_passes": "amend_protocol_and_extend_pilot_beyond_100",
+      "interpretation": "Budget selection only; final candidate performance requires independent simulator seed blocks."
+    }
+  },
+  "finalized_experiment_plan": {
+    "iterations_per_evaluation": 100,
+    "optimization_evaluations": 50,
+    "minimum_important_effect_threshold": null,
+    "effect_reporting": "Report network-specific absolute and relative suppression with confidence intervals as continuous quantities.",
+    "stage4_fixed_confirmation": {
+      "networks": [
+        "ba1000",
+        "facebook",
+        "wiki_vote"
+      ],
+      "simulator_seeds": [
+        20001,
+        20002,
+        20003,
+        20004,
+        20005
+      ],
+      "raw_level": "all",
+      "conditions": [
+        {
+          "id": "grid_c050_e050",
+          "enabled": true,
+          "certainty": 0.5,
+          "effectiveness": 0.5
+        },
+        {
+          "id": "grid_c050_e075",
+          "enabled": true,
+          "certainty": 0.5,
+          "effectiveness": 0.75
+        },
+        {
+          "id": "grid_c050_e100",
+          "enabled": true,
+          "certainty": 0.5,
+          "effectiveness": 1.0
+        },
+        {
+          "id": "grid_c075_e050",
+          "enabled": true,
+          "certainty": 0.75,
+          "effectiveness": 0.5
+        },
+        {
+          "id": "grid_c075_e075",
+          "enabled": true,
+          "certainty": 0.75,
+          "effectiveness": 0.75
+        },
+        {
+          "id": "grid_c075_e100",
+          "enabled": true,
+          "certainty": 0.75,
+          "effectiveness": 1.0
+        },
+        {
+          "id": "grid_c100_e050",
+          "enabled": true,
+          "certainty": 1.0,
+          "effectiveness": 0.5
+        },
+        {
+          "id": "grid_c100_e075",
+          "enabled": true,
+          "certainty": 1.0,
+          "effectiveness": 0.75
+        },
+        {
+          "id": "grid_c100_e100",
+          "enabled": true,
+          "certainty": 1.0,
+          "effectiveness": 1.0
+        },
+        {
+          "id": "none",
+          "enabled": false,
+          "certainty": null,
+          "effectiveness": null
+        },
+        {
+          "id": "prior_high",
+          "enabled": true,
+          "certainty": 1.0,
+          "effectiveness": 0.98
+        },
+        {
+          "id": "legacy_balance",
+          "enabled": true,
+          "certainty": 0.8,
+          "effectiveness": 0.8
+        },
+        {
+          "id": "legacy_certainty_high",
+          "enabled": true,
+          "certainty": 0.9,
+          "effectiveness": 0.5
+        },
+        {
+          "id": "legacy_effectiveness_high",
+          "enabled": true,
+          "certainty": 0.5,
+          "effectiveness": 0.9
+        }
+      ]
+    },
+    "stage6_optimization": {
+      "networks": [
+        "ba1000",
+        "facebook",
+        "wiki_vote"
+      ],
+      "methods": [
+        "bo_gp",
+        "cma_es",
+        "random_search"
+      ],
+      "simulator_seed": 30001,
+      "reserve_simulator_seeds": [
+        30002,
+        30003,
+        30004,
+        30005
+      ],
+      "optimizer_replicates": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "optimizer_seeds": {
+        "bo_gp": [
+          60101,
+          60201,
+          60301,
+          60401,
+          60501,
+          60601
+        ],
+        "cma_es": [
+          60102,
+          60202,
+          60302,
+          60402,
+          60502,
+          60602
+        ],
+        "random_search": [
+          60103,
+          60203,
+          60303,
+          60403,
+          60503,
+          60603
+        ]
+      },
+      "startup_trials": 10,
+      "raw_level": "pop"
+    },
+    "candidate_validation": {
+      "simulator_seeds": [
+        40001,
+        40002,
+        40003
+      ]
+    },
+    "final_test": {
+      "simulator_seeds": [
+        50001,
+        50002,
+        50003,
+        50004,
+        50005
+      ],
+      "use_policy": "Use once after candidate selection is frozen."
+    },
+    "bootstrap": {
+      "seed": 90001,
+      "method": "hierarchical_paired_percentile"
+    },
+    "resource_projection_basis": {
+      "time": "Phase A network-specific median and p90 simulation seconds per iteration.",
+      "storage": "Phase A network-specific median retained Arrow bytes per iteration.",
+      "stage4_scope": "14 conditions x 5 simulator seed blocks per network.",
+      "stage6_scope": "3 methods x 6 optimizer replicates x 50 evaluations per network.",
+      "candidate_validation_and_final_test": "Excluded from the total because the number of frozen candidates is not yet fixed."
+    }
+  }
+}

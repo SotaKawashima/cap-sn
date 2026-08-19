@@ -11,7 +11,11 @@ import pandas as pd
 import optimize_single_objective as optimization_module
 import run_fixed_condition as fixed_module
 from analysis.optimization_metrics import compute_selfish_metrics_from_arrow
-from experiment_runtime import SimulationExecutionError, SimulationRunResult
+from experiment_runtime import (
+    SimulationExecutionError,
+    SimulationRunResult,
+    sha256_file,
+)
 
 
 EXPERIMENT_ID = "20260810_000000_unit_test_v01"
@@ -55,6 +59,57 @@ def fake_successful_simulator(**kwargs) -> SimulationRunResult:
 
 
 class ExecutionPipelineTests(unittest.TestCase):
+    def test_fixed_runner_preserves_existing_opinion_csv_and_manifest_hashes(self):
+        source = (
+            Path(__file__).resolve().parents[1]
+            / "v2"
+            / "test_2"
+            / "strategy"
+            / "inhibition_opinion"
+            / "98_98.csv"
+        )
+        with tempfile.TemporaryDirectory() as temp_dir, patch.object(
+            fixed_module, "run_simulator", side_effect=fake_successful_simulator
+        ):
+            args = fixed_module.parse_args(
+                [
+                    "--experiment-id",
+                    EXPERIMENT_ID,
+                    "--network",
+                    "ba1000",
+                    "--condition-id",
+                    "prior_high",
+                    "--intervention-opinion-csv",
+                    str(source),
+                    "--simulator-seed",
+                    "1",
+                    "--iterations",
+                    "2",
+                    "--output-root",
+                    temp_dir,
+                ]
+            )
+            run_dir = fixed_module.run_fixed_condition(args)
+
+            with (run_dir / "manifest.json").open(encoding="utf-8") as handle:
+                manifest = json.load(handle)
+            intervention = manifest["intervention"]
+            copied = run_dir / "inhibition_opinion.csv"
+
+            self.assertEqual(intervention["opinion_mode"], "existing_csv")
+            self.assertEqual(
+                intervention["opinion_source"]["sha256"], sha256_file(source)
+            )
+            self.assertEqual(
+                intervention["opinion_csv"]["sha256"], sha256_file(source)
+            )
+            self.assertEqual(sha256_file(copied), sha256_file(source))
+            self.assertEqual(intervention["opinion_values"]["phi_a0"], 0.02)
+            self.assertEqual(
+                intervention["applied_parameters"],
+                {"certainty": 1.0, "effectiveness": 0.98},
+            )
+
     def test_fixed_runner_online_value_matches_offline_recalculation(self):
         with tempfile.TemporaryDirectory() as temp_dir, patch.object(
             fixed_module, "run_simulator", side_effect=fake_successful_simulator

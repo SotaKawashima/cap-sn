@@ -116,6 +116,53 @@ class Stage4ProtocolTests(unittest.TestCase):
             "stage4_fixed_confirmation",
         )
 
+    def test_prior_high_correction_protocol_uses_exact_existing_csv(self):
+        protocol_path = (
+            Path(__file__).resolve().parents[1]
+            / "experiment_protocols"
+            / "stage4_fixed_confirmation_v2_prior_high_correction.json"
+        )
+        protocol = load_protocol(protocol_path)
+        specs = [
+            spec
+            for spec in build_specs(protocol)
+            if spec.condition_id == "prior_high"
+        ]
+
+        self.assertEqual(len(specs), 15)
+        self.assertTrue(all(spec.opinion_csv is not None for spec in specs))
+        self.assertTrue(
+            all(
+                spec.opinion_sha256
+                == "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745"
+                for spec in specs
+            )
+        )
+        command = command_for_spec(
+            specs[0],
+            experiment_id="20260819_120000_prior_high_correction_v01",
+        )
+        self.assertIn("--intervention-opinion-csv", command)
+        self.assertNotIn("--certainty", command)
+        self.assertNotIn("--effectiveness", command)
+
+    def test_prior_high_correction_rejects_an_unexpected_csv_hash(self):
+        protocol_path = (
+            Path(__file__).resolve().parents[1]
+            / "experiment_protocols"
+            / "stage4_fixed_confirmation_v2_prior_high_correction.json"
+        )
+        protocol = copy.deepcopy(load_protocol(protocol_path))
+        prior_high = next(
+            condition
+            for condition in protocol["design"]["conditions"]
+            if condition["id"] == "prior_high"
+        )
+        prior_high["opinion_sha256"] = "0" * 64
+
+        with self.assertRaisesRegex(ValueError, "SHA-256"):
+            build_specs(protocol)
+
     def test_stage4_and_future_seed_groups_are_disjoint(self):
         stage4_seeds = set(self.protocol["design"]["simulator_seeds"])
         groups = [

@@ -9,6 +9,7 @@ import math
 import os
 import platform
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -37,6 +38,25 @@ EXPERIMENT_ID_PATTERN = re.compile(
     r"^\d{8}_\d{6}_[a-z0-9]+(?:_[a-z0-9]+)*_v\d{2}$"
 )
 SAFE_NAME_PATTERN = re.compile(r"^[a-z0-9]+(?:_[a-z0-9]+)*$")
+INTERVENTION_OPINION_COLUMNS = (
+    "phi_b0",
+    "phi_b1",
+    "phi_u",
+    "phi_a0",
+    "phi_a1",
+    "psi0_b0",
+    "psi0_b1",
+    "psi0_u",
+    "psi1_b0",
+    "psi1_b1",
+    "psi1_u",
+    "b0_b0",
+    "b0_b1",
+    "b0_u",
+    "b1_b0",
+    "b1_b1",
+    "b1_u",
+)
 
 
 @dataclass(frozen=True)
@@ -279,6 +299,91 @@ def parameter_condition_id(certainty: float, effectiveness: float) -> str:
         return f"{round(value, 4):.4f}".replace(".", "p")
 
     return f"c{encode(certainty)}_e{encode(effectiveness)}"
+
+
+def read_intervention_opinion_csv(
+    path: str | Path,
+) -> tuple[dict[str, float], dict[str, float]]:
+    """Validate one complete intervention opinion and extract its design values."""
+
+    path = Path(path).resolve()
+    if not path.is_file():
+        raise ExperimentConfigurationError(
+            f"intervention opinion CSV does not exist: {path}"
+        )
+    try:
+        frame = pd.read_csv(path)
+    except (OSError, pd.errors.ParserError) as exc:
+        raise ExperimentConfigurationError(
+            f"failed to read intervention opinion CSV: {path}"
+        ) from exc
+    if len(frame) != 1:
+        raise ExperimentConfigurationError(
+            "intervention opinion CSV must contain exactly one data row"
+        )
+    if tuple(frame.columns) != INTERVENTION_OPINION_COLUMNS:
+        raise ExperimentConfigurationError(
+            "intervention opinion CSV columns do not match the simulator schema"
+        )
+
+    values: dict[str, float] = {}
+    for column in INTERVENTION_OPINION_COLUMNS:
+        try:
+            value = float(frame.iloc[0][column])
+        except (TypeError, ValueError) as exc:
+            raise ExperimentConfigurationError(
+                f"intervention opinion value is not numeric: {column}"
+            ) from exc
+        if not math.isfinite(value) or not 0.0 <= value <= 1.0:
+            raise ExperimentConfigurationError(
+                f"intervention opinion value must be in [0, 1]: {column}"
+            )
+        values[column] = value
+
+    normalized_groups = (
+        ("phi_b0", "phi_b1", "phi_u"),
+        ("phi_a0", "phi_a1"),
+        ("psi0_b0", "psi0_b1", "psi0_u"),
+        ("psi1_b0", "psi1_b1", "psi1_u"),
+        ("b0_b0", "b0_b1", "b0_u"),
+        ("b1_b0", "b1_b1", "b1_u"),
+    )
+    for columns in normalized_groups:
+        total = sum(values[column] for column in columns)
+        if not math.isclose(total, 1.0, rel_tol=0.0, abs_tol=1e-9):
+            raise ExperimentConfigurationError(
+                "intervention opinion components must sum to 1: "
+                + ", ".join(columns)
+            )
+    if not math.isclose(
+        values["psi1_b0"], values["b1_b0"], rel_tol=0.0, abs_tol=1e-9
+    ):
+        raise ExperimentConfigurationError(
+            "psi1_b0 and b1_b0 must encode the same effectiveness"
+        )
+
+    applied = {
+        "certainty": _validate_parameter(values["phi_b1"], "certainty"),
+        "effectiveness": _validate_parameter(
+            values["psi1_b0"], "effectiveness"
+        ),
+    }
+    return values, applied
+
+
+def copy_intervention_opinion_csv(
+    source: str | Path, destination: str | Path
+) -> tuple[dict[str, float], dict[str, float]]:
+    """Copy a validated fixed opinion without regenerating any of its fields."""
+
+    source = Path(source).resolve()
+    values, applied = read_intervention_opinion_csv(source)
+    destination = Path(destination).resolve()
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(source, destination)
+    if sha256_file(source) != sha256_file(destination):
+        raise OSError("copied intervention opinion CSV failed SHA-256 verification")
+    return values, applied
 
 
 def write_intervention_opinion_csv(
@@ -530,4 +635,3 @@ def append_study_manifest(
 
 def command_for_manifest() -> list[str]:
     return [sys.executable, *sys.argv]
-

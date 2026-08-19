@@ -24,11 +24,13 @@ from experiment_runtime import (
     build_simulator_command,
     command_for_manifest,
     config_manifest_entry,
+    copy_intervention_opinion_csv,
     create_unique_run_directory,
     git_state,
     make_experiment_id,
     now_iso,
     parameter_condition_id,
+    read_intervention_opinion_csv,
     relative_to_run,
     remove_unrequested_raw,
     resolve_output_root,
@@ -56,6 +58,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--condition-id", default=None)
     parser.add_argument("--certainty", type=float, default=None)
     parser.add_argument("--effectiveness", type=float, default=None)
+    parser.add_argument("--intervention-opinion-csv", type=Path, default=None)
     parser.add_argument("--no-intervention", action="store_true")
     parser.add_argument("--simulator-seed", type=int, required=True)
     parser.add_argument("--iterations", type=int, required=True)
@@ -70,9 +73,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def resolve_condition(args: argparse.Namespace) -> dict[str, Any]:
     if args.no_intervention:
-        if args.certainty is not None or args.effectiveness is not None:
+        if (
+            args.certainty is not None
+            or args.effectiveness is not None
+            or args.intervention_opinion_csv is not None
+        ):
             raise ExperimentConfigurationError(
-                "certainty/effectiveness must be omitted for no-intervention runs"
+                "design variables and opinion CSV must be omitted for "
+                "no-intervention runs"
             )
         condition_id = args.condition_id or "none"
         if condition_id != "none":
@@ -83,11 +91,32 @@ def resolve_condition(args: argparse.Namespace) -> dict[str, Any]:
             "enabled": False,
             "condition_id": "none",
             "proposed_parameters": None,
+            "opinion_mode": None,
+        }
+
+    if args.intervention_opinion_csv is not None:
+        if args.certainty is not None or args.effectiveness is not None:
+            raise ExperimentConfigurationError(
+                "--intervention-opinion-csv cannot be combined with "
+                "--certainty/--effectiveness"
+            )
+        _, applied = read_intervention_opinion_csv(args.intervention_opinion_csv)
+        generated_condition_id = parameter_condition_id(
+            applied["certainty"], applied["effectiveness"]
+        )
+        condition_id = args.condition_id or generated_condition_id
+        validate_safe_name(condition_id, "condition_id")
+        return {
+            "enabled": True,
+            "condition_id": condition_id,
+            "proposed_parameters": applied,
+            "opinion_mode": "existing_csv",
         }
 
     if args.certainty is None or args.effectiveness is None:
         raise ExperimentConfigurationError(
-            "intervention runs require both --certainty and --effectiveness"
+            "intervention runs require both --certainty and --effectiveness, "
+            "or --intervention-opinion-csv"
         )
     generated_condition_id = parameter_condition_id(
         args.certainty, args.effectiveness
@@ -101,6 +130,7 @@ def resolve_condition(args: argparse.Namespace) -> dict[str, Any]:
             "certainty": float(args.certainty),
             "effectiveness": float(args.effectiveness),
         },
+        "opinion_mode": "generated_from_design_variables",
     }
 
 
@@ -135,14 +165,24 @@ def run_fixed_condition(args: argparse.Namespace) -> Path:
     )
 
     applied_parameters: dict[str, float] | None = None
+    opinion_values: dict[str, float] | None = None
+    opinion_source: dict[str, str] | None = None
     opinion_path: Path | None = None
     if condition["enabled"]:
         opinion_path = run_dir / "inhibition_opinion.csv"
-        applied_parameters = write_intervention_opinion_csv(
-            opinion_path,
-            certainty=condition["proposed_parameters"]["certainty"],
-            effectiveness=condition["proposed_parameters"]["effectiveness"],
-        )
+        if args.intervention_opinion_csv is not None:
+            source_path = args.intervention_opinion_csv.resolve()
+            opinion_values, applied_parameters = copy_intervention_opinion_csv(
+                source_path, opinion_path
+            )
+            opinion_source = config_manifest_entry(source_path)
+        else:
+            applied_parameters = write_intervention_opinion_csv(
+                opinion_path,
+                certainty=condition["proposed_parameters"]["certainty"],
+                effectiveness=condition["proposed_parameters"]["effectiveness"],
+            )
+            opinion_values, _ = read_intervention_opinion_csv(opinion_path)
 
     strategy_path = write_strategy_config(
         run_dir / "strategy.toml",
@@ -192,6 +232,8 @@ def run_fixed_condition(args: argparse.Namespace) -> Path:
         "intervention": {
             **condition,
             "applied_parameters": applied_parameters,
+            "opinion_source": opinion_source,
+            "opinion_values": opinion_values,
             "opinion_csv": (
                 None if opinion_path is None else config_manifest_entry(opinion_path)
             ),

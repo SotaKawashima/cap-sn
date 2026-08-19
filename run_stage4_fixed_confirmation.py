@@ -21,6 +21,7 @@ from experiment_runtime import (
     git_state,
     make_experiment_id,
     now_iso,
+    read_intervention_opinion_csv,
     resolve_output_root,
     sha256_file,
     validate_experiment_id,
@@ -48,6 +49,8 @@ class FixedConfirmationRunSpec:
     intervention_enabled: bool
     certainty: float | None
     effectiveness: float | None
+    opinion_csv: str | None
+    opinion_sha256: str | None
     simulator_seed: int
     iterations: int
     raw_level: str
@@ -149,6 +152,10 @@ def _validate_protocol(protocol: dict[str, Any]) -> None:
         validate_safe_name(str(condition.get("role", "")), "condition_role")
         if not enabled:
             disabled_ids.append(condition_id)
+            if condition.get("opinion_csv") is not None:
+                raise ExperimentConfigurationError(
+                    "the no-intervention condition cannot specify opinion_csv"
+                )
             if condition.get("certainty") is not None or condition.get(
                 "effectiveness"
             ) is not None:
@@ -164,6 +171,48 @@ def _validate_protocol(protocol: dict[str, Any]) -> None:
                 condition.get("effectiveness"), f"{condition_id}.effectiveness"
             ),
         )
+        configured_opinion = condition.get("opinion_csv")
+        configured_hash = condition.get("opinion_sha256")
+        if configured_opinion is None and configured_hash is not None:
+            raise ExperimentConfigurationError(
+                f"condition {condition_id} opinion_sha256 requires opinion_csv"
+            )
+        if configured_opinion is not None:
+            opinion_path = Path(configured_opinion)
+            if not opinion_path.is_absolute():
+                opinion_path = REPO_ROOT / opinion_path
+            opinion_path = opinion_path.resolve()
+            try:
+                opinion_path.relative_to(REPO_ROOT)
+            except ValueError as exc:
+                raise ExperimentConfigurationError(
+                    "Stage 4 opinion_csv must be inside the repository"
+                ) from exc
+            _, applied = read_intervention_opinion_csv(opinion_path)
+            if (
+                not isinstance(configured_hash, str)
+                or len(configured_hash) != 64
+                or any(
+                    character not in "0123456789abcdef"
+                    for character in configured_hash.lower()
+                )
+            ):
+                raise ExperimentConfigurationError(
+                    f"condition {condition_id} requires a valid opinion_sha256"
+                )
+            if sha256_file(opinion_path) != configured_hash.lower():
+                raise ExperimentConfigurationError(
+                    f"condition {condition_id} opinion_csv SHA-256 does not "
+                    "match protocol"
+                )
+            if not math.isclose(
+                pair[0], applied["certainty"], rel_tol=0.0, abs_tol=1e-12
+            ) or not math.isclose(
+                pair[1], applied["effectiveness"], rel_tol=0.0, abs_tol=1e-12
+            ):
+                raise ExperimentConfigurationError(
+                    f"condition {condition_id} parameters do not match opinion_csv"
+                )
         if pair in parameter_pairs:
             raise ExperimentConfigurationError(
                 f"duplicate Stage 4 intervention parameters: {pair}"
@@ -243,6 +292,15 @@ def build_specs(protocol: dict[str, Any]) -> list[FixedConfirmationRunSpec]:
             effectiveness = (
                 float(condition["effectiveness"]) if enabled else None
             )
+            configured_opinion = condition.get("opinion_csv")
+            opinion_csv: str | None = None
+            opinion_sha256: str | None = None
+            if configured_opinion is not None:
+                opinion_path = Path(configured_opinion)
+                if not opinion_path.is_absolute():
+                    opinion_path = REPO_ROOT / opinion_path
+                opinion_csv = opinion_path.resolve().as_posix()
+                opinion_sha256 = str(condition["opinion_sha256"]).lower()
             for seed_value in design["simulator_seeds"]:
                 seed = int(seed_value)
                 condition_id = str(condition["id"])
@@ -258,6 +316,8 @@ def build_specs(protocol: dict[str, Any]) -> list[FixedConfirmationRunSpec]:
                         intervention_enabled=enabled,
                         certainty=certainty,
                         effectiveness=effectiveness,
+                        opinion_csv=opinion_csv,
+                        opinion_sha256=opinion_sha256,
                         simulator_seed=seed,
                         iterations=iterations,
                         raw_level=raw_level,
@@ -296,14 +356,19 @@ def command_for_spec(
         str(resolved_output_root),
     ]
     if spec.intervention_enabled:
-        command.extend(
-            [
-                "--certainty",
-                str(spec.certainty),
-                "--effectiveness",
-                str(spec.effectiveness),
-            ]
-        )
+        if spec.opinion_csv is not None:
+            command.extend(
+                ["--intervention-opinion-csv", str(spec.opinion_csv)]
+            )
+        else:
+            command.extend(
+                [
+                    "--certainty",
+                    str(spec.certainty),
+                    "--effectiveness",
+                    str(spec.effectiveness),
+                ]
+            )
     else:
         command.append("--no-intervention")
     return command

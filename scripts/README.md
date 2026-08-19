@@ -156,6 +156,62 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
 
 実行計画と進捗は`experiments/summer_2026/stage4_fixed_confirmation/<experiment_id>/fixed_confirmation_execution_plan.json`に記録される。条件、ネットワーク、seedを限定するオプションは確認や分割実行用であり、正式実験の構成自体はprotocolから変更しない。
 
+実行結果をMacBookへ転送した後は、[`analyze_stage4_fixed_confirmation.py`](../analyze_stage4_fixed_confirmation.py)で全210 runをraw Arrowから再計算し、階層的paired bootstrapによる正式分析を行う。
+
+```bash
+.venv/bin/python analyze_stage4_fixed_confirmation.py \
+  --experiment-root experiments/summer_2026/stage4_fixed_confirmation/<experiment_id> \
+  --protocol experiment_protocols/stage4_fixed_confirmation_v1.json \
+  --analysis-id fixed_confirmation_analysis_v03
+```
+
+分析処理は、manifestとprotocolの照合、`metrics.csv`の再現、`pop.arrow`と`agent.arrow`の整合、情報データの検査を行う。主要比較、全介入条件と無介入の記述比較、固定格子の事前対比、角点交互作用を別表へ保存する。無介入時に情報ラベル3が存在しないことは、行動誘導情報を投入しない正常な状態としてゼロ件に補完する。可視化には[`第4段階_無介入・代表条件・固定設計の確認実験.ipynb`](../notebooks/第4段階_無介入・代表条件・固定設計の確認実験.ipynb)を用いる。
+
+#### `prior_high`の補正実験
+
+先行研究の高説得力条件`prior_high`は、[`98_98.csv`](../v2/test_2/strategy/inhibition_opinion/98_98.csv)を再生成せず、その全列をそのまま使用する。固定条件実行で既存CSVを指定する場合は`--intervention-opinion-csv`を用いる。この引数は`--certainty`および`--effectiveness`と同時には指定できない。実行時にはCSVをrunディレクトリへバイト単位で複製し、入力元と複製先のSHA-256をmanifestへ保存する。
+
+補正対象は、第3段階Phase Aの15 runと第4段階の15 runだけである。その他のPhase A 75 run、第4段階195 run、およびPhase B 27 runは再利用する。補正用protocolは次の2つである。
+
+- [`stage3_pilot_v5_prior_high_correction.json`](../experiment_protocols/stage3_pilot_v5_prior_high_correction.json)
+- [`stage4_fixed_confirmation_v2_prior_high_correction.json`](../experiment_protocols/stage4_fixed_confirmation_v2_prior_high_correction.json)
+
+補正runは条件フィルタを付けて実行する。
+
+```bash
+.venv/bin/python -u run_stage3_pilot.py \
+  --phase precision \
+  --protocol experiment_protocols/stage3_pilot_v5_prior_high_correction.json \
+  --experiment-id <prior_high_correction_experiment_id> \
+  --conditions prior_high
+
+.venv/bin/python -u run_stage4_fixed_confirmation.py \
+  --protocol experiment_protocols/stage4_fixed_confirmation_v2_prior_high_correction.json \
+  --experiment-id <prior_high_correction_experiment_id> \
+  --conditions prior_high
+```
+
+転送後の再集計では元データを上書きせず、同じrun keyの`prior_high`だけを補正runへ差し替え、新しいanalysis IDへ保存する。
+
+```bash
+.venv/bin/python analyze_stage3_pilot.py \
+  --phase precision \
+  --experiment-root experiments/summer_2026/stage3_pilot/20260812_134236_pilot_precision_v01 \
+  --source-analysis-root experiments/summer_2026/stage3_pilot/20260812_134236_pilot_precision_v01/precision_without_delta_v01 \
+  --protocol experiment_protocols/stage3_pilot_v5_prior_high_correction.json \
+  --condition-override-id prior_high \
+  --condition-override-root experiments/summer_2026/stage3_pilot/<prior_high_correction_experiment_id> \
+  --analysis-id precision_prior_high_corrected_v05
+
+.venv/bin/python analyze_stage4_fixed_confirmation.py \
+  --experiment-root experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01 \
+  --protocol experiment_protocols/stage4_fixed_confirmation_v1.json \
+  --condition-override-id prior_high \
+  --condition-override-root experiments/summer_2026/stage4_fixed_confirmation/<prior_high_correction_experiment_id> \
+  --condition-override-protocol experiment_protocols/stage4_fixed_confirmation_v2_prior_high_correction.json \
+  --analysis-id fixed_confirmation_prior_high_corrected_v04
+```
+
 以下は春学期までの旧実行系である。
 
 | スクリプト | 内容 | 出力先 |

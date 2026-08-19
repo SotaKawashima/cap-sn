@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import subprocess
 import sys
 from dataclasses import asdict, dataclass
@@ -20,6 +21,7 @@ from experiment_runtime import (
     git_state,
     make_experiment_id,
     now_iso,
+    read_intervention_opinion_csv,
     resolve_output_root,
     sha256_file,
     validate_experiment_id,
@@ -44,6 +46,8 @@ class PilotRunSpec:
     intervention_enabled: bool | None = None
     certainty: float | None = None
     effectiveness: float | None = None
+    opinion_csv: str | None = None
+    opinion_sha256: str | None = None
     simulator_seed: int | None = None
     iterations: int | None = None
     method: str | None = None
@@ -98,6 +102,65 @@ def build_precision_specs(protocol: dict[str, Any]) -> list[PilotRunSpec]:
             raise ExperimentConfigurationError(f"unsupported network: {network}")
         for condition in conditions:
             certainty, effectiveness = _condition_parameters(condition, network)
+            opinion_csv: str | None = None
+            opinion_sha256: str | None = None
+            configured_opinion = condition.get("opinion_csv")
+            configured_hash = condition.get("opinion_sha256")
+            if configured_opinion is None and configured_hash is not None:
+                raise ExperimentConfigurationError(
+                    "opinion_sha256 requires opinion_csv"
+                )
+            if configured_opinion is not None:
+                if not condition["enabled"]:
+                    raise ExperimentConfigurationError(
+                        "a disabled precision condition cannot specify opinion_csv"
+                    )
+                opinion_path = Path(configured_opinion)
+                if not opinion_path.is_absolute():
+                    opinion_path = REPO_ROOT / opinion_path
+                opinion_path = opinion_path.resolve()
+                try:
+                    opinion_path.relative_to(REPO_ROOT)
+                except ValueError as exc:
+                    raise ExperimentConfigurationError(
+                        "precision opinion_csv must be inside the repository"
+                    ) from exc
+                _, applied = read_intervention_opinion_csv(opinion_path)
+                if (
+                    not isinstance(configured_hash, str)
+                    or len(configured_hash) != 64
+                    or any(
+                        character not in "0123456789abcdef"
+                        for character in configured_hash.lower()
+                    )
+                ):
+                    raise ExperimentConfigurationError(
+                        f"condition {condition['id']} requires a valid "
+                        "opinion_sha256"
+                    )
+                opinion_sha256 = configured_hash.lower()
+                observed_hash = sha256_file(opinion_path)
+                if observed_hash != opinion_sha256:
+                    raise ExperimentConfigurationError(
+                        f"condition {condition['id']} opinion_csv SHA-256 "
+                        f"does not match protocol: {observed_hash}"
+                    )
+                if not math.isclose(
+                    float(certainty),
+                    applied["certainty"],
+                    rel_tol=0.0,
+                    abs_tol=1e-12,
+                ) or not math.isclose(
+                    float(effectiveness),
+                    applied["effectiveness"],
+                    rel_tol=0.0,
+                    abs_tol=1e-12,
+                ):
+                    raise ExperimentConfigurationError(
+                        f"condition {condition['id']} parameters do not match "
+                        "opinion_csv"
+                    )
+                opinion_csv = opinion_path.as_posix()
             for seed in phase["simulator_seeds"]:
                 seed = int(seed)
                 condition_id = condition["id"]
@@ -114,6 +177,8 @@ def build_precision_specs(protocol: dict[str, Any]) -> list[PilotRunSpec]:
                         intervention_enabled=bool(condition["enabled"]),
                         certainty=certainty,
                         effectiveness=effectiveness,
+                        opinion_csv=opinion_csv,
+                        opinion_sha256=opinion_sha256,
                         simulator_seed=seed,
                         iterations=iterations,
                         raw_level=phase["raw_level"],
@@ -206,14 +271,19 @@ def command_for_spec(
             str(resolved_output_root),
         ]
         if spec.intervention_enabled:
-            command.extend(
-                [
-                    "--certainty",
-                    str(spec.certainty),
-                    "--effectiveness",
-                    str(spec.effectiveness),
-                ]
-            )
+            if spec.opinion_csv is not None:
+                command.extend(
+                    ["--intervention-opinion-csv", str(spec.opinion_csv)]
+                )
+            else:
+                command.extend(
+                    [
+                        "--certainty",
+                        str(spec.certainty),
+                        "--effectiveness",
+                        str(spec.effectiveness),
+                    ]
+                )
         else:
             command.append("--no-intervention")
         return command
@@ -313,12 +383,23 @@ def _filter_specs(
     specs: Sequence[PilotRunSpec],
     *,
     networks: Sequence[str] | None,
+    conditions: Sequence[str] | None,
     simulator_seeds: Sequence[int] | None,
     optimizer_replicates: Sequence[int] | None,
 ) -> list[PilotRunSpec]:
     selected = list(specs)
     if networks:
         selected = [spec for spec in selected if spec.network in networks]
+    if conditions:
+        known_conditions = {
+            spec.condition_id for spec in specs if spec.condition_id is not None
+        }
+        unknown = set(conditions) - known_conditions
+        if unknown:
+            raise ExperimentConfigurationError(
+                f"condition is not in protocol: {sorted(unknown)}"
+            )
+        selected = [spec for spec in selected if spec.condition_id in conditions]
     if simulator_seeds:
         seed_set = set(simulator_seeds)
         selected = [spec for spec in selected if spec.simulator_seed in seed_set]
@@ -339,6 +420,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--experiment-id", default=None)
     parser.add_argument("--iterations", type=int, default=None)
     parser.add_argument("--networks", nargs="+", choices=sorted(NETWORKS))
+    parser.add_argument("--conditions", nargs="+")
     parser.add_argument("--simulator-seeds", nargs="+", type=int)
     parser.add_argument("--optimizer-replicates", nargs="+", type=int)
     parser.add_argument("--output-root", type=Path, default=SUMMER_EXPERIMENT_ROOT)
@@ -374,6 +456,7 @@ def run_pilot(args: argparse.Namespace) -> Path | None:
     selected = _filter_specs(
         all_specs,
         networks=args.networks,
+        conditions=args.conditions,
         simulator_seeds=args.simulator_seeds,
         optimizer_replicates=args.optimizer_replicates,
     )

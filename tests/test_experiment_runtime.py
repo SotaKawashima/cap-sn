@@ -12,9 +12,12 @@ from experiment_runtime import (
     NETWORKS,
     ExperimentConfigurationError,
     build_simulator_command,
+    copy_intervention_opinion_csv,
     create_unique_run_directory,
     make_experiment_id,
     parameter_condition_id,
+    read_intervention_opinion_csv,
+    sha256_file,
     validate_experiment_id,
     write_intervention_opinion_csv,
     write_runtime_config,
@@ -84,6 +87,66 @@ class ExperimentRuntimeTests(unittest.TestCase):
             self.assertEqual(
                 Path(strategy["information"]["inhibition"]), opinion_path.resolve()
             )
+
+    def test_existing_intervention_csv_is_copied_without_regeneration(self):
+        source = (
+            Path(__file__).resolve().parents[1]
+            / "v2"
+            / "test_2"
+            / "strategy"
+            / "inhibition_opinion"
+            / "98_98.csv"
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            destination = Path(temp_dir) / "opinion.csv"
+            values, applied = copy_intervention_opinion_csv(source, destination)
+
+            self.assertEqual(sha256_file(destination), sha256_file(source))
+            self.assertEqual(applied, {"certainty": 1.0, "effectiveness": 0.98})
+            self.assertEqual(values["phi_a0"], 0.02)
+            self.assertEqual(values["phi_a1"], 0.98)
+
+    def test_existing_intervention_csv_resolves_design_parameters(self):
+        source = (
+            Path(__file__).resolve().parents[1]
+            / "v2"
+            / "test_2"
+            / "strategy"
+            / "inhibition_opinion"
+            / "98_98.csv"
+        )
+        args = parse_args(
+            [
+                "--network",
+                "ba1000",
+                "--condition-id",
+                "prior_high",
+                "--intervention-opinion-csv",
+                str(source),
+                "--simulator-seed",
+                "1",
+                "--iterations",
+                "2",
+            ]
+        )
+
+        condition = resolve_condition(args)
+
+        self.assertTrue(condition["enabled"])
+        self.assertEqual(condition["condition_id"], "prior_high")
+        self.assertEqual(
+            condition["proposed_parameters"],
+            {"certainty": 1.0, "effectiveness": 0.98},
+        )
+        self.assertEqual(condition["opinion_mode"], "existing_csv")
+
+    def test_existing_intervention_csv_schema_is_validated(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            invalid = Path(temp_dir) / "invalid.csv"
+            pd.DataFrame([{"phi_b1": 1.0}]).to_csv(invalid, index=False)
+
+            with self.assertRaises(ExperimentConfigurationError):
+                read_intervention_opinion_csv(invalid)
 
     def test_simulator_command_only_enables_intervention_when_requested(self):
         common = {

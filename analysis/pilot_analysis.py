@@ -12,6 +12,8 @@ import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
 
+from experiment_runtime import sha256_file
+
 
 OBJECTIVE_COLUMN = "cumulative_selfish_fraction"
 OBJECTIVE_DEFINITION_VERSION = "cumulative_selfish_fraction_v1"
@@ -100,7 +102,77 @@ def _fixed_condition_mismatches(
                 mismatches.append(
                     f"applied_{field}={observed!r} (expected {expected!r})"
                 )
+        expected_opinion = getattr(spec, "opinion_csv", None)
+        if expected_opinion is not None:
+            expected_hash = getattr(spec, "opinion_sha256", None)
+            if expected_hash is None:
+                expected_hash = sha256_file(expected_opinion)
+            if intervention.get("opinion_mode") != "existing_csv":
+                mismatches.append(
+                    "opinion_mode="
+                    f"{intervention.get('opinion_mode')!r} "
+                    "(expected 'existing_csv')"
+                )
+            for field in ("opinion_source", "opinion_csv"):
+                entry = intervention.get(field) or {}
+                if entry.get("sha256") != expected_hash:
+                    mismatches.append(
+                        f"{field}_sha256={entry.get('sha256')!r} "
+                        f"(expected {expected_hash!r})"
+                    )
     return mismatches
+
+
+def replace_precision_condition(
+    original: PrecisionPilotData,
+    correction: PrecisionPilotData,
+    *,
+    condition_id: str,
+) -> PrecisionPilotData:
+    """Replace one complete condition while preserving all other pilot rows."""
+
+    correction_conditions = set(correction.runs["condition_id"].astype(str))
+    if correction_conditions != {condition_id}:
+        raise ValueError(
+            "correction data must contain only the requested condition: "
+            f"{sorted(correction_conditions)}"
+        )
+    original_keys = set(
+        original.runs.loc[
+            original.runs["condition_id"].astype(str) == condition_id,
+            "run_key",
+        ].astype(str)
+    )
+    correction_keys = set(correction.runs["run_key"].astype(str))
+    if correction_keys != original_keys:
+        raise ValueError(
+            "correction run keys do not exactly match the original condition"
+        )
+
+    def replace(
+        original_frame: pd.DataFrame, corrected_frame: pd.DataFrame
+    ) -> pd.DataFrame:
+        retained = original_frame[
+            ~original_frame["run_key"].astype(str).isin(original_keys)
+        ]
+        corrected = corrected_frame.loc[:, original_frame.columns]
+        return pd.concat([retained, corrected], ignore_index=True)
+
+    merged_runs = replace(original.runs, correction.runs)
+    merged_iterations = replace(original.iterations, correction.iterations)
+    if merged_runs["run_key"].duplicated().any():
+        raise ValueError("merged precision run inventory contains duplicate keys")
+    iteration_key = ["run_key", "num_iter"]
+    if merged_iterations.duplicated(iteration_key).any():
+        raise ValueError("merged precision iteration table contains duplicate rows")
+    if set(merged_runs["run_key"].astype(str)) != set(
+        merged_iterations["run_key"].astype(str)
+    ):
+        raise ValueError("merged precision run and iteration keys differ")
+    return PrecisionPilotData(
+        iterations=merged_iterations.sort_values(iteration_key).reset_index(drop=True),
+        runs=merged_runs.sort_values("run_key").reset_index(drop=True),
+    )
 
 
 def _optimization_mismatches(

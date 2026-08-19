@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import unittest
 from pathlib import Path
 
@@ -20,6 +21,8 @@ from analysis.pilot_analysis import (
     project_future_resources,
     recommend_iteration_count,
     recommend_iteration_count_by_selection_regret,
+    replace_precision_condition,
+    PrecisionPilotData,
 )
 from run_stage3_pilot import (
     build_optimization_specs,
@@ -202,11 +205,100 @@ class Stage3ProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "precision prefixes"):
             build_optimization_specs(self.protocol, iterations=30)
 
+    def test_prior_high_correction_protocol_uses_exact_existing_csv(self):
+        protocol_path = (
+            Path(__file__).resolve().parents[1]
+            / "experiment_protocols"
+            / "stage3_pilot_v5_prior_high_correction.json"
+        )
+        protocol = load_protocol(protocol_path)
+        specs = [
+            spec
+            for spec in build_precision_specs(protocol)
+            if spec.condition_id == "prior_high"
+        ]
+
+        self.assertEqual(len(specs), 15)
+        self.assertTrue(all(spec.opinion_csv is not None for spec in specs))
+        self.assertTrue(
+            all(
+                spec.opinion_sha256
+                == "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745"
+                for spec in specs
+            )
+        )
+        command = command_for_spec(
+            specs[0], experiment_id="20260819_120000_prior_high_correction_v01"
+        )
+        self.assertIn("--intervention-opinion-csv", command)
+        self.assertNotIn("--certainty", command)
+        self.assertNotIn("--effectiveness", command)
+
+    def test_prior_high_correction_rejects_an_unexpected_csv_hash(self):
+        protocol_path = (
+            Path(__file__).resolve().parents[1]
+            / "experiment_protocols"
+            / "stage3_pilot_v5_prior_high_correction.json"
+        )
+        protocol = copy.deepcopy(load_protocol(protocol_path))
+        prior_high = next(
+            condition
+            for condition in protocol["precision_phase"]["conditions"]
+            if condition["id"] == "prior_high"
+        )
+        prior_high["opinion_sha256"] = "0" * 64
+
+        with self.assertRaisesRegex(ValueError, "SHA-256"):
+            build_precision_specs(protocol)
+
 
 class Stage3AnalysisTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.protocol = load_protocol()
+
+    def test_precision_condition_replacement_preserves_other_runs(self):
+        original_runs = pd.DataFrame(
+            [
+                {"run_key": "n", "condition_id": "none", "objective": 0.3},
+                {
+                    "run_key": "p",
+                    "condition_id": "prior_high",
+                    "objective": 0.2,
+                },
+            ]
+        )
+        original_iterations = pd.DataFrame(
+            [
+                {
+                    "run_key": "n",
+                    "condition_id": "none",
+                    "num_iter": 0,
+                    "cumulative_selfish_fraction": 0.3,
+                },
+                {
+                    "run_key": "p",
+                    "condition_id": "prior_high",
+                    "num_iter": 0,
+                    "cumulative_selfish_fraction": 0.2,
+                },
+            ]
+        )
+        corrected_runs = original_runs[original_runs["run_key"] == "p"].copy()
+        corrected_runs.loc[:, "objective"] = 0.1
+        corrected_iterations = original_iterations[
+            original_iterations["run_key"] == "p"
+        ].copy()
+        corrected_iterations.loc[:, "cumulative_selfish_fraction"] = 0.1
+
+        merged = replace_precision_condition(
+            PrecisionPilotData(original_iterations, original_runs),
+            PrecisionPilotData(corrected_iterations, corrected_runs),
+            condition_id="prior_high",
+        )
+
+        values = merged.runs.set_index("run_key")["objective"].to_dict()
+        self.assertEqual(values, {"n": 0.3, "p": 0.1})
 
     def test_fixed_manifest_protocol_validation(self):
         spec = next(

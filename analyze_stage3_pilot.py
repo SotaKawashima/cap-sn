@@ -27,6 +27,7 @@ from analysis.pilot_analysis import (
     project_future_resources,
     recommend_iteration_count,
     recommend_iteration_count_by_selection_regret,
+    replace_precision_condition,
 )
 from experiment_runtime import (
     REPO_ROOT,
@@ -63,6 +64,46 @@ def _write_csv(frame: pd.DataFrame, output_dir: Path, name: str) -> str:
     return path.name
 
 
+def _read_json(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def _validate_precision_override_source(
+    experiment_root: Path,
+    protocol_path: Path,
+    expected_specs: list[Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    plan_path = experiment_root / "pilot_execution_plan.json"
+    study_path = experiment_root / "study_manifest.json"
+    if not plan_path.is_file() or not study_path.is_file():
+        raise FileNotFoundError(
+            "precision condition override execution plan or study manifest "
+            "is missing"
+        )
+    plan = _read_json(plan_path)
+    study = _read_json(study_path)
+    if plan.get("stage") != "stage3_pilot" or plan.get("phase") != "precision":
+        raise ValueError("condition override is not a Stage 3 precision execution")
+    if plan.get("protocol", {}).get("sha256") != sha256_file(protocol_path):
+        raise ValueError("condition override protocol does not match its execution")
+    statuses = {
+        str(row.get("relative_run_dir")): str(row.get("status"))
+        for row in plan.get("runs", [])
+    }
+    missing = [
+        spec.relative_run_dir
+        for spec in expected_specs
+        if statuses.get(spec.relative_run_dir) != "completed"
+    ]
+    if missing:
+        raise ValueError(
+            "condition override does not contain every completed target run: "
+            f"{missing[:5]}"
+        )
+    return plan, study
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Analyze a completed Stage 3 pilot.")
     parser.add_argument(
@@ -80,6 +121,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             "and run_inventory.csv; use when raw run directories are elsewhere."
         ),
     )
+    parser.add_argument(
+        "--condition-override-root",
+        type=Path,
+        default=None,
+        help="Completed fixed-condition runs used to replace one precision condition.",
+    )
+    parser.add_argument("--condition-override-id", default=None)
     parser.add_argument("--protocol", type=Path, default=DEFAULT_PROTOCOL_PATH)
     parser.add_argument("--analysis-id", default="analysis_v01")
     parser.add_argument("--delta-min", type=float, default=None)
@@ -254,6 +302,7 @@ def analyze(args: argparse.Namespace) -> Path:
         },
         "pilot_experiment_root": experiment_root.as_posix(),
         "source_analysis": None,
+        "condition_override": None,
         "delta_min": args.delta_min,
         "outputs": {},
         "decision": None,
@@ -283,6 +332,61 @@ def analyze(args: argparse.Namespace) -> Path:
                     "analysis_manifest_sha256": sha256_file(source_manifest),
                     "iteration_metrics_sha256": sha256_file(source_iterations),
                     "run_inventory_sha256": sha256_file(source_runs),
+                }
+            override_requested = (
+                args.condition_override_root is not None
+                or args.condition_override_id is not None
+            )
+            if override_requested:
+                if (
+                    args.condition_override_root is None
+                    or args.condition_override_id is None
+                ):
+                    raise ValueError(
+                        "--condition-override-root and --condition-override-id "
+                        "must be specified together"
+                    )
+                if args.source_analysis_root is None:
+                    raise ValueError(
+                        "condition override requires --source-analysis-root"
+                    )
+                override_id = validate_safe_name(
+                    args.condition_override_id, "condition_override_id"
+                )
+                override_specs = [
+                    spec for spec in specs if spec.condition_id == override_id
+                ]
+                if not override_specs:
+                    raise ValueError(
+                        f"condition override is not present in protocol: {override_id}"
+                    )
+                override_root = args.condition_override_root.resolve()
+                override_plan, override_study = _validate_precision_override_source(
+                    override_root,
+                    protocol_path,
+                    override_specs,
+                )
+                correction = load_precision_pilot(
+                    override_root, expected_specs=override_specs
+                )
+                data = replace_precision_condition(
+                    data, correction, condition_id=override_id
+                )
+                study_manifest = override_root / "study_manifest.json"
+                manifest["condition_override"] = {
+                    "condition_id": override_id,
+                    "experiment_root": override_root.as_posix(),
+                    "run_count": len(override_specs),
+                    "execution_plan_sha256": sha256_file(
+                        override_root / "pilot_execution_plan.json"
+                    ),
+                    "study_manifest_sha256": sha256_file(study_manifest),
+                    "execution_plan_experiment_id": override_plan.get(
+                        "experiment_id"
+                    ),
+                    "study_manifest_run_count": len(
+                        override_study.get("runs", [])
+                    ),
                 }
             prefixes = [int(value) for value in phase["prefix_iterations"]]
             repetitions = int(
@@ -442,9 +546,14 @@ def analyze(args: argparse.Namespace) -> Path:
                 "decision_method": decision_method,
             }
         else:
-            if args.source_analysis_root is not None:
+            if (
+                args.source_analysis_root is not None
+                or args.condition_override_root is not None
+                or args.condition_override_id is not None
+            ):
                 raise ValueError(
-                    "--source-analysis-root is only supported for precision analysis"
+                    "source and condition overrides are only supported for "
+                    "precision analysis"
                 )
             if args.iterations is None:
                 raise ValueError("optimization analysis requires --iterations")
