@@ -265,6 +265,40 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
 
 分析処理は、全54 run、全2700試行、全270,000反復について、manifestとprotocolの一致、試行完遂、適用パラメータ、raw保存方針を検査する。各試行の`pop.arrow`から目的関数を再計算し、保存値と一致した場合だけ収束表と候補プールを出力する。候補プールには各runの最良試行を1件ずつ残す。探索用seedだけで最終候補や抑制効果を確定せず、未使用seedによる候補検証は第7段階で行う。
 
+### 第7段階：検証seedによる候補選択
+
+第7段階では、追跡用に固定した[`stage7_candidate_pool_v1.csv`](../experiment_protocols/stage7_candidate_pool_v1.csv)の54候補を、[`stage7_candidate_validation_v1.json`](../experiment_protocols/stage7_candidate_validation_v1.json)に従って検証する。各ネットワークの18候補に`none`、`legacy_balance`、正しい既存CSVの`prior_high`を加え、未使用seed `40001`--`40003`で各100反復を行う。全体は189 run、18,900反復である。
+
+```bash
+.venv/bin/python run_stage7_candidate_validation.py \
+  --experiment-id <stage7_experiment_id> \
+  --dry-run
+
+.venv/bin/python -u run_stage7_candidate_validation.py \
+  --experiment-id <stage7_experiment_id> \
+  2>&1 | tee "$HOME/<stage7_experiment_id>.log"
+```
+
+中断後は、同じGit commit、protocol、候補CSV、実験IDで`--resume`を指定する。完了runだけを飛ばし、不完全な既存runは上書きしない。
+
+```bash
+.venv/bin/python -u run_stage7_candidate_validation.py \
+  --experiment-id <stage7_experiment_id> \
+  --resume \
+  2>&1 | tee -a "$HOME/<stage7_experiment_id>.log"
+```
+
+実験結果をMacBookへ転送した後、raw `pop.arrow`の再計算、階層的paired bootstrap、seedブロック順位、候補領域、最終候補の固定を行う。
+
+```bash
+.venv/bin/python analyze_stage7_candidate_validation.py \
+  --experiment-root experiments/summer_2026/stage7_candidate_validation/<stage7_experiment_id> \
+  --protocol experiment_protocols/stage7_candidate_validation_v1.json \
+  --analysis-id candidate_validation_analysis_v01
+```
+
+候補は、無介入と`legacy_balance`の双方に対して平均抑制量が正で、3検証seed中2 seed以上でも改善した場合に適格とする。適格候補をseedブロック順位の中央値、最悪順位、平均目的値の順に並べ、距離0.05以内の完全連結領域から代表1点、最大3領域を選ぶ。`prior_high`は確実性・有効性以外も含む先行研究パッケージの外部ベンチマークであり、候補適格性の必須条件にはしない。選択後も検証値を最終性能とは扱わず、seed `50001`--`50005`は第8段階まで使用しない。可視化には[`第7段階_検証seedによる候補選択.ipynb`](../notebooks/第7段階_検証seedによる候補選択.ipynb)を用いる。
+
 以下は春学期までの旧実行系である。
 
 | スクリプト | 内容 | 出力先 |

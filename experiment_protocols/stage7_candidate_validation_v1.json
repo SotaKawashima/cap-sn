@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage7_candidate_validation_v1",
+  "stage": "stage7_candidate_validation",
+  "status": "frozen_before_execution",
+  "created_date": "2026-08-22",
+  "purpose": {
+    "primary": "Validate every Stage 6 run-level candidate on unused simulator-seed blocks and freeze the candidates or candidate regions sent to the final test.",
+    "secondary": "Quantify exploration-to-validation optimism and compare generated candidates with no intervention, the spring reference, and the exact prior-study package benchmark.",
+    "not_in_scope": [
+      "reporting validation estimates as final performance",
+      "using final-test simulator seeds",
+      "claiming that certainty and effectiveness alone reproduce the exact prior_high package",
+      "testing a universal candidate shared across networks",
+      "declaring one optimization method generally superior"
+    ]
+  },
+  "decision_sources": [
+    {
+      "role": "stage6_execution_and_candidate_generation_specification",
+      "path": "experiment_protocols/stage6_reoptimization_v1.json",
+      "sha256": "ae18a22e770249c1b76e12eff618090dde3a5ac4fbf18944118fb3db3153fd41"
+    },
+    {
+      "role": "stage6_formal_candidate_pool_before_tracking_copy",
+      "path": "experiments/summer_2026/stage6_reoptimization/20260819_162842_stage6_reoptimization_v01/reoptimization_analysis_v01/tables/candidate_pool.csv",
+      "sha256": "98f37150c3a9a2a69908d740d6d76893bf19a13f7d8b1cba98f181e64cc358d3",
+      "availability": "provenance_only_not_required_at_execution"
+    },
+    {
+      "role": "stage6_formal_decision",
+      "path": "experiments/summer_2026/stage6_reoptimization/20260819_162842_stage6_reoptimization_v01/reoptimization_analysis_v01/decision.json",
+      "sha256": "c7e4aa16b5adc5729e436a8060a130fb0c5e395a5a53948bfc4ea19b8e4262ac",
+      "availability": "provenance_only_not_required_at_execution"
+    },
+    {
+      "role": "corrected_prior_high_definition",
+      "path": "experiment_protocols/stage4_fixed_confirmation_v2_prior_high_correction.json",
+      "sha256": "61eafd8d15ec18d84d26674d6a2ea4f408f1ff8d9e69b9ed12454b3f1befcf8c"
+    }
+  ],
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize",
+    "scope": "Validate and select candidates separately for each network."
+  },
+  "candidate_source": {
+    "path": "experiment_protocols/stage7_candidate_pool_v1.csv",
+    "sha256": "f66b2f551f461bdaf4fdc2cd1b423cf716d3ef2539170e4ec3d33d077604fb64",
+    "rows": 54,
+    "rows_per_network": 18,
+    "application_precision_decimal_places": 4,
+    "policy": "Evaluate all 54 candidates. Do not remove or merge candidates before validation."
+  },
+  "design": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      40001,
+      40002,
+      40003
+    ],
+    "iterations_per_seed_block": 100,
+    "raw_level": "pop",
+    "comparators": [
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "role": "no_intervention_baseline",
+        "selection_role": "required_suppression_reference"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "role": "spring_research_reference",
+        "selection_role": "required_optimization_gain_reference"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "opinion_csv": "v2/test_2/strategy/inhibition_opinion/98_98.csv",
+        "opinion_sha256": "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745",
+        "role": "prior_study_package_benchmark",
+        "selection_role": "external_benchmark_not_an_eligibility_requirement"
+      }
+    ],
+    "candidate_count": 54,
+    "candidate_count_per_network": 18,
+    "comparator_count_per_network": 3,
+    "condition_count_per_network": 21,
+    "expected_run_count": 189,
+    "expected_simulation_iterations": 18900
+  },
+  "fairness_rules": [
+    "Evaluate every candidate and comparator on the same three simulator-seed blocks within its network.",
+    "Use the same 100 iterations, retained raw level, agent settings, information settings, timing, and initial-source settings for every condition.",
+    "Treat a Stage 6 candidate as a network-specific condition; never apply a candidate from one network to another network in Stage 7.",
+    "Use the applied four-decimal certainty and effectiveness values saved by Stage 6.",
+    "Keep method and optimizer-replicate labels only as candidate provenance; do not reserve shortlist positions by method.",
+    "Do not use a validation result to add, remove, or alter a candidate before all 189 runs are complete."
+  ],
+  "seed_policy": {
+    "development_and_fixed_confirmation": [
+      20001,
+      20002,
+      20003,
+      20004,
+      20005
+    ],
+    "stage6_exploration": [
+      30001
+    ],
+    "candidate_validation": [
+      40001,
+      40002,
+      40003
+    ],
+    "reserved_final_test": [
+      50001,
+      50002,
+      50003,
+      50004,
+      50005
+    ],
+    "disjointness_required": true,
+    "final_test_use_policy": "Do not execute or inspect final-test seeds until Stage 7 selection is frozen."
+  },
+  "inference": {
+    "pairing": "same_network_same_simulator_seed_same_iteration_index",
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "levels": [
+        "simulator_seed_block",
+        "iteration_within_seed_block"
+      ],
+      "repetitions": 10000,
+      "seed": 91001,
+      "confidence_level": 0.95,
+      "selection_use": "descriptive_only_not_an_eligibility_threshold"
+    },
+    "effect_measures": [
+      "reference_minus_candidate_absolute_suppression",
+      "relative_suppression_eta",
+      "equivalent_agents"
+    ],
+    "minimum_important_effect_threshold": null,
+    "policy": "Report continuous estimates and intervals; do not invent a post-hoc magnitude threshold."
+  },
+  "selection_rule": {
+    "scope": "Apply independently within each network and only to the 18 Stage 6 candidates.",
+    "block_rank": {
+      "metric": "mean cumulative_selfish_fraction within each validation simulator-seed block",
+      "direction": "ascending",
+      "tie_method": "average"
+    },
+    "eligibility": {
+      "none_reference": {
+        "mean_absolute_suppression_strictly_positive": true,
+        "minimum_positive_seed_blocks": 2
+      },
+      "legacy_balance_reference": {
+        "mean_absolute_improvement_strictly_positive": true,
+        "minimum_positive_seed_blocks": 2
+      },
+      "prior_high_reference": {
+        "required": false,
+        "reason": "prior_high reproduces an exact prior-study opinion package whose non-design-variable fields are not assumed reachable by changing only certainty and effectiveness"
+      },
+      "confidence_interval_required": false,
+      "reason": "The three validation blocks are used for robust direction and ranking; interval width is reported but not converted into an arbitrary pass threshold."
+    },
+    "candidate_order": [
+      "median_validation_block_rank_ascending",
+      "worst_validation_block_rank_ascending",
+      "mean_validation_objective_ascending",
+      "candidate_id_ascending"
+    ],
+    "region_grouping": {
+      "method": "deterministic_complete_linkage",
+      "coordinates": [
+        "applied_certainty",
+        "applied_effectiveness"
+      ],
+      "distance": "euclidean_in_raw_design_variable_units",
+      "maximum_complete_linkage_distance": 0.05,
+      "purpose": "Interpret nearby qualifying candidates as one observed good region; do not infer untested points inside the region are good."
+    },
+    "shortlist": {
+      "maximum_regions_per_network": 3,
+      "representative": "best ordered eligible candidate in each region",
+      "when_eligible_candidates_exist": "Select representatives only from eligible regions, up to the maximum.",
+      "when_no_eligible_candidate_exists": "Select up to three best-ranked distinct regions as exploratory fallback and set the network decision to no_qualified_candidate.",
+      "method_quota": false
+    }
+  },
+  "analysis_plan": {
+    "quality_gate": {
+      "required_completed_runs": 189,
+      "required_iterations_per_run": 100,
+      "recalculate_objective_from_pop_arrow": true,
+      "numeric_tolerance": 1e-12
+    },
+    "outputs": [
+      "data_audit",
+      "run_inventory",
+      "iteration_metrics",
+      "condition_seed_summary",
+      "condition_summary",
+      "candidate_block_performance",
+      "candidate_effects_vs_none",
+      "candidate_effects_vs_legacy_balance",
+      "candidate_effects_vs_prior_high",
+      "exploration_validation_comparison",
+      "candidate_clusters",
+      "candidate_ranking",
+      "selected_candidates",
+      "decision"
+    ],
+    "interpretation_limits": [
+      "Validation estimates are used for selection and are not final performance estimates.",
+      "A positive validation effect does not authorize a final generalization claim.",
+      "Region bounds summarize observed candidates only and do not validate every interior parameter value.",
+      "The reserved final-test seeds remain unused throughout Stage 7."
+    ]
+  },
+  "output": {
+    "stage_directory": "stage7_candidate_validation",
+    "run_directory": "<network>/<condition_id>/simseed_<simulator_seed>",
+    "execution_plan": "candidate_validation_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}
