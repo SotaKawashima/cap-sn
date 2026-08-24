@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage8_final_evaluation_v1",
+  "stage": "stage8_final_evaluation",
+  "status": "frozen_before_execution",
+  "created_date": "2026-08-24",
+  "purpose": {
+    "primary": "Estimate the out-of-sample suppression effect of the nine candidates frozen by Stage 7 on simulator-seed blocks unused by exploration and validation.",
+    "secondary": "Separate intervention effectiveness from optimization gain by comparing every candidate with no intervention, the spring reference, and the exact prior-study package benchmark.",
+    "not_in_scope": [
+      "selecting or tuning candidates with final-test results",
+      "pooling network-specific candidates into one universal optimum",
+      "declaring one optimization method generally superior",
+      "introducing a post-hoc minimum important effect threshold",
+      "claiming that certainty and effectiveness alone reproduce the exact prior_high package"
+    ]
+  },
+  "decision_sources": [
+    {
+      "role": "stage7_protocol",
+      "path": "experiment_protocols/stage7_candidate_validation_v1.json",
+      "sha256": "706ca7b450d382394513f8df0b32ba130403189a807f61193b153b175b3fd266"
+    },
+    {
+      "role": "stage7_formal_selected_candidates_before_tracking_copy",
+      "path": "experiments/summer_2026/stage7_candidate_validation/20260824_101150_candidate_validation_v01/candidate_validation_analysis_v01/tables/selected_candidates.csv",
+      "sha256": "b6c43b80c3dc1e44898afe053608376f0cae1724256706b270225ed29a930bf6",
+      "availability": "provenance_only_not_required_at_execution"
+    },
+    {
+      "role": "stage7_formal_decision",
+      "path": "experiments/summer_2026/stage7_candidate_validation/20260824_101150_candidate_validation_v01/candidate_validation_analysis_v01/decision.json",
+      "sha256": "77fc0d02f96d94ca3c238328a63639b8bfc543aaa3b74460c1559070c70399a0",
+      "availability": "provenance_only_not_required_at_execution"
+    },
+    {
+      "role": "corrected_prior_high_definition",
+      "path": "experiment_protocols/stage4_fixed_confirmation_v2_prior_high_correction.json",
+      "sha256": "61eafd8d15ec18d84d26674d6a2ea4f408f1ff8d9e69b9ed12454b3f1befcf8c"
+    }
+  ],
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize",
+    "scope": "Estimate final effects separately for each network and each frozen candidate."
+  },
+  "candidate_source": {
+    "path": "experiment_protocols/stage8_final_candidate_pool_v1.csv",
+    "sha256": "13b5b4511b643e63f50a3fa687cfed8dc31f4728d3a91974c7d9ab4e7d16f703",
+    "rows": 9,
+    "rows_per_network": 3,
+    "application_precision_decimal_places": 4,
+    "policy": "Evaluate all nine frozen candidates without addition, removal, parameter modification, reranking, or reselection."
+  },
+  "design": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      50001,
+      50002,
+      50003,
+      50004,
+      50005
+    ],
+    "iterations_per_seed_block": 100,
+    "raw_level": "pop",
+    "comparators": [
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "role": "no_intervention_baseline",
+        "reporting_role": "intervention_effect_reference"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "role": "spring_research_reference",
+        "reporting_role": "optimization_gain_reference"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "opinion_csv": "v2/test_2/strategy/inhibition_opinion/98_98.csv",
+        "opinion_sha256": "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745",
+        "role": "prior_study_package_benchmark",
+        "reporting_role": "external_benchmark"
+      }
+    ],
+    "candidate_count": 9,
+    "candidate_count_per_network": 3,
+    "comparator_count_per_network": 3,
+    "condition_count_per_network": 6,
+    "expected_run_count": 90,
+    "expected_simulation_iterations": 9000
+  },
+  "candidate_reporting_policy": {
+    "selection_order_1": "Primary candidate fixed before final-test execution. Use this candidate for the main network-specific claim.",
+    "selection_order_2_and_3": "Secondary representatives of different Stage 7 regions. Report them descriptively to assess region robustness; do not replace the primary candidate after seeing test results.",
+    "qualified_networks": [
+      "ba1000",
+      "wiki_vote"
+    ],
+    "exploratory_fallback_networks": [
+      "facebook"
+    ],
+    "facebook_limit": "Stage 7 found no candidate satisfying its prespecified eligibility rule. All Facebook candidates remain exploratory fallbacks and cannot support a confirmed optimized-candidate claim.",
+    "test_result_policy": "Report every candidate. Never use Stage 8 values or confidence intervals to rerank, replace, tune, or discard candidates."
+  },
+  "fairness_rules": [
+    "Evaluate every candidate and comparator on the same five simulator-seed blocks within its network.",
+    "Use the same 100 iterations, retained raw level, agent settings, information settings, timing, and initial-source settings for every condition.",
+    "Treat every candidate as network-specific; never apply it to another network.",
+    "Use the exact four-decimal certainty and effectiveness values frozen after Stage 7.",
+    "Use the exact existing opinion CSV for prior_high and generate only the candidate and legacy_balance opinions from design variables.",
+    "Do not inspect a partial result to alter the remaining execution or reporting roles."
+  ],
+  "seed_policy": {
+    "development_and_fixed_confirmation": [
+      20001,
+      20002,
+      20003,
+      20004,
+      20005
+    ],
+    "stage6_exploration": [
+      30001
+    ],
+    "stage7_candidate_validation": [
+      40001,
+      40002,
+      40003
+    ],
+    "stage8_final_test": [
+      50001,
+      50002,
+      50003,
+      50004,
+      50005
+    ],
+    "disjointness_required": true,
+    "final_test_use_policy": "Use these seeds once for frozen-candidate final estimation. Do not feed any Stage 8 result back into candidate selection or optimization."
+  },
+  "inference": {
+    "unit_of_generalization": "simulator_seed_block_with_iterations_nested_within_block",
+    "pairing": "same_network_same_simulator_seed_same_iteration_index",
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "levels": [
+        "simulator_seed_block",
+        "iteration_within_seed_block"
+      ],
+      "repetitions": 10000,
+      "seed": 92001,
+      "confidence_level": 0.95,
+      "final_inference_use": true
+    },
+    "effect_measures": [
+      "reference_minus_candidate_absolute_suppression",
+      "relative_suppression_eta",
+      "equivalent_agents"
+    ],
+    "minimum_important_effect_threshold": null,
+    "interpretation": {
+      "reduction": "The absolute-suppression confidence interval is entirely above zero.",
+      "reduction_tendency_with_uncertainty": "The point estimate is positive but the confidence interval includes zero.",
+      "increase": "The absolute-suppression confidence interval is entirely below zero.",
+      "no_clear_reduction": "No clear directional conclusion is supported."
+    },
+    "multiplicity_policy": "Do not convert the nine candidate comparisons into a winner search. The primary candidate in each network was fixed before testing; secondary comparisons are descriptive.",
+    "policy": "Report continuous estimates, seed-block directions, and intervals. Do not invent a post-hoc magnitude threshold."
+  },
+  "analysis_plan": {
+    "quality_gate": {
+      "required_completed_runs": 90,
+      "required_iterations_per_run": 100,
+      "recalculate_objective_from_pop_arrow": true,
+      "numeric_tolerance": 1e-12
+    },
+    "outputs": [
+      "data_audit",
+      "run_inventory",
+      "iteration_metrics",
+      "condition_seed_summary",
+      "condition_summary",
+      "candidate_seed_performance",
+      "candidate_effects_vs_none",
+      "candidate_effects_vs_legacy_balance",
+      "candidate_effects_vs_prior_high",
+      "validation_test_comparison",
+      "final_candidate_results",
+      "network_conclusions",
+      "decision"
+    ],
+    "interpretation_limits": [
+      "Each network is analyzed separately.",
+      "Only the predesignated primary candidate supports the main network-specific candidate claim.",
+      "Secondary candidates describe robustness across selected regions and cannot replace the primary candidate.",
+      "Facebook remains exploratory because Stage 7 had no eligible candidate.",
+      "prior_high is an external package benchmark and not a condition reachable by changing certainty and effectiveness alone.",
+      "The five final-test seed blocks do not establish validity outside the modeled networks and fixed intervention conditions."
+    ]
+  },
+  "output": {
+    "stage_directory": "stage8_final_evaluation",
+    "run_directory": "<network>/<condition_id>/simseed_<simulator_seed>",
+    "execution_plan": "final_evaluation_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}

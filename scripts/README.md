@@ -299,6 +299,40 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
 
 候補は、無介入と`legacy_balance`の双方に対して平均抑制量が正で、3検証seed中2 seed以上でも改善した場合に適格とする。適格候補をseedブロック順位の中央値、最悪順位、平均目的値の順に並べ、距離0.05以内の完全連結領域から代表1点、最大3領域を選ぶ。`prior_high`は確実性・有効性以外も含む先行研究パッケージの外部ベンチマークであり、候補適格性の必須条件にはしない。選択後も検証値を最終性能とは扱わず、seed `50001`--`50005`は第8段階まで使用しない。可視化には[`第7段階_検証seedによる候補選択.ipynb`](../notebooks/第7段階_検証seedによる候補選択.ipynb)を用いる。
 
+### 第8段階：未使用テストseedによる最終評価
+
+第8段階では、追跡用に固定した[`stage8_final_candidate_pool_v1.csv`](../experiment_protocols/stage8_final_candidate_pool_v1.csv)の9候補を、[`stage8_final_evaluation_v1.json`](../experiment_protocols/stage8_final_evaluation_v1.json)に従って最終評価する。各ネットワークの3候補に`none`、`legacy_balance`、正しい既存CSVの`prior_high`を加え、未使用seed `50001`--`50005`で各100反復を行う。全体は90 run、9,000反復である。
+
+```bash
+.venv/bin/python run_stage8_final_evaluation.py \
+  --experiment-id <stage8_experiment_id> \
+  --dry-run
+
+.venv/bin/python -u run_stage8_final_evaluation.py \
+  --experiment-id <stage8_experiment_id> \
+  2>&1 | tee "$HOME/<stage8_experiment_id>.log"
+```
+
+中断後は、同じGit commit、protocol、候補CSV、実験IDで`--resume`を指定する。完了runだけを飛ばし、不完全な既存runは上書きしない。
+
+```bash
+.venv/bin/python -u run_stage8_final_evaluation.py \
+  --experiment-id <stage8_experiment_id> \
+  --resume \
+  2>&1 | tee -a "$HOME/<stage8_experiment_id>.log"
+```
+
+実験完了後、raw `pop.arrow`から全指標を再計算し、5 seedブロックと各100反復を階層化したpaired bootstrapで最終CIを算出する。
+
+```bash
+.venv/bin/python analyze_stage8_final_evaluation.py \
+  --experiment-root experiments/summer_2026/stage8_final_evaluation/<stage8_experiment_id> \
+  --protocol experiment_protocols/stage8_final_evaluation_v1.json \
+  --analysis-id final_evaluation_analysis_v01
+```
+
+第7段階の選択順1位をネットワーク別の主候補として事前固定し、2位・3位は異なる候補領域の副候補として記述する。最終テスト結果を用いた候補の順位変更、差し替え、再調整は行わない。Facebookは第7段階で適格候補がなかったため、3候補とも探索的フォールバックとして扱う。可視化には[`第8段階_未使用テストseedによる最終評価.ipynb`](../notebooks/第8段階_未使用テストseedによる最終評価.ipynb)を用いる。
+
 以下は春学期までの旧実行系である。
 
 | スクリプト | 内容 | 出力先 |

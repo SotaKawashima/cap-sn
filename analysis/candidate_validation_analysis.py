@@ -49,7 +49,11 @@ def _float_matches(observed: Any, expected: Any, tolerance: float) -> bool:
 
 
 def _manifest_errors(
-    manifest: dict[str, Any], spec: Any, *, tolerance: float
+    manifest: dict[str, Any],
+    spec: Any,
+    *,
+    tolerance: float,
+    expected_stage: str = STAGE,
 ) -> list[str]:
     intervention = manifest.get("intervention", {})
     objective = manifest.get("objective", {})
@@ -67,7 +71,7 @@ def _manifest_errors(
     }
     expected = {
         "status": "completed",
-        "stage": STAGE,
+        "stage": expected_stage,
         "run_type": "fixed_condition",
         "network": spec.network,
         "condition_id": spec.condition_id,
@@ -156,8 +160,9 @@ def load_candidate_validation(
     *,
     expected_specs: Sequence[Any],
     numeric_tolerance: float = 1e-12,
+    expected_stage: str = STAGE,
 ) -> CandidateValidationData:
-    """Load all expected runs and reproduce metrics from retained pop Arrow."""
+    """Load fixed candidate runs and reproduce metrics from retained pop Arrow."""
 
     root = Path(experiment_root).resolve()
     if numeric_tolerance < 0 or not math.isfinite(numeric_tolerance):
@@ -193,7 +198,12 @@ def load_candidate_validation(
                 raise FileNotFoundError(f"missing files: {missing}")
             audit["files_present"] = True
             manifest = _read_json(paths["manifest"])
-            errors = _manifest_errors(manifest, spec, tolerance=numeric_tolerance)
+            errors = _manifest_errors(
+                manifest,
+                spec,
+                tolerance=numeric_tolerance,
+                expected_stage=expected_stage,
+            )
             if errors:
                 raise ValueError("; ".join(errors))
             audit["manifest_valid"] = True
@@ -297,7 +307,7 @@ def load_candidate_validation(
     if failures:
         preview = "\n".join(failures[:10])
         raise ValueError(
-            f"Stage 7 data audit failed for {len(failures)} runs:\n{preview}"
+            f"{expected_stage} data audit failed for {len(failures)} runs:\n{preview}"
         )
     iterations = pd.concat(iteration_frames, ignore_index=True)
     runs = pd.DataFrame(run_rows)
@@ -443,8 +453,10 @@ def _paired_hierarchical_effect(
     }
 
 
-def _candidate_metadata(iterations: pd.DataFrame) -> pd.DataFrame:
-    candidates = iterations[iterations["condition_role"] == "stage6_candidate"]
+def _candidate_metadata(
+    iterations: pd.DataFrame, *, candidate_role: str = "stage6_candidate"
+) -> pd.DataFrame:
+    candidates = iterations[iterations["condition_role"] == candidate_role]
     columns = [
         "network",
         "condition_id",
@@ -468,6 +480,7 @@ def build_candidate_effects(
     reference_id: str,
     repetitions: int,
     seed: int,
+    candidate_role: str = "stage6_candidate",
 ) -> pd.DataFrame:
     key = ["network", "simulator_seed", "num_iter"]
     if iterations.duplicated(key + ["condition_id"]).any():
@@ -477,7 +490,7 @@ def build_candidate_effects(
     ).reset_index()
     if reference_id not in wide:
         raise ValueError(f"reference condition is missing: {reference_id}")
-    metadata = _candidate_metadata(iterations)
+    metadata = _candidate_metadata(iterations, candidate_role=candidate_role)
     rows: list[dict[str, Any]] = []
     for offset, candidate in metadata.sort_values(
         ["network", "condition_id"]
@@ -515,7 +528,9 @@ def build_candidate_effects(
     return pd.DataFrame(rows)
 
 
-def build_candidate_block_performance(iterations: pd.DataFrame) -> pd.DataFrame:
+def build_candidate_block_performance(
+    iterations: pd.DataFrame, *, candidate_role: str = "stage6_candidate"
+) -> pd.DataFrame:
     seed_summary = build_seed_summary(iterations)
     references = (
         seed_summary[
@@ -530,7 +545,9 @@ def build_candidate_block_performance(iterations: pd.DataFrame) -> pd.DataFrame:
         )
         .reset_index()
     )
-    candidates = seed_summary[seed_summary["condition_role"] == "stage6_candidate"].copy()
+    candidates = seed_summary[
+        seed_summary["condition_role"] == candidate_role
+    ].copy()
     candidates["validation_block_rank"] = candidates.groupby(
         ["network", "simulator_seed"], sort=False
     )["mean_jcum"].rank(method="average", ascending=True)
