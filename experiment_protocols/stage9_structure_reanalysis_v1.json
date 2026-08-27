@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "stage": "stage9_structure_reanalysis",
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "secondary_metric": "peak_new_selfish_ratio"
+  },
+  "expected_iterations_per_run": 100,
+  "expected_raw_run_count": 357,
+  "bootstrap": {
+    "repetitions": 10000,
+    "seed": 20260824
+  },
+  "strategies": {
+    "balance": {
+      "certainty": 0.8,
+      "effectiveness": 0.8
+    },
+    "effective_high": {
+      "certainty": 0.5,
+      "effectiveness": 0.9
+    },
+    "certainty_high": {
+      "certainty": 0.9,
+      "effectiveness": 0.5
+    }
+  },
+  "strategy_comparisons": [
+    {
+      "id": "effective_high_vs_balance",
+      "reference": "balance",
+      "candidate": "effective_high"
+    },
+    {
+      "id": "certainty_high_vs_balance",
+      "reference": "balance",
+      "candidate": "certainty_high"
+    },
+    {
+      "id": "effective_high_vs_certainty_high",
+      "reference": "certainty_high",
+      "candidate": "effective_high"
+    }
+  ],
+  "datasets": [
+    {
+      "id": "ba_topology",
+      "run_root": "experiments/2026-05_baseline_ba1000_topology/strategy_runs",
+      "path_layout": "standard",
+      "fixed_num_agents": 1000,
+      "structure_level_template": "ba1000_topology",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "primary_synthetic_network_seed",
+      "analysis_note": "Four BA topology instances; no no-intervention condition."
+    },
+    {
+      "id": "real_network_legacy",
+      "run_root": "experiments/2026-05_real_network_strategy/strategy_runs",
+      "path_layout": "standard",
+      "fixed_num_agents_by_network": {
+        "facebook": 4039,
+        "wiki-vote": 7115
+      },
+      "structure_level_template": "{network}",
+      "block_kind": "observed_network",
+      "default_simulator_seed": 0,
+      "evidence_scope": "descriptive_single_seed_legacy",
+      "analysis_note": "Retained for historical comparison only; Stage 4 supplies the formal fixed-condition evidence."
+    },
+    {
+      "id": "powerlaw_cluster",
+      "run_root": "experiments/2026-05-18_powerlaw_cluster/strategy_runs",
+      "metadata_csv": "v2/test_2/network/powerlaw_cluster/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "{cluster_level}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "primary_synthetic_network_seed",
+      "analysis_note": "Average degree is approximately fixed at 20."
+    },
+    {
+      "id": "powerlaw_degree",
+      "run_root": "experiments/2026-05-19_powerlaw_degree/strategy_runs",
+      "metadata_csv": "v2/test_2/network/powerlaw_degree/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "{degree_level}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "primary_synthetic_network_seed",
+      "analysis_note": "Node count is fixed at 1000."
+    },
+    {
+      "id": "powerlaw_degree_cluster",
+      "run_root": "experiments/2026-05-19_powerlaw_degree_cluster/strategy_runs",
+      "metadata_csv": "v2/test_2/network/powerlaw_degree_cluster/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "{degree_level}_{cluster_level}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "primary_synthetic_network_seed",
+      "analysis_note": "Average degree is approximately fixed at 40."
+    },
+    {
+      "id": "powerlaw_node_count_graph_comm",
+      "run_root": "experiments/2026-05-25_powerlaw_node_count_graph_comm/strategy_runs",
+      "metadata_csv": "v2/test_2/network/powerlaw_node_count/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "n{num_nodes}_{cluster_level}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "excluded_comm_confounding",
+      "analysis_note": "Reaggregated for audit only because graph-derived comm.csv changed source placement."
+    },
+    {
+      "id": "powerlaw_cluster_c06",
+      "run_root": "experiments/2026-05-26_powerlaw_cluster_c06/strategy_runs",
+      "metadata_csv": "v2/test_2/network/powerlaw_cluster_c06/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "c06_low_degree",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "exploratory_degree_cluster_confounding",
+      "analysis_note": "Clustering near 0.6 is confounded with average degree near 6."
+    },
+    {
+      "id": "powerlaw_node_count_ba_comm",
+      "run_root": "experiments/2026-05-26_powerlaw_node_count_ba_comm/strategy_runs",
+      "metadata_csv": "v2/test_2/network/powerlaw_node_count_ba_comm/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "n{num_nodes}_{cluster_level}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "exploratory_node_count_with_fixed_comm_source",
+      "analysis_note": "Node count changes while BA-derived support placement is retained."
+    },
+    {
+      "id": "lfr_community",
+      "run_root": "experiments/2026-06-02_lfr_community/strategy_runs",
+      "metadata_csv": "v2/test_2/network/lfr_community/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "{community_level}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "evidence_scope": "primary_synthetic_network_seed",
+      "analysis_note": "Three independently generated graphs at each mixing parameter."
+    },
+    {
+      "id": "lfr_facebook_pool",
+      "run_root": "experiments/2026-06-02_lfr_facebook_pool/strategy_runs",
+      "metadata_csv": "v2/test_2/network/lfr_facebook_pool/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "{comm_method}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "paired_structure_reference": "original",
+      "evidence_scope": "exploratory_source_pool_manipulation",
+      "analysis_note": "Graph is fixed within seed and only support-level placement changes."
+    },
+    {
+      "id": "lfr_rust_target_pool",
+      "run_root": "experiments/2026-06-03_lfr_rust_target_pool/strategy_runs",
+      "metadata_csv": "v2/test_2/network/lfr_rust_target_pool/generation_summary.csv",
+      "path_layout": "standard",
+      "structure_level_template": "{comm_method}",
+      "block_kind": "network_seed",
+      "default_simulator_seed": 0,
+      "paired_structure_reference": "original",
+      "evidence_scope": "exploratory_source_pool_manipulation",
+      "analysis_note": "Graph is fixed within seed and support placement follows the Rust ordering."
+    },
+    {
+      "id": "facebook_degree_rewire",
+      "run_root": "experiments/2026-06-16_facebook_degree_rewire/strategy_runs/degree_rewire_20260616_113844",
+      "metadata_csv": "v2/test_2/network/facebook_degree_rewire/generation_summary.csv",
+      "path_layout": "simseed_network_strategy",
+      "structure_level_template": "{variant}",
+      "block_kind": "simulator_seed",
+      "paired_structure_reference": "original",
+      "evidence_scope": "primary_single_graph_rewiring",
+      "analysis_note": "Degree sequence is fixed, but several other structural metrics change together."
+    }
+  ],
+  "formal_fixed_effect_source": {
+    "analysis_manifest": "experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01/fixed_confirmation_prior_high_corrected_v05/analysis_manifest.json",
+    "condition_summary": "experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01/fixed_confirmation_prior_high_corrected_v05/tables/condition_summary.csv",
+    "all_enabled_vs_none": "experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01/fixed_confirmation_prior_high_corrected_v05/tables/all_enabled_vs_none.csv",
+    "selected_conditions": [
+      "legacy_balance",
+      "legacy_effectiveness_high",
+      "legacy_certainty_high",
+      "grid_c100_e100",
+      "prior_high"
+    ]
+  }
+}

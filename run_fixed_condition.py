@@ -16,6 +16,7 @@ from experiment_runtime import (
     AGENT_CONFIG,
     MANIFEST_SCHEMA_VERSION,
     NETWORKS,
+    NetworkSpec,
     STRATEGY_TEMPLATE,
     SUMMER_EXPERIMENT_ROOT,
     ExperimentConfigurationError,
@@ -134,7 +135,14 @@ def resolve_condition(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
-def run_fixed_condition(args: argparse.Namespace) -> Path:
+def run_fixed_condition_for_network(
+    args: argparse.Namespace,
+    *,
+    network: NetworkSpec,
+    network_seed: int | None,
+) -> Path:
+    """Run one fixed condition on an explicitly resolved network."""
+
     stage = validate_safe_name(args.stage, "stage")
     simulator_seed = validate_nonnegative_integer(
         args.simulator_seed, "simulator_seed"
@@ -145,7 +153,6 @@ def run_fixed_condition(args: argparse.Namespace) -> Path:
         if args.experiment_id
         else make_experiment_id(args.purpose)
     )
-    network = NETWORKS[args.network]
     condition = resolve_condition(args)
     output_root = resolve_output_root(args.output_root)
     experiment_root = output_root / stage / experiment_id
@@ -219,7 +226,7 @@ def run_fixed_condition(args: argparse.Namespace) -> Path:
         "network": {
             "id": network.id,
             **config_manifest_entry(network.config_path),
-            "network_seed": None,
+            "network_seed": network_seed,
             "num_agents": network.num_agents,
         },
         "agent": config_manifest_entry(AGENT_CONFIG),
@@ -327,6 +334,16 @@ def run_fixed_condition(args: argparse.Namespace) -> Path:
         )
 
     return run_dir
+
+
+def run_fixed_condition(args: argparse.Namespace) -> Path:
+    """Run one fixed condition on a standard network from ``NETWORKS``."""
+
+    return run_fixed_condition_for_network(
+        args,
+        network=NETWORKS[args.network],
+        network_seed=None,
+    )
 
 
 def main(argv: list[str] | None = None) -> int:

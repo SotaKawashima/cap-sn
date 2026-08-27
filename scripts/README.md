@@ -333,6 +333,51 @@ Phase Aで決定した`M=100`を使って、BA1000、Facebook、Wiki-voteの3ネ
 
 第7段階の選択順1位をネットワーク別の主候補として事前固定し、2位・3位は異なる候補領域の副候補として記述する。最終テスト結果を用いた候補の順位変更、差し替え、再調整は行わない。Facebookは第7段階で適格候補がなかったため、3候補とも探索的フォールバックとして扱う。可視化には[`第8段階_未使用テストseedによる最終評価.ipynb`](../notebooks/第8段階_未使用テストseedによる最終評価.ipynb)を用いる。
 
+### 第9段階：ネットワーク構造による効果差の再整理
+
+既存の構造実験357 runは、[`stage9_structure_reanalysis_v1.json`](../experiment_protocols/stage9_structure_reanalysis_v1.json)に従って現行の`Jcum`と`Jpeak`で監査・再集計する。
+
+```bash
+.venv/bin/python analyze_stage9_structure.py \
+  --analysis-id existing_structure_reanalysis_v01
+```
+
+旧構造実験には無介入条件がないため、旧データから構造別の相対抑制率`eta`は算出しない。追加確認は[`stage9_structure_confirmation_v1.json`](../experiment_protocols/stage9_structure_confirmation_v1.json)に固定したLFR 9グラフとFacebook次数保存組み替え4グラフに限定する。3固定条件、5 simulator seed、各100反復で、全195 run、19,500反復である。
+
+dry-runと本実行は以下を用いる。
+
+```bash
+STAGE9_ID="$(date '+%Y%m%d_%H%M%S')_structure_confirmation_v01"
+printf '%s\n' "$STAGE9_ID" > "$HOME/cap_sn_stage9_id.txt"
+
+.venv/bin/python run_stage9_structure_confirmation.py \
+  --experiment-id="$STAGE9_ID" \
+  --dry-run > "$HOME/${STAGE9_ID}_dry_run.json"
+
+.venv/bin/python -u run_stage9_structure_confirmation.py \
+  --experiment-id="$STAGE9_ID" \
+  2>&1 | tee "$HOME/${STAGE9_ID}.log"
+```
+
+中断時は同一commit、protocol、実験IDで再開する。
+
+```bash
+.venv/bin/python -u run_stage9_structure_confirmation.py \
+  --experiment-id="$STAGE9_ID" \
+  --resume \
+  2>&1 | tee -a "$HOME/${STAGE9_ID}.log"
+```
+
+実行後はraw `pop.arrow`から指標を再計算し、LFRはnetwork seed、simulator seed、反復、Facebook組み替えはsimulator seed、反復を階層化したpaired bootstrapで分析する。
+
+```bash
+.venv/bin/python analyze_stage9_structure_confirmation.py \
+  --experiment-root "experiments/summer_2026/stage9_structure_confirmation/${STAGE9_ID}" \
+  --analysis-id structure_confirmation_analysis_v01
+```
+
+任意の固定済みネットワークTOMLを単独で確認する場合は[`run_custom_fixed_condition.py`](../run_custom_fixed_condition.py)を使う。可視化には[`第9段階_ネットワーク構造による効果差の再整理.ipynb`](../notebooks/第9段階_ネットワーク構造による効果差の再整理.ipynb)を用いる。
+
 以下は春学期までの旧実行系である。
 
 | スクリプト | 内容 | 出力先 |

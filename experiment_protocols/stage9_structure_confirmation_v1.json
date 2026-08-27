@@ -1,0 +1,344 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage9_structure_confirmation_v1",
+  "stage": "stage9_structure_confirmation",
+  "status": "frozen_before_execution",
+  "created_date": "2026-08-24",
+  "purpose": {
+    "primary": "Separate baseline outcome level from intervention effect for the two structural hypotheses retained after reaggregating the 357 legacy runs.",
+    "secondary": "Estimate how the effects of legacy_balance and the exact prior_high package vary across LFR community separation and degree-preserving Facebook rewiring.",
+    "not_in_scope": [
+      "reoptimizing certainty or effectiveness",
+      "selecting a new candidate from these results",
+      "identifying one network metric as the unique causal mechanism",
+      "generalizing a single observed Facebook graph to all social networks",
+      "repeating every legacy structure experiment"
+    ]
+  },
+  "decision_sources": [
+    {
+      "role": "legacy_structure_reanalysis_protocol",
+      "path": "experiment_protocols/stage9_structure_reanalysis_v1.json",
+      "sha256": "7601709cb88a53b42b62431cbbf87985192d6145168857e16ccecc9c2b06c393"
+    },
+    {
+      "role": "lfr_generation_metadata",
+      "path": "v2/test_2/network/lfr_community/generation_summary.csv",
+      "sha256": "bbefb829e62ffda02c64cc586e126cfd334b185bc47cb1b23f91529a249ca255"
+    },
+    {
+      "role": "facebook_rewiring_metadata",
+      "path": "v2/test_2/network/facebook_degree_rewire/generation_summary.csv",
+      "sha256": "c00a1b5d157770e9b1ea9da576abc106701f5c49dcbcb6a62013bbb3722d9506"
+    }
+  ],
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize",
+    "secondary_metric": "peak_new_selfish_ratio"
+  },
+  "design": {
+    "simulator_seeds": [
+      60001,
+      60002,
+      60003,
+      60004,
+      60005
+    ],
+    "iterations_per_seed_block": 100,
+    "raw_level": "pop",
+    "conditions": [
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "role": "no_intervention_baseline"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "role": "spring_research_reference"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "opinion_csv": "v2/test_2/strategy/inhibition_opinion/98_98.csv",
+        "opinion_sha256": "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745",
+        "role": "prior_study_package_benchmark"
+      }
+    ],
+    "network_families": [
+      {
+        "id": "lfr_community",
+        "reference_level": "strong",
+        "unit_of_generalization": "network_generation_seed_with_simulator_seed_and_iterations_nested_within_network",
+        "scope": "Three generated graph instances at each of three mixing parameters. Average degree and other generated metrics are not exactly identical across levels."
+      },
+      {
+        "id": "facebook_degree_rewire",
+        "reference_level": "original",
+        "unit_of_generalization": "simulator_seed_with_iterations_nested_within_one_fixed_graph_variant",
+        "scope": "One observed Facebook graph and three degree-preserving rewired variants. Rewiring changes clustering, modularity, internal-edge ratio, and source connectivity together."
+      }
+    ],
+    "network_instances": [
+      {
+        "id": "lfr_strong_seed1",
+        "family": "lfr_community",
+        "structure_level": "strong",
+        "structure_value": 0.05,
+        "network_seed_index": 1,
+        "network_generation_seed": 20261602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_strong_seed1.toml",
+        "config_sha256": "eb41602d12f8f3b1c323a28557afdaced67cb03f1e9d59948b1b57357c98ec98",
+        "avg_degree": 36.808,
+        "avg_clustering": 0.4355018009048542,
+        "modularity": 0.8128791977080287,
+        "internal_edge_ratio": 0.9226255161921322
+      },
+      {
+        "id": "lfr_strong_seed2",
+        "family": "lfr_community",
+        "structure_level": "strong",
+        "structure_value": 0.05,
+        "network_seed_index": 2,
+        "network_generation_seed": 20262602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_strong_seed2.toml",
+        "config_sha256": "07a27370557ad1c6d04e117bd92508aeb874f8283fc33a575f96f7a4cc51ce5d",
+        "avg_degree": 37.17,
+        "avg_clustering": 0.4704899079518049,
+        "modularity": 0.8098328521190041,
+        "internal_edge_ratio": 0.922625773473231
+      },
+      {
+        "id": "lfr_strong_seed3",
+        "family": "lfr_community",
+        "structure_level": "strong",
+        "structure_value": 0.05,
+        "network_seed_index": 3,
+        "network_generation_seed": 20263602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_strong_seed3.toml",
+        "config_sha256": "ba3e342508fad793860e32c7ff07e76cc55d6a42cac1e2f9617c083e567dbaef",
+        "avg_degree": 38.684,
+        "avg_clustering": 0.5166733393676928,
+        "modularity": 0.8289077306607316,
+        "internal_edge_ratio": 0.9232240719677386
+      },
+      {
+        "id": "lfr_middle_seed1",
+        "family": "lfr_community",
+        "structure_level": "middle",
+        "structure_value": 0.2,
+        "network_seed_index": 1,
+        "network_generation_seed": 20361602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_middle_seed1.toml",
+        "config_sha256": "67c4915a1f809d32acad6ab0c3a7268100ce63ff89d2ece81f8534c191913c9c",
+        "avg_degree": 39.882,
+        "avg_clustering": 0.2354813525960366,
+        "modularity": 0.6026002561324525,
+        "internal_edge_ratio": 0.7027731808836066
+      },
+      {
+        "id": "lfr_middle_seed2",
+        "family": "lfr_community",
+        "structure_level": "middle",
+        "structure_value": 0.2,
+        "network_seed_index": 2,
+        "network_generation_seed": 20362602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_middle_seed2.toml",
+        "config_sha256": "1876cba29139cec61a0783cf20a26efbcbaaf45cba67ac49b6c33f4bd8110fd1",
+        "avg_degree": 39.43,
+        "avg_clustering": 0.2633281392924137,
+        "modularity": 0.6101539532813811,
+        "internal_edge_ratio": 0.6968298250063404
+      },
+      {
+        "id": "lfr_middle_seed3",
+        "family": "lfr_community",
+        "structure_level": "middle",
+        "structure_value": 0.2,
+        "network_seed_index": 3,
+        "network_generation_seed": 20363602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_middle_seed3.toml",
+        "config_sha256": "69399a6ff46fdf4de3840c43c74d81c7956cc650e79c93e800ff5af71b2c64c0",
+        "avg_degree": 39.912,
+        "avg_clustering": 0.2327535470284028,
+        "modularity": 0.5944837763143056,
+        "internal_edge_ratio": 0.7016937261976348
+      },
+      {
+        "id": "lfr_weak_seed1",
+        "family": "lfr_community",
+        "structure_level": "weak",
+        "structure_value": 0.4,
+        "network_seed_index": 1,
+        "network_generation_seed": 20461602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_weak_seed1.toml",
+        "config_sha256": "dc0e24ceb40906518b79fae3e89dd740d9ac6a329766d9a1222f6bd0df9d606e",
+        "avg_degree": 40.568,
+        "avg_clustering": 0.1002716787911648,
+        "modularity": 0.340598206464069,
+        "internal_edge_ratio": 0.4279727864326563
+      },
+      {
+        "id": "lfr_weak_seed2",
+        "family": "lfr_community",
+        "structure_level": "weak",
+        "structure_value": 0.4,
+        "network_seed_index": 2,
+        "network_generation_seed": 20462602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_weak_seed2.toml",
+        "config_sha256": "3bdeb0cd65d1a67ced1f3f464f62f5db417c31a4bf1e053db1cbae018dfdc99c",
+        "avg_degree": 39.344,
+        "avg_clustering": 0.0955223852990965,
+        "modularity": 0.3226405281777722,
+        "internal_edge_ratio": 0.4195302968686458
+      },
+      {
+        "id": "lfr_weak_seed3",
+        "family": "lfr_community",
+        "structure_level": "weak",
+        "structure_value": 0.4,
+        "network_seed_index": 3,
+        "network_generation_seed": 20463602,
+        "num_agents": 1000,
+        "config_path": "v2/test_2/network/network-lfr_weak_seed3.toml",
+        "config_sha256": "a88312055c86dcd1fb7d63c3c2f0daacc50e069a08bd66905b013ac9eca82053",
+        "avg_degree": 40.296,
+        "avg_clustering": 0.0964027999530402,
+        "modularity": 0.3251699607735002,
+        "internal_edge_ratio": 0.4274369664482827
+      },
+      {
+        "id": "fbdeg_original",
+        "family": "facebook_degree_rewire",
+        "structure_level": "original",
+        "structure_value": 0.0,
+        "network_seed_index": null,
+        "network_generation_seed": null,
+        "num_agents": 4039,
+        "config_path": "v2/test_2/network/network-fbdeg_original.toml",
+        "config_sha256": "f488d84cad68082f00c53cd586709af9c27de539dd4516488b28cc068d85c00d",
+        "avg_degree": 43.69101262688784,
+        "avg_clustering": 0.6055467186200862,
+        "modularity": 0.8349649535783614,
+        "internal_edge_ratio": 0.9609447605231544
+      },
+      {
+        "id": "fbdeg_rewire_0p1",
+        "family": "facebook_degree_rewire",
+        "structure_level": "rewire_0p1",
+        "structure_value": 0.1,
+        "network_seed_index": null,
+        "network_generation_seed": 20260617,
+        "num_agents": 4039,
+        "config_path": "v2/test_2/network/network-fbdeg_rewire_0p1.toml",
+        "config_sha256": "9764668c160f99105d9bb00a5560ba86c9e349effe9cb7f35519ef9131f42bd0",
+        "avg_degree": 43.69101262688784,
+        "avg_clustering": 0.3354404494070832,
+        "modularity": 0.6696239801871531,
+        "internal_edge_ratio": 0.7966770179295963
+      },
+      {
+        "id": "fbdeg_rewire_1p0",
+        "family": "facebook_degree_rewire",
+        "structure_level": "rewire_1p0",
+        "structure_value": 1.0,
+        "network_seed_index": null,
+        "network_generation_seed": 20260618,
+        "num_agents": 4039,
+        "config_path": "v2/test_2/network/network-fbdeg_rewire_1p0.toml",
+        "config_sha256": "a5b4109e6c586c8fc4fcd9493f7d3c13ddcfd0bc5244cf8b8cd019ad5785e7fb",
+        "avg_degree": 43.69101262688784,
+        "avg_clustering": 0.063743763036587,
+        "modularity": 0.1120878046710479,
+        "internal_edge_ratio": 0.2358387923022871
+      },
+      {
+        "id": "fbdeg_rewire_5p0",
+        "family": "facebook_degree_rewire",
+        "structure_level": "rewire_5p0",
+        "structure_value": 5.0,
+        "network_seed_index": null,
+        "network_generation_seed": 20260619,
+        "num_agents": 4039,
+        "config_path": "v2/test_2/network/network-fbdeg_rewire_5p0.toml",
+        "config_sha256": "7b099ad8401aeb15712fac8ae3499f83043542a46543057c03221652ea0eeb5c",
+        "avg_degree": 43.69101262688784,
+        "avg_clustering": 0.0623845258891003,
+        "modularity": 0.1139271783818366,
+        "internal_edge_ratio": 0.24124487159145
+      }
+    ],
+    "expected_network_instance_count": 13,
+    "expected_condition_count_per_instance": 3,
+    "expected_run_count": 195,
+    "expected_simulation_iterations": 19500
+  },
+  "seed_policy": {
+    "stage9_structure_confirmation": [
+      60001,
+      60002,
+      60003,
+      60004,
+      60005
+    ],
+    "disjoint_from_stages_3_to_8": true,
+    "role": "New simulator seeds for structural confirmation; they are not used for optimization or candidate selection."
+  },
+  "inference": {
+    "pairing": "same_network_instance_same_simulator_seed_same_iteration_index",
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "repetitions": 10000,
+      "seed": 93001,
+      "confidence_level": 0.95,
+      "lfr_levels": [
+        "network_generation_seed",
+        "simulator_seed",
+        "iteration_within_seed"
+      ],
+      "facebook_rewiring_levels": [
+        "simulator_seed",
+        "iteration_within_seed"
+      ]
+    },
+    "primary_effects": [
+      "none_minus_intervention_absolute_suppression",
+      "relative_suppression_eta"
+    ],
+    "secondary_effects": [
+      "peak_new_selfish_ratio",
+      "difference_in_intervention_effect_across_structure_levels"
+    ],
+    "minimum_important_effect_threshold": null
+  },
+  "interpretation_limits": [
+    "The LFR result generalizes only across the three generated network seeds at each selected mixing parameter.",
+    "The LFR generator does not produce exactly equal average degree and clustering across levels, so the result is a bundled structural comparison rather than a pure causal effect of mu.",
+    "The Facebook result concerns one observed graph and its fixed rewired variants.",
+    "Degree-preserving rewiring changes several metrics simultaneously; no single metric is identified as the cause.",
+    "legacy_balance and prior_high are fixed reference interventions, not newly optimized candidates.",
+    "Jpeak is secondary and cannot replace the Jcum conclusion."
+  ],
+  "output": {
+    "stage_directory": "stage9_structure_confirmation",
+    "run_directory": "<network_instance>/<condition_id>/simseed_<simulator_seed>",
+    "execution_plan": "structure_confirmation_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}
