@@ -378,6 +378,44 @@ printf '%s\n' "$STAGE9_ID" > "$HOME/cap_sn_stage9_id.txt"
 
 任意の固定済みネットワークTOMLを単独で確認する場合は[`run_custom_fixed_condition.py`](../run_custom_fixed_condition.py)を使う。可視化には[`第9段階_ネットワーク構造による効果差の再整理.ipynb`](../notebooks/第9段階_ネットワーク構造による効果差の再整理.ipynb)を用いる。
 
+### 第10段階：情報拡散指標の再分析
+
+第10段階では、第2段階の保存済み3,600試行と、補正済み`prior_high`を含む第4段階の固定確認結果を再利用する。第8段階の最終候補は`info.arrow`を保存していないため、各ネットワークで事前指定された主候補1点だけを、第4段階と同じseed `20001`--`20005`、各100反復、`info_pop`保存で追加実行する。全体は15 run、1,500反復である。
+
+dry-runと本実行は以下を用いる。
+
+```bash
+STAGE10_ID="$(date '+%Y%m%d_%H%M%S')_information_diffusion_v01"
+printf '%s\n' "$STAGE10_ID" > "$HOME/cap_sn_stage10_id.txt"
+
+.venv/bin/python run_stage10_information_diffusion.py \
+  --experiment-id="$STAGE10_ID" \
+  --dry-run > "$HOME/${STAGE10_ID}_dry_run.json"
+
+.venv/bin/python -u run_stage10_information_diffusion.py \
+  --experiment-id="$STAGE10_ID" \
+  2>&1 | tee "$HOME/${STAGE10_ID}.log"
+```
+
+中断時は同一commit、protocol、実験IDで再開する。
+
+```bash
+.venv/bin/python -u run_stage10_information_diffusion.py \
+  --experiment-id="$STAGE10_ID" \
+  --resume \
+  2>&1 | tee -a "$HOME/${STAGE10_ID}.log"
+```
+
+追加15 runをMacBookへ転送後、保存済み3,600試行、第4段階の比較条件45 run、追加した最終候補15 runを統合して正式分析する。
+
+```bash
+.venv/bin/python analyze_stage10_information_diffusion.py \
+  --experiment-root "experiments/summer_2026/stage10_information_diffusion/${STAGE10_ID}" \
+  --analysis-id information_diffusion_analysis_v01
+```
+
+保存済み最適化試行は探索的相関、固定条件は同一seed・同一反復番号によるpaired比較に用いる。`num_fst_viewed`はユニーク閲覧者数ではなく、情報オブジェクトへの初回アクセス数として扱う。情報拡散指標は介入後の反応指標であり、候補の再選択、因果主張、最適化目的への追加には使用しない。可視化には[`第10段階_情報拡散指標の再分析.ipynb`](../notebooks/第10段階_情報拡散指標の再分析.ipynb)を用いる。
+
 以下は春学期までの旧実行系である。
 
 | スクリプト | 内容 | 出力先 |

@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage10_information_diffusion_v1",
+  "stage": "stage10_information_diffusion",
+  "status": "frozen_before_execution",
+  "created_date": "2026-08-27",
+  "purpose": {
+    "primary": "Describe the information environment associated with cumulative selfish-action outcomes under the current objective.",
+    "secondary": "Separate broad exploratory associations in saved optimization trials from paired fixed-condition comparisons.",
+    "not_in_scope": [
+      "reselecting or tuning the Stage 8 candidates",
+      "optimizing an information-diffusion metric",
+      "claiming that an observed information metric causally changed selfish action",
+      "isolating a single network-structure mechanism",
+      "adding unrestricted agent-level logging"
+    ]
+  },
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "secondary_outcome": "peak_new_selfish_ratio"
+  },
+  "decision_sources": [
+    {
+      "role": "stage8_frozen_candidate_pool",
+      "path": "experiment_protocols/stage8_final_candidate_pool_v1.csv",
+      "sha256": "13b5b4511b643e63f50a3fa687cfed8dc31f4728d3a91974c7d9ab4e7d16f703",
+      "required_for_execution": true
+    },
+    {
+      "role": "stage8_final_decision",
+      "path": "experiments/summer_2026/stage8_final_evaluation/20260824_140153_final_evaluation_v01/final_evaluation_analysis_v01/decision.json",
+      "sha256": "9b3a5e31bccc4e50f5cbb339f801195f9f52b2a60f5183145720c354bca2da6a",
+      "required_for_execution": false
+    }
+  ],
+  "additional_experiment": {
+    "candidate_source": {
+      "path": "experiment_protocols/stage8_final_candidate_pool_v1.csv",
+      "sha256": "13b5b4511b643e63f50a3fa687cfed8dc31f4728d3a91974c7d9ab4e7d16f703",
+      "selection_filter": "selection_order == 1",
+      "expected_rows": 3
+    },
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      20001,
+      20002,
+      20003,
+      20004,
+      20005
+    ],
+    "iterations_per_seed_block": 100,
+    "raw_level": "info_pop",
+    "expected_run_count": 15,
+    "expected_simulation_iterations": 1500,
+    "candidate_policy": "Run only the predesignated primary candidate for each network. Do not use Stage 10 results to change candidate identity, rank, or parameters."
+  },
+  "existing_data": {
+    "stage2_saved_trials": {
+      "analysis_root": "experiments/summer_2026/stage2_existing_reanalysis/20260812_105100_saved_trials_reanalysis_v03",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "eaf7aa7b9e0edd70b31728df19752381253c2bb6a6e945ea5a20d0e19c82a53f"
+      },
+      "trial_summary": {
+        "path": "tables/trial_summary.parquet",
+        "sha256": "3b6fd6a80a740cc287d9f84bc108671027c2b6e30de818a7795ee2b14268bd7d",
+        "expected_rows": 3600
+      },
+      "info_summary": {
+        "path": "tables/info_summary_long.parquet",
+        "sha256": "e1788dac5a0463f6ce048ed0888deb3df9bd0726844008f3287a153469ad6dd0",
+        "expected_rows": 14400
+      },
+      "primary_sampling_subset": "random",
+      "sensitivity_sampling_subset": "all_methods",
+      "interpretation": "Exploratory association only because optimization methods sampled the design space adaptively and the simulator seed was fixed."
+    },
+    "stage4_fixed_confirmation": {
+      "analysis_root": "experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01/fixed_confirmation_prior_high_corrected_v05",
+      "analysis_manifest": {
+        "path": "analysis_manifest.json",
+        "sha256": "a2a515d38edc8fce41b8049416ad1387f623288484b32c1b6c4b19c1062af07d"
+      },
+      "iteration_metrics": {
+        "path": "tables/iteration_metrics.parquet",
+        "sha256": "941c1534722cdd8abcf3a081c69fbc5095841b2c5398cc7bc25a12a3bd482d72"
+      },
+      "information_run_summary": {
+        "path": "tables/information_run_summary.csv",
+        "sha256": "e19b2ab5b5eb54f54303d1839fa136462b11b16b9df7e5fa8e44af7821640da0"
+      },
+      "run_inventory": {
+        "path": "tables/run_inventory.csv",
+        "sha256": "732cd1a61f53759eb88c5a9d35504a85cb2a1ab05fcb779d281137f2a4a960bc"
+      },
+      "original_experiment_root": "experiments/summer_2026/stage4_fixed_confirmation/20260817_112313_fixed_confirmation_v01",
+      "prior_high_override_root": "experiments/summer_2026/stage4_fixed_confirmation/20260819_113718_prior_high_correction_v01",
+      "selected_conditions": [
+        "none",
+        "legacy_balance",
+        "prior_high"
+      ],
+      "expected_formal_rows": 21000,
+      "expected_selected_runs": 45,
+      "prior_high_policy": "Use only the corrected existing-CSV runs; never use the original generated prior_high runs."
+    }
+  },
+  "information_definition": {
+    "labels": {
+      "0": "misinformation",
+      "1": "corrective",
+      "2": "observational",
+      "3": "behavior_guiding"
+    },
+    "counts": [
+      "num_shared",
+      "num_viewed",
+      "num_fst_viewed"
+    ],
+    "num_fst_viewed_label": "first_access_count",
+    "num_fst_viewed_note": "Count of first accesses to information objects, not a count of unique viewing agents.",
+    "normalization": "Divide counts by the number of agents and simulation iterations when comparing runs across networks.",
+    "ratio": {
+      "name": "corrective_to_misinformation",
+      "metrics": [
+        "shared",
+        "viewed",
+        "fst_viewed"
+      ],
+      "zero_denominator_policy": "Return missing for the ratio and report the zero-denominator count together with numerator and denominator."
+    }
+  },
+  "analysis_plan": {
+    "primary_information_indicators": [
+      "misinformation_fst_viewed_per_agent_iteration",
+      "corrective_fst_viewed_per_agent_iteration",
+      "observational_fst_viewed_per_agent_iteration",
+      "behavior_guiding_fst_viewed_per_agent_iteration",
+      "corrective_to_misinformation_fst_viewed_ratio"
+    ],
+    "exploratory_information_indicators": [
+      "all four information labels for shared_per_agent_iteration and viewed_per_agent_iteration",
+      "corrective_to_misinformation_shared_ratio",
+      "corrective_to_misinformation_viewed_ratio"
+    ],
+    "stage2": [
+      "Spearman associations between certainty/effectiveness and information indicators",
+      "Spearman associations between information indicators and Jcum/Jpeak",
+      "rank-residual partial correlations between information indicators and outcomes controlling certainty and effectiveness",
+      "random-search results as primary and all-method results as sensitivity",
+      "Benjamini-Hochberg q-values as supplementary output; interpret effect direction and cross-network consistency first"
+    ],
+    "fixed_confirmation": [
+      "paired comparisons of none, legacy_balance, corrected prior_high, and the frozen primary candidate",
+      "hierarchical paired percentile bootstrap over simulator-seed blocks and iterations",
+      "separate cumulative behavior and cumulative information time series without dual axes"
+    ],
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "repetitions": 10000,
+      "seed": 94001,
+      "confidence_level": 0.95
+    },
+    "interpretation_limits": [
+      "Information indicators are post-intervention response indicators, not independently manipulated causes.",
+      "A large corrective-to-misinformation ratio is not promoted to a design variable or optimization objective.",
+      "Lower behavior-guiding diffusion is not interpreted as intrinsically desirable.",
+      "A smaller diffusion count does not imply that an information type is unnecessary.",
+      "Facebook primary-candidate results remain exploratory because Stage 7 found no qualified candidate."
+    ]
+  },
+  "output": {
+    "stage_directory": "stage10_information_diffusion",
+    "run_directory": "<network>/<condition_id>/simseed_<simulator_seed>",
+    "execution_plan": "information_diffusion_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}
