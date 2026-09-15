@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage8_final_retest_simple_max_v1",
+  "stage": "stage8_final_retest",
+  "status": "frozen_before_execution",
+  "created_date": "2026-09-15",
+  "purpose": {
+    "primary": "Estimate the out-of-sample performance of the nine candidates frozen by the amended Stage 7 reselection on five simulator-seed blocks not used by exploration, validation, or the inspected original final test.",
+    "secondary": "Separate intervention effect from optimization gain by comparing every candidate with no intervention and a normally generated certainty=1.0, effectiveness=1.0 reference.",
+    "descriptive": "Retain the spring 0.8,0.8 condition and the exact prior-study package as contextual comparisons without using either to select or rerank candidates.",
+    "amendment_status": "The simple_max comparison and amended shortlist were defined after the original Stage 8 results were inspected. This retest therefore uses a new untouched simulator-seed group.",
+    "not_in_scope": [
+      "selecting, tuning, dropping, or reranking candidates with revised final-test results",
+      "pooling network-specific candidates into a universal optimum",
+      "declaring one optimization method generally superior",
+      "introducing a post-hoc minimum important effect threshold",
+      "treating prior_high as reachable by changing certainty and effectiveness alone"
+    ]
+  },
+  "decision_sources": [
+    {
+      "role": "amended_stage7_protocol",
+      "path": "experiment_protocols/stage7_candidate_reselection_simple_max_v1.json",
+      "sha256": "adb09442825d4ae284a01110dc7eff81e9ec8b9369996cd9044042a2676acac8"
+    },
+    {
+      "role": "amended_stage7_selected_candidates",
+      "path": "experiments/summer_2026/stage7_candidate_reselection/20260915_170633_candidate_reselection_simple_max_v01/candidate_reselection_analysis_v01/tables/selected_candidates.csv",
+      "sha256": "499f393f21d3cd57b700c68a6fb59456c0429e002b7c972e6f3fa966a9af330d",
+      "availability": "provenance_only_not_required_at_execution"
+    },
+    {
+      "role": "amended_stage7_decision",
+      "path": "experiments/summer_2026/stage7_candidate_reselection/20260915_170633_candidate_reselection_simple_max_v01/candidate_reselection_analysis_v01/decision.json",
+      "sha256": "12323290c0e7821b7517e990ee6fd4e28a4daaeb3e0a8c56d1ab838b4c87b04c",
+      "availability": "provenance_only_not_required_at_execution"
+    },
+    {
+      "role": "corrected_prior_high_definition",
+      "path": "experiment_protocols/stage4_fixed_confirmation_v2_prior_high_correction.json",
+      "sha256": "61eafd8d15ec18d84d26674d6a2ea4f408f1ff8d9e69b9ed12454b3f1befcf8c"
+    }
+  ],
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize",
+    "scope": "Estimate effects separately for each network and each frozen candidate."
+  },
+  "candidate_source": {
+    "path": "experiment_protocols/stage8_final_retest_candidate_pool_simple_max_v1.csv",
+    "sha256": "cc9bfcddecdea3973b981b9a983c3c8120b65b3f382993172df7448a93d9afcb",
+    "rows": 9,
+    "rows_per_network": 3,
+    "application_precision_decimal_places": 4,
+    "source_selected_candidates_sha256": "499f393f21d3cd57b700c68a6fb59456c0429e002b7c972e6f3fa966a9af330d",
+    "projection_policy": "Copy all nine selected rows, retain the 30 fields needed for execution and comparison, and prefix 17 validation-result fields with stage7_ to distinguish them from revised final-test results.",
+    "policy": "Evaluate all nine amended candidates without addition, removal, parameter modification, reranking, or reselection."
+  },
+  "design": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      70001,
+      70002,
+      70003,
+      70004,
+      70005
+    ],
+    "iterations_per_seed_block": 100,
+    "raw_level": "pop",
+    "comparators": [
+      {
+        "id": "none",
+        "enabled": false,
+        "certainty": null,
+        "effectiveness": null,
+        "opinion_mode": "none",
+        "role": "no_intervention_baseline",
+        "reporting_role": "intervention_effect_reference"
+      },
+      {
+        "id": "simple_max",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 1.0,
+        "opinion_mode": "generated_from_design_variables",
+        "role": "simple_design_variable_maximum_reference",
+        "reporting_role": "optimization_gain_reference"
+      },
+      {
+        "id": "legacy_balance",
+        "enabled": true,
+        "certainty": 0.8,
+        "effectiveness": 0.8,
+        "opinion_mode": "generated_from_design_variables",
+        "role": "spring_research_reference",
+        "reporting_role": "descriptive_historical_reference"
+      },
+      {
+        "id": "prior_high",
+        "enabled": true,
+        "certainty": 1.0,
+        "effectiveness": 0.98,
+        "opinion_mode": "existing_csv",
+        "opinion_csv": "v2/test_2/strategy/inhibition_opinion/98_98.csv",
+        "opinion_sha256": "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745",
+        "role": "prior_study_package_benchmark",
+        "reporting_role": "external_package_benchmark"
+      }
+    ],
+    "candidate_count": 9,
+    "candidate_count_per_network": 3,
+    "comparator_count_per_network": 4,
+    "condition_count_per_network": 7,
+    "expected_run_count": 105,
+    "expected_simulation_iterations": 10500
+  },
+  "candidate_reporting_policy": {
+    "selection_order_1": "Candidate 1 was fixed by the amended validation rule before revised final testing and is used for the main network-specific candidate statement.",
+    "selection_order_2_and_3": "Candidates 2 and 3 are frozen representatives of different validation regions and are reported descriptively without replacing candidate 1.",
+    "individual_selection_role": "The qualified or exploratory scope is retained for each candidate instead of assuming one common qualification status within a network.",
+    "network_selection_modes": {
+      "ba1000": "qualified_candidates_with_exploratory_fill",
+      "facebook": "no_qualified_candidate_exploratory_fallback",
+      "wiki_vote": "qualified_candidates_selected"
+    },
+    "facebook_limit": "All three Facebook candidates are exploratory because no candidate satisfied the amended eligibility rule.",
+    "ba1000_limit": "BA1000 candidates 1 and 2 are qualified; candidate 3 is an exploratory representative added to preserve a third distinct region.",
+    "test_result_policy": "Report every candidate and never use revised final-test values or confidence intervals to rerank, replace, tune, or discard candidates."
+  },
+  "fairness_rules": [
+    "Evaluate every candidate and comparator on the same five simulator-seed blocks within each network.",
+    "Use the same 100 iterations, retained raw level, agent settings, information settings, timing, and initial-source settings for every condition.",
+    "Treat every candidate as network-specific and never apply it to another network.",
+    "Use the exact four-decimal certainty and effectiveness values frozen after amended Stage 7.",
+    "Generate candidate, simple_max, and legacy_balance opinions through the same design-variable path.",
+    "Use the exact existing opinion CSV only for prior_high and interpret it as an external package benchmark.",
+    "Do not inspect a partial result to alter remaining execution or reporting roles."
+  ],
+  "seed_policy": {
+    "development_and_fixed_confirmation": [
+      20001,
+      20002,
+      20003,
+      20004,
+      20005
+    ],
+    "stage6_exploration": [
+      30001
+    ],
+    "stage7_candidate_validation": [
+      40001,
+      40002,
+      40003
+    ],
+    "inspected_original_final_test": [
+      50001,
+      50002,
+      50003,
+      50004,
+      50005
+    ],
+    "stage9_structure_confirmation": [
+      60001,
+      60002,
+      60003,
+      60004,
+      60005
+    ],
+    "revised_final_test": [
+      70001,
+      70002,
+      70003,
+      70004,
+      70005
+    ],
+    "disjointness_required": true,
+    "final_test_use_policy": "Use the revised final-test seeds only after the amended candidate CSV is frozen. Never feed these results back into candidate selection or optimization."
+  },
+  "inference": {
+    "unit_of_generalization": "simulator_seed_block_with_iterations_nested_within_block",
+    "pairing": "same_network_same_simulator_seed_same_iteration_index",
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "levels": [
+        "simulator_seed_block",
+        "iteration_within_seed_block"
+      ],
+      "repetitions": 10000,
+      "seed": 94001,
+      "confidence_level": 0.95,
+      "final_inference_use": true
+    },
+    "effect_measures": [
+      "reference_minus_candidate_absolute_suppression",
+      "relative_suppression_eta",
+      "equivalent_agents"
+    ],
+    "minimum_important_effect_threshold": null,
+    "interpretation": {
+      "reduction": "The absolute-suppression confidence interval is entirely above zero.",
+      "reduction_tendency_with_uncertainty": "The point estimate is positive but the confidence interval includes zero.",
+      "increase": "The absolute-suppression confidence interval is entirely below zero.",
+      "no_clear_reduction": "No clear directional conclusion is supported."
+    },
+    "multiplicity_policy": "Do not convert the nine candidate comparisons into a new winner search. Candidate 1 in each network was fixed before revised testing; candidates 2 and 3 remain descriptive.",
+    "policy": "Report continuous estimates, seed-block directions, and confidence intervals without adding a post-hoc magnitude threshold."
+  },
+  "analysis_plan": {
+    "quality_gate": {
+      "required_completed_runs": 105,
+      "required_iterations_per_run": 100,
+      "recalculate_objective_from_pop_arrow": true,
+      "numeric_tolerance": 1e-12
+    },
+    "outputs": [
+      "data_audit",
+      "run_inventory",
+      "iteration_metrics",
+      "condition_seed_summary",
+      "condition_summary",
+      "candidate_seed_performance",
+      "candidate_effects_vs_none",
+      "candidate_effects_vs_simple_max",
+      "candidate_effects_vs_legacy_balance",
+      "candidate_effects_vs_prior_high",
+      "validation_retest_comparison",
+      "final_candidate_results",
+      "network_conclusions",
+      "decision"
+    ],
+    "interpretation_limits": [
+      "Analyze each network separately.",
+      "Use candidate 1 for the main network-specific candidate statement and report candidates 2 and 3 descriptively.",
+      "Respect each candidate's qualified or exploratory selection role.",
+      "Treat simple_max as the direct benchmark for whether optimization improved on naively maximizing both design variables.",
+      "Treat prior_high as an external package benchmark whose base-rate settings differ from generated design-variable conditions.",
+      "Five revised final-test seed blocks do not establish validity outside the modeled networks and fixed intervention conditions."
+    ]
+  },
+  "output": {
+    "stage_directory": "stage8_final_retest",
+    "run_directory": "<network>/<condition_id>/simseed_<simulator_seed>",
+    "execution_plan": "final_retest_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}
