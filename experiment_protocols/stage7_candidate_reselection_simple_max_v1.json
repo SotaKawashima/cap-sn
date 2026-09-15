@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "protocol_id": "stage7_candidate_reselection_simple_max_v1",
+  "stage": "stage7_candidate_reselection",
+  "status": "frozen_before_simple_max_execution",
+  "created_date": "2026-09-15",
+  "purpose": {
+    "primary": "Re-select the existing Stage 6 candidates using no intervention and a normally generated certainty=1.0, effectiveness=1.0 condition as required references.",
+    "secondary": "Keep the spring condition and exact prior-study package as descriptive comparisons without using either as an eligibility gate.",
+    "amendment_status": "This is an amended analysis defined after the original Stage 7 and Stage 8 results were inspected.",
+    "not_in_scope": [
+      "rerunning Stage 6 optimization",
+      "altering any of the 54 existing candidates",
+      "using the already-inspected Stage 8 test seeds for revised final inference",
+      "claiming a universal optimum across networks",
+      "declaring one optimization method generally superior"
+    ]
+  },
+  "source_validation": {
+    "experiment_root": "experiments/summer_2026/stage7_candidate_validation/20260824_101150_candidate_validation_v01",
+    "protocol": {
+      "path": "experiment_protocols/stage7_candidate_validation_v1.json",
+      "sha256": "706ca7b450d382394513f8df0b32ba130403189a807f61193b153b175b3fd266"
+    },
+    "candidate_source": {
+      "path": "experiment_protocols/stage7_candidate_pool_v1.csv",
+      "sha256": "f66b2f551f461bdaf4fdc2cd1b423cf716d3ef2539170e4ec3d33d077604fb64"
+    },
+    "expected_run_count": 189,
+    "expected_candidate_count": 54
+  },
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize",
+    "scope": "Select candidates independently within each network."
+  },
+  "design": {
+    "networks": [
+      "ba1000",
+      "facebook",
+      "wiki_vote"
+    ],
+    "simulator_seeds": [
+      40001,
+      40002,
+      40003
+    ],
+    "iterations_per_seed_block": 100,
+    "raw_level": "pop",
+    "supplemental_condition": {
+      "id": "simple_max",
+      "enabled": true,
+      "certainty": 1.0,
+      "effectiveness": 1.0,
+      "opinion_mode": "generated_from_design_variables",
+      "role": "simple_design_variable_maximum_reference"
+    },
+    "expected_run_count": 9,
+    "expected_simulation_iterations": 900,
+    "expected_combined_run_count": 198,
+    "expected_combined_iteration_count": 19800
+  },
+  "seed_policy": {
+    "development_and_fixed_confirmation": [
+      20001,
+      20002,
+      20003,
+      20004,
+      20005
+    ],
+    "stage6_exploration": [
+      30001
+    ],
+    "candidate_validation": [
+      40001,
+      40002,
+      40003
+    ],
+    "inspected_original_final_test": [
+      50001,
+      50002,
+      50003,
+      50004,
+      50005
+    ],
+    "stage9_structure_confirmation": [
+      60001,
+      60002,
+      60003,
+      60004,
+      60005
+    ],
+    "reserved_revised_final_test": [
+      70001,
+      70002,
+      70003,
+      70004,
+      70005
+    ],
+    "disjointness_required": true,
+    "reserved_seed_policy": "Do not execute or inspect revised final-test seeds before the amended shortlist is frozen."
+  },
+  "inference": {
+    "pairing": "same_network_same_simulator_seed_same_iteration_index",
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "levels": [
+        "simulator_seed_block",
+        "iteration_within_seed_block"
+      ],
+      "repetitions": 10000,
+      "seed": 93001,
+      "confidence_level": 0.95,
+      "selection_use": "descriptive_only_not_an_eligibility_threshold"
+    },
+    "minimum_important_effect_threshold": null
+  },
+  "selection_rule": {
+    "scope": "Apply independently within each network to the frozen 18 Stage 6 candidates.",
+    "required_references": [
+      "none",
+      "simple_max"
+    ],
+    "descriptive_references": [
+      "legacy_balance",
+      "prior_high"
+    ],
+    "eligibility": {
+      "mean_absolute_suppression_strictly_positive_for_each_required_reference": true,
+      "minimum_positive_seed_blocks_for_each_required_reference": 2,
+      "confidence_interval_required": false
+    },
+    "candidate_order": [
+      "median_validation_block_rank_ascending",
+      "worst_validation_block_rank_ascending",
+      "mean_validation_objective_ascending",
+      "candidate_id_ascending"
+    ],
+    "region_grouping": {
+      "method": "deterministic_complete_linkage",
+      "coordinates": [
+        "applied_certainty",
+        "applied_effectiveness"
+      ],
+      "distance": "euclidean_in_raw_design_variable_units",
+      "maximum_complete_linkage_distance": 0.05
+    },
+    "shortlist": {
+      "target_candidates_per_network": 3,
+      "maximum_regions_per_network": 3,
+      "representative": "best ordered candidate in each region",
+      "partial_fill_policy": "Fill missing positions from the best unselected regions and mark those candidates exploratory.",
+      "no_qualified_policy": "Select three distinct-region exploratory fallbacks and do not claim optimization success.",
+      "candidate_1_policy": "Freeze selection order 1 before revised final testing; never replace it after seeing final results."
+    }
+  },
+  "analysis_plan": {
+    "quality_gate": {
+      "required_source_runs": 189,
+      "required_supplemental_runs": 9,
+      "required_combined_runs": 198,
+      "required_iterations_per_run": 100,
+      "recalculate_objective_from_pop_arrow": true,
+      "numeric_tolerance": 1e-12
+    },
+    "outputs": [
+      "source_data_audit",
+      "supplemental_data_audit",
+      "combined_run_inventory",
+      "combined_iteration_metrics",
+      "condition_seed_summary",
+      "condition_summary",
+      "candidate_block_performance",
+      "candidate_effects_vs_none",
+      "candidate_effects_vs_simple_max",
+      "candidate_effects_vs_legacy_balance",
+      "candidate_effects_vs_prior_high",
+      "candidate_clusters",
+      "candidate_ranking",
+      "selected_candidates",
+      "decision"
+    ]
+  },
+  "output": {
+    "stage_directory": "stage7_candidate_reselection",
+    "run_directory": "<network>/simple_max/simseed_<simulator_seed>",
+    "execution_plan": "candidate_reselection_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}
