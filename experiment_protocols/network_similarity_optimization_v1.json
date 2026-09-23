@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "protocol_id": "network_similarity_optimization_v1",
+  "stage": "network_similarity_optimization",
+  "status": "frozen_before_execution",
+  "purpose": "Check whether exploration patterns recur on other graphs of the same broad source family; do not infer structural causes or unseen-seed efficacy.",
+  "stage6_protocol": {
+    "path": "experiment_protocols/stage6_reoptimization_v1.json",
+    "sha256": "ae18a22e770249c1b76e12eff618090dde3a5ac4fbf18944118fb3db3153fd41"
+  },
+  "observed_input_manifest": {
+    "path": "experiments/summer_2026/observed_network_inputs/20260922_v01/manifest.json",
+    "sha256": "af5529b22c99fad37aed77ea31d85b9bfd204e92954e8f3fa823fa97f05cf76f"
+  },
+  "added_networks": [
+    {
+      "id": "ba1000_seed2", "family": "ba1000", "num_agents": 1000,
+      "config": "v2/test_2/network/network-ba1000-seed2.toml",
+      "config_sha256": "dba54400088a8855dc8f4d240b384c83738ae41108dc1530949117fe39eb98fa",
+      "edge_sha256": "b93850a026dad2de4cfa404cd533bf242048ad8599c67dac00a744f45c24f120",
+      "community_sha256": "d6cd2d1d1e21d6d6b4b301b4a56e8f2c4574db386a88acbd6c313e6ecdd4fa48"
+    },
+    {
+      "id": "ba1000_seed3", "family": "ba1000", "num_agents": 1000,
+      "config": "v2/test_2/network/network-ba1000-seed3.toml",
+      "config_sha256": "8bc721441e9807bf7faa57bffa7ceb37b66a965af778eb1c7af9d734c30b1f18",
+      "edge_sha256": "d1719cbabed348b05def9a5c783778349a51cf98000ec30d50fe0a764b64aa78",
+      "community_sha256": "d6cd2d1d1e21d6d6b4b301b4a56e8f2c4574db386a88acbd6c313e6ecdd4fa48"
+    },
+    {
+      "id": "ba1000_seed4", "family": "ba1000", "num_agents": 1000,
+      "config": "v2/test_2/network/network-ba1000-seed4.toml",
+      "config_sha256": "f391819308577acc51ae801283a5be78d2eab2e3c6ffcbccf28d0d6fddcc682e",
+      "edge_sha256": "96e7cd070af3a0f2e986b350f403d137beeea974b524f58df7a676e4c661dda9",
+      "community_sha256": "d6cd2d1d1e21d6d6b4b301b4a56e8f2c4574db386a88acbd6c313e6ecdd4fa48"
+    },
+    {"id": "facebook_brandeis99", "family": "facebook", "num_agents": 3898, "observed_manifest_name": "facebook_brandeis99"},
+    {"id": "facebook_bucknell39", "family": "facebook", "num_agents": 3826, "observed_manifest_name": "facebook_bucknell39"},
+    {"id": "facebook_rice31", "family": "facebook", "num_agents": 4087, "observed_manifest_name": "facebook_rice31"},
+    {"id": "wiki_rfa_post2008", "family": "wiki_vote", "num_agents": 5709, "observed_manifest_name": "wiki_rfa_post2008"}
+  ],
+  "original_fixed_networks": ["ba1000", "facebook", "wiki_vote"],
+  "execution": {
+    "methods": ["bo_gp", "cma_es", "random_search"],
+    "optimizer_replicates": [1, 2, 3, 4, 5, 6],
+    "simulator_seed": 30001,
+    "iterations_per_evaluation": 100,
+    "evaluations_per_run": 50,
+    "bo_gp_startup_trials": 10,
+    "raw_level": "pop",
+    "fixed_conditions": ["none", "simple_max"],
+    "expected_optimization_runs": 126,
+    "expected_fixed_runs": 20,
+    "expected_total_runs": 146,
+    "expected_simulation_iterations": 632000
+  },
+  "interpretation_limits": [
+    "The same simulator seed is used on different graphs only to match the numeric setting, not to pair identical stochastic realizations.",
+    "Observed Facebook and Wiki graphs have graph-specific community files and are not structure-controlled replicates.",
+    "Exploration on one simulator seed is not independent validation or evidence of a unique optimum."
+  ]
+}

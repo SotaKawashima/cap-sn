@@ -26,6 +26,8 @@ from experiment_runtime import (
     AGENT_CONFIG,
     MANIFEST_SCHEMA_VERSION,
     NETWORKS,
+    NetworkSpec,
+    REPO_ROOT,
     RUST_BINARY,
     STRATEGY_TEMPLATE,
     SUMMER_EXPERIMENT_ROOT,
@@ -65,7 +67,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--stage", default="stage1_metric_validation")
     parser.add_argument("--experiment-id", default=None)
     parser.add_argument("--purpose", default="single_objective_optimization")
-    parser.add_argument("--network", choices=sorted(NETWORKS), required=True)
+    parser.add_argument("--network", required=True)
+    parser.add_argument("--network-config", type=Path, default=None)
+    parser.add_argument("--network-num-agents", type=int, default=None)
     parser.add_argument("--method", choices=METHODS, required=True)
     parser.add_argument("--optimizer-replicate", type=int, required=True)
     parser.add_argument("--optimizer-seed", type=int, required=True)
@@ -134,6 +138,37 @@ def _trial_failure_attrs(trial: optuna.Trial, exc: BaseException, stage: str) ->
         trial.set_user_attr("failure_exit_code", exit_code)
 
 
+def resolve_network(args: argparse.Namespace) -> NetworkSpec:
+    network_id = validate_safe_name(args.network, "network")
+    config = getattr(args, "network_config", None)
+    count = getattr(args, "network_num_agents", None)
+    if config is None and count is None:
+        if network_id not in NETWORKS:
+            raise ExperimentConfigurationError(
+                f"unknown network {network_id}; provide --network-config and "
+                "--network-num-agents"
+            )
+        return NETWORKS[network_id]
+    if config is None or count is None:
+        raise ExperimentConfigurationError(
+            "--network-config and --network-num-agents must be supplied together"
+        )
+    num_agents = validate_positive_integer(count, "network_num_agents")
+    config_path = config if config.is_absolute() else REPO_ROOT / config
+    config_path = config_path.resolve()
+    try:
+        config_path.relative_to(REPO_ROOT)
+    except ValueError as exc:
+        raise ExperimentConfigurationError(
+            "network_config must be inside the repository"
+        ) from exc
+    if not config_path.is_file() or config_path.suffix != ".toml":
+        raise ExperimentConfigurationError(
+            f"network config must be an existing TOML file: {config_path}"
+        )
+    return NetworkSpec(id=network_id, config_path=config_path, num_agents=num_agents)
+
+
 def run_optimization(args: argparse.Namespace) -> Path:
     stage = validate_safe_name(args.stage, "stage")
     optimizer_replicate = validate_positive_integer(
@@ -154,7 +189,7 @@ def run_optimization(args: argparse.Namespace) -> Path:
         if args.experiment_id
         else make_experiment_id(args.purpose)
     )
-    network = NETWORKS[args.network]
+    network = resolve_network(args)
     output_root = resolve_output_root(args.output_root)
     experiment_root = output_root / stage / experiment_id
     run_dir = (
