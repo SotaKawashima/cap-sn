@@ -104,12 +104,13 @@ def build_candidate_block_performance(
     iterations: pd.DataFrame,
     *,
     candidate_role: str = "stage6_candidate",
+    reference_ids: Sequence[str] = ALL_REFERENCES,
 ) -> pd.DataFrame:
-    """Build candidate ranks and all four reference contrasts by seed block."""
+    """Build candidate ranks and requested reference contrasts by seed block."""
 
     seed_summary = build_seed_summary(iterations)
     references = (
-        seed_summary[seed_summary["condition_id"].isin(ALL_REFERENCES)]
+        seed_summary[seed_summary["condition_id"].isin(reference_ids)]
         [["network", "simulator_seed", "condition_id", "mean_jcum"]]
         .pivot(
             index=["network", "simulator_seed"],
@@ -118,7 +119,7 @@ def build_candidate_block_performance(
         )
         .reset_index()
     )
-    missing_columns = set(ALL_REFERENCES) - set(references.columns)
+    missing_columns = set(reference_ids) - set(references.columns)
     if missing_columns:
         raise ValueError(f"reference conditions are missing: {missing_columns}")
 
@@ -134,9 +135,9 @@ def build_candidate_block_performance(
         how="left",
         validate="many_to_one",
     )
-    if candidates[list(ALL_REFERENCES)].isna().any().any():
+    if candidates[list(reference_ids)].isna().any().any():
         raise ValueError("one or more reference block means are missing")
-    for reference in ALL_REFERENCES:
+    for reference in reference_ids:
         absolute = f"absolute_suppression_vs_{reference}"
         candidates[absolute] = candidates[reference] - candidates["mean_jcum"]
         candidates[f"relative_suppression_vs_{reference}"] = (
@@ -185,10 +186,13 @@ def build_candidate_selection(
     target_candidates_per_network: int,
     minimum_positive_seed_blocks: int,
     reserved_revised_final_test_seeds: Sequence[int],
+    reference_ids: Sequence[str] = ALL_REFERENCES,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, Any]]:
     """Apply the amended none-and-simple_max eligibility rule."""
 
-    if set(effects_by_reference) != set(ALL_REFERENCES):
+    if not set(REQUIRED_REFERENCES).issubset(reference_ids):
+        raise ValueError("none and simple_max must be required references")
+    if set(effects_by_reference) != set(reference_ids):
         raise ValueError("effects_by_reference must contain all references")
     if target_candidates_per_network < 1:
         raise ValueError("target_candidates_per_network must be positive")
@@ -221,7 +225,7 @@ def build_candidate_selection(
     ranking["validation_minus_exploration"] = (
         ranking["validation_mean_jcum"] - ranking["source_final_best"]
     )
-    for reference in ALL_REFERENCES:
+    for reference in reference_ids:
         ranking = ranking.merge(
             _effect_columns(effects_by_reference[reference], reference),
             on=["network", "condition_id"],

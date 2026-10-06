@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "stage": "multiseed_reoptimization",
+  "created_date": "2026-10-06",
+  "stage6_commit": "4a8967bbde79ef918dd6a49ce2edacfd5a05b1cd",
+  "all_input_files_match_stage6_commit": true,
+  "files": [
+    {
+      "path": "v2/test_2/agent/agent-type6.toml",
+      "sha256": "d324b1ad1b6f747b2e6e406e350253d2eacba9c872a15bc2ffa6ab68d5a2da9e"
+    },
+    {
+      "path": "v2/test_2/agent/condition/risk3.toml",
+      "sha256": "51aa21ea6e709726146a78ea884fb651843386c98b99050ac4b24874744e76fa"
+    },
+    {
+      "path": "v2/test_2/agent/cpt/cpt.csv",
+      "sha256": "6634d43c2e3a475869dc2a8d80985205e20fdc710211eb76172d2125be629051"
+    },
+    {
+      "path": "v2/test_2/agent/initial_states/initial_states.toml",
+      "sha256": "49af9fb7a20050e3a632b93c869cfbfb65df4ecf199c8ef6e4eaca5b9cfdfba8"
+    },
+    {
+      "path": "v2/test_2/agent/probabilities/probs-plural-2.toml",
+      "sha256": "a2b94f07d2dea34db332d6ca980602e879b9ce5c6d4b91d790a1eb5ab79abc7a"
+    },
+    {
+      "path": "v2/test_2/agent/prospect/x[4-8_33]-ym3.csv",
+      "sha256": "bc7e12a140418c814a0fa6381d4145a93f6e48802655cff7fd51875385c5d04c"
+    },
+    {
+      "path": "v2/test_2/agent/sharer_trust/trust.toml",
+      "sha256": "2506e177eac71ae3a2c06c599e452cae1b4adca12ec614fed3e9534643d6009d"
+    },
+    {
+      "path": "v2/test_2/agent/uncertainty/1d_30.csv",
+      "sha256": "02dbb0d8bf1fc128ccbd47b1277771d70fa5302bf98e62c49acc18a49edd9fda"
+    },
+    {
+      "path": "v2/test_2/agent/uncertainty/2d_30_1.csv",
+      "sha256": "bb0e6cd3f830a578577aaa8f286d1c6dd7aa7131e45a1f9b3f6045b06732e9d9"
+    },
+    {
+      "path": "v2/test_2/agent/uncertainty/uncertainty.toml",
+      "sha256": "6dd91635e2908f2e9b56db0344c55fc769dc7ad0f958223c07c2974cafa1fe39"
+    },
+    {
+      "path": "v2/test_2/network/ba/ba1000/comm.csv",
+      "sha256": "d6cd2d1d1e21d6d6b4b301b4a56e8f2c4574db386a88acbd6c313e6ecdd4fa48"
+    },
+    {
+      "path": "v2/test_2/network/ba/ba1000/edgelist.txt",
+      "sha256": "df87858994c46891b2dca3206c5277c7c89e156b10e641a0b39ec4c14a7c1e06"
+    },
+    {
+      "path": "v2/test_2/network/facebook/comm.csv",
+      "sha256": "54efdbfae710699da46e52cb3c58fd0d279577ef71f4e4997c548c3c4727fe96"
+    },
+    {
+      "path": "v2/test_2/network/facebook/edgelist.txt",
+      "sha256": "f41c026ed8af3cc3359f1ca5573d0605fb09ae0eefa34544b820fd8c6e2ef296"
+    },
+    {
+      "path": "v2/test_2/network/network-ba1000.toml",
+      "sha256": "48c7d0a507b15f54e3c3db138e4ea098ad449f5bc5abc3e9e0142f2e889394ff"
+    },
+    {
+      "path": "v2/test_2/network/network-facebook.toml",
+      "sha256": "e27bf52107b2799159890687efc40460587bc92d9ade5a3d9e3b0d3030da8986"
+    },
+    {
+      "path": "v2/test_2/network/network-wiki-vote.toml",
+      "sha256": "a7a4ad66b4cc04fcfd4deb12ba00c95e54ff174f7d8837b935ebfa04102acdc8"
+    },
+    {
+      "path": "v2/test_2/network/wiki-vote/comm.csv",
+      "sha256": "54717bed39d0ee8d053a7e8caa8797cdf63ef9c2b71899989a2cc1df117b7d4c"
+    },
+    {
+      "path": "v2/test_2/network/wiki-vote/wiki-Vote.txt",
+      "sha256": "0ab0f9889a5b777c5673d90d50e889f1841190c88e80d1404e1217a991bd1c44"
+    },
+    {
+      "path": "v2/test_2/strategy/information_opinion/a75_50.csv",
+      "sha256": "6446cd63b8ef0fc12da1469f4c399056185e1fdc58be07cdfae3c9377f5f47b5"
+    },
+    {
+      "path": "v2/test_2/strategy/information_opinion/a75_80.csv",
+      "sha256": "df3d4a2f00e987b304b6e1344342ff2203a2a7c33d81782092fb74d53a3cc38b"
+    },
+    {
+      "path": "v2/test_2/strategy/information_opinion/n95_95.csv",
+      "sha256": "7b04ec09a08f6ded04ebd40fcbbfee34052c57c3cae4043efa3680a49ac45674"
+    },
+    {
+      "path": "v2/test_2/strategy/informing/case2o.toml",
+      "sha256": "0e8a5e2db9a3455900d1b2c05e1ed34fa31efde732ed068ce886e13b4c500416"
+    },
+    {
+      "path": "v2/test_2/strategy/inhibition_opinion/98_98.csv",
+      "sha256": "f850c9b911d125eb7e0da1debac3f8d5cf157d651359bd8ec7f34dd4a4ab3745"
+    },
+    {
+      "path": "v2/test_2/strategy/strategy-config.toml",
+      "sha256": "1e890139feca7a9b60343fd87ff3a3dcf0e0209d2cb09c267940a308f913bf67"
+    }
+  ],
+  "graph_checks": [
+    {
+      "network": "ba1000",
+      "nodes": 1000,
+      "edges": 9900,
+      "directed": false,
+      "transposed": false,
+      "self_loops": 0,
+      "community_agents": 1000,
+      "graph": {
+        "path": "v2/test_2/network/ba/ba1000/edgelist.txt",
+        "sha256": "df87858994c46891b2dca3206c5277c7c89e156b10e641a0b39ec4c14a7c1e06"
+      },
+      "community": {
+        "path": "v2/test_2/network/ba/ba1000/comm.csv",
+        "sha256": "d6cd2d1d1e21d6d6b4b301b4a56e8f2c4574db386a88acbd6c313e6ecdd4fa48"
+      },
+      "stage6_manifest": {
+        "path": "experiments/summer_2026/stage6_reoptimization/20260819_162842_stage6_reoptimization_v01/ba1000/random_search/optseed_1/manifest.json",
+        "sha256": "1b26c92a771eac556ba2d36f38b8857ba37dcd4b83e1340c6060e0b24f471b72"
+      },
+      "stage6_configuration_hashes_match": true
+    },
+    {
+      "network": "facebook",
+      "nodes": 4039,
+      "edges": 88234,
+      "directed": false,
+      "transposed": false,
+      "self_loops": 0,
+      "community_agents": 4039,
+      "graph": {
+        "path": "v2/test_2/network/facebook/edgelist.txt",
+        "sha256": "f41c026ed8af3cc3359f1ca5573d0605fb09ae0eefa34544b820fd8c6e2ef296"
+      },
+      "community": {
+        "path": "v2/test_2/network/facebook/comm.csv",
+        "sha256": "54efdbfae710699da46e52cb3c58fd0d279577ef71f4e4997c548c3c4727fe96"
+      },
+      "stage6_manifest": {
+        "path": "experiments/summer_2026/stage6_reoptimization/20260819_162842_stage6_reoptimization_v01/facebook/random_search/optseed_1/manifest.json",
+        "sha256": "539ba8df8be9b20c1fac51ac02171fe2efbe295fc0f3d7b3e757ea5cba14b9e9"
+      },
+      "stage6_configuration_hashes_match": true
+    },
+    {
+      "network": "wiki_vote",
+      "nodes": 7115,
+      "edges": 103689,
+      "directed": true,
+      "transposed": true,
+      "self_loops": 0,
+      "community_agents": 7115,
+      "graph": {
+        "path": "v2/test_2/network/wiki-vote/wiki-Vote.txt",
+        "sha256": "0ab0f9889a5b777c5673d90d50e889f1841190c88e80d1404e1217a991bd1c44"
+      },
+      "community": {
+        "path": "v2/test_2/network/wiki-vote/comm.csv",
+        "sha256": "54717bed39d0ee8d053a7e8caa8797cdf63ef9c2b71899989a2cc1df117b7d4c"
+      },
+      "stage6_manifest": {
+        "path": "experiments/summer_2026/stage6_reoptimization/20260819_162842_stage6_reoptimization_v01/wiki_vote/random_search/optseed_1/manifest.json",
+        "sha256": "7b810d725332010b5e136910fe9f1698e8460b49bf40049dba1ade257cb56818"
+      },
+      "stage6_configuration_hashes_match": true
+    }
+  ],
+  "note": "All 25 input hashes match the file contents at the Git commit recorded in the three Stage 6 manifests. No graph is regenerated."
+}

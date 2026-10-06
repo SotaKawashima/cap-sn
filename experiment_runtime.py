@@ -524,6 +524,7 @@ def run_simulator(
     intervention_enabled: bool,
     stdout_path: str | Path,
     stderr_path: str | Path,
+    pass_fds: tuple[int, ...] = (),
 ) -> SimulationRunResult:
     if not RUST_BINARY.exists():
         raise SimulationExecutionError(
@@ -557,6 +558,7 @@ def run_simulator(
             stdout=stdout_handle,
             stderr=stderr_handle,
             check=False,
+            **({"pass_fds": pass_fds} if pass_fds else {}),
         )
     elapsed = time.perf_counter() - start
 

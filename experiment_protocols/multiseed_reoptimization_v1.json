@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "protocol_id": "multiseed_reoptimization_v1",
+  "stage": "multiseed_reoptimization",
+  "status": "frozen_before_execution",
+  "created_date": "2026-10-06",
+  "input_inventory": {
+    "path": "experiment_protocols/multiseed_reoptimization_inputs_v1.json",
+    "sha256": "090c67f642205b6529ce41445ce413dec8241c260d3dd33bc25992d13c3ffc29"
+  },
+  "purpose": {
+    "primary": "Search for network-specific candidates using the mean cumulative selfish fraction across five simulator-seed blocks, then evaluate them on independent validation and final-test blocks.",
+    "secondary": "Keep the amended simple_max candidate-selection rule unchanged so that the extension changes search-time estimation rather than the eligibility or shortlisting criteria.",
+    "historical_comparison": "Reevaluate the nine previously frozen single-block-search candidates on the same new final-test blocks as a descriptive comparison, without admitting them into the new candidate pool.",
+    "not_in_scope": [
+      "optimizing the seven additional graphs from the network-similarity experiment",
+      "adding a variance penalty or a worst-seed objective",
+      "multi-objective optimization",
+      "selecting or reranking candidates using final-test results",
+      "claiming a unique or universal optimum or a generally superior optimization method"
+    ]
+  },
+  "decision_sources": [
+    {
+      "role": "inherited_search_design",
+      "path": "experiment_protocols/stage6_reoptimization_v1.json",
+      "sha256": "ae18a22e770249c1b76e12eff618090dde3a5ac4fbf18944118fb3db3153fd41"
+    },
+    {
+      "role": "inherited_candidate_selection_rule",
+      "path": "experiment_protocols/stage7_candidate_reselection_simple_max_v1.json",
+      "sha256": "adb09442825d4ae284a01110dc7eff81e9ec8b9369996cd9044042a2676acac8"
+    },
+    {
+      "role": "inherited_final_evaluation_and_reporting_policy",
+      "path": "experiment_protocols/stage8_final_retest_simple_max_v1.json",
+      "sha256": "469fc517f3964cb0faf28ec2a21d14144b90a1fb1ccd4f9f707635c74352d4a4"
+    }
+  ],
+  "objective": {
+    "name": "cumulative_selfish_fraction",
+    "definition_version": "cumulative_selfish_fraction_v1",
+    "direction": "minimize",
+    "scope": "Optimize each original fixed graph separately with all non-optimized settings unchanged.",
+    "aggregation": "arithmetic_mean_of_five_100_iteration_block_means",
+    "total_iterations_per_evaluation": 500,
+    "variance_penalty": false,
+    "interpretation": "Estimate expected performance on one fixed graph more precisely, not worst-seed robustness or performance on other graphs."
+  },
+  "design_variables": {
+    "certainty": {"lower": 0.5, "upper": 1.0},
+    "effectiveness": {"lower": 0.5, "upper": 1.0},
+    "application_precision_decimal_places": 4,
+    "fixed_condition_policy": "Keep the original graphs, agent configuration, generated opinion base rates, information settings, timing, and source-selection settings unchanged from Stage 6."
+  },
+  "execution": {
+    "networks": ["ba1000", "facebook", "wiki_vote"],
+    "methods": ["bo_gp", "cma_es", "random_search"],
+    "optimizer_replicates": [1, 2, 3, 4, 5, 6],
+    "optimizer_seeds": {
+      "bo_gp": [60101, 60201, 60301, 60401, 60501, 60601],
+      "cma_es": [60102, 60202, 60302, 60402, 60502, 60602],
+      "random_search": [60103, 60203, 60303, 60403, 60503, 60603]
+    },
+    "evaluations_per_run": 50,
+    "bo_gp_startup_trials": 10,
+    "simulator_seeds": [80001, 80002, 80003, 80004, 80005],
+    "iterations_per_seed_block": 100,
+    "raw_level": "pop",
+    "expected_optimization_run_count": 54,
+    "expected_evaluation_count": 2700,
+    "expected_optimization_block_count": 13500,
+    "expected_optimization_iteration_count": 1350000,
+    "expected_exploration_reference_block_count": 30,
+    "reference_policy": "Evaluate each reference once per network and exploration seed, separately from optimization; do not repeat references for every optimizer run."
+  },
+  "comparators": [
+    {
+      "id": "none",
+      "enabled": false,
+      "certainty": null,
+      "effectiveness": null,
+      "opinion_mode": "none",
+      "role": "no_intervention_baseline"
+    },
+    {
+      "id": "simple_max",
+      "enabled": true,
+      "certainty": 1.0,
+      "effectiveness": 1.0,
+      "opinion_mode": "generated_from_design_variables",
+      "role": "simple_design_variable_maximum_reference"
+    }
+  ],
+  "seed_policy": {
+    "exploration": [80001, 80002, 80003, 80004, 80005],
+    "validation": [81001, 81002, 81003],
+    "final_test": [82001, 82002, 82003, 82004, 82005],
+    "disjointness_required": true,
+    "historical_seed_audit": "No conflicts found in the existing protocol and saved summer-experiment seed metadata at specification freeze; recheck before execution.",
+    "common_block_policy": "Use the same seed groups for all candidates, methods, and references within each phase.",
+    "pilot_policy": "Use exploration seeds only. Do not inspect validation or final-test blocks during implementation or timing pilots.",
+    "final_test_policy": "Do not execute or inspect final-test blocks until the new shortlist and all reporting roles are frozen."
+  },
+  "candidate_pool": {
+    "source": "The best complete five-block-mean evaluation from each network-method-optimizer-replicate run.",
+    "expected_rows_before_deduplication": 54,
+    "rows_per_network": 18,
+    "deduplication_key": ["network", "applied_certainty", "applied_effectiveness"],
+    "policy": "Preserve all run-level best candidates and provenance; apply the inherited region grouping during validation."
+  },
+  "validation": {
+    "simulator_seeds": [81001, 81002, 81003],
+    "iterations_per_seed_block": 100,
+    "candidate_count_before_deduplication": 54,
+    "expected_block_count_before_deduplication": 180,
+    "expected_iteration_count_before_deduplication": 18000,
+    "historical_candidate_policy": "Historical candidates are excluded from the new validation pool and new eligibility decision."
+  },
+  "selection_rule": {
+    "scope": "Apply the inherited amended rule independently to the 18 new run-level candidates within each network.",
+    "required_references": ["none", "simple_max"],
+    "eligibility": {
+      "mean_absolute_suppression_strictly_positive_for_each_required_reference": true,
+      "minimum_positive_seed_blocks_for_each_required_reference": 2,
+      "confidence_interval_required": false
+    },
+    "candidate_order": [
+      "median_validation_block_rank_ascending",
+      "worst_validation_block_rank_ascending",
+      "mean_validation_objective_ascending",
+      "candidate_id_ascending"
+    ],
+    "validation_rank_ties": "average_rank_as_in_the_existing_candidate_reselection_implementation",
+    "region_grouping": {
+      "method": "deterministic_complete_linkage",
+      "coordinates": ["applied_certainty", "applied_effectiveness"],
+      "distance": "euclidean_in_raw_design_variable_units",
+      "maximum_complete_linkage_distance": 0.05
+    },
+    "shortlist": {
+      "target_candidates_per_network": 3,
+      "maximum_regions_per_network": 3,
+      "representative": "best ordered candidate in each region",
+      "partial_fill_policy": "Fill missing positions from the best unselected regions and mark those candidates exploratory.",
+      "no_qualified_policy": "Select three distinct-region exploratory fallbacks and do not claim optimization success.",
+      "candidate_1_policy": "Freeze selection order 1 before final testing; never replace it after seeing final results."
+    }
+  },
+  "final_test": {
+    "simulator_seeds": [82001, 82002, 82003, 82004, 82005],
+    "iterations_per_seed_block": 100,
+    "new_candidate_count": 9,
+    "historical_candidate_source": {
+      "path": "experiment_protocols/stage8_final_retest_candidate_pool_simple_max_v1.csv",
+      "sha256": "cc9bfcddecdea3973b981b9a983c3c8120b65b3f382993172df7448a93d9afcb",
+      "rows": 9,
+      "rows_per_network": 3,
+      "policy": "Keep every historical candidate, coordinate, original qualification role, and selection order unchanged; distinguish its condition ID from new candidates."
+    },
+    "new_candidates_and_reference_block_count": 75,
+    "historical_candidate_block_count": 45,
+    "expected_block_count_before_coordinate_deduplication": 120,
+    "expected_iteration_count_before_coordinate_deduplication": 12000,
+    "reporting_policy": {
+      "primary": "New candidate 1 versus none and simple_max within each network.",
+      "other_new_candidates": "Report candidates 2 and 3 descriptively, retaining their qualified or exploratory status.",
+      "historical_comparison": "Report both frozen candidate sets on the same new test blocks. The candidate-1 versus historical-candidate-1 contrast is supplementary; other candidates remain descriptive.",
+      "historical_role_limit": "A qualified versus exploratory candidate-1 contrast compares the frozen procedures, not equivalent qualification status; retain that distinction.",
+      "no_reselection": "Never use final means or confidence intervals to rerank, replace, tune, discard, or redefine candidates or reporting roles."
+    }
+  },
+  "inference": {
+    "pairing": "same_network_same_simulator_seed_same_iteration_index",
+    "estimand": "expected_cumulative_selfish_fraction_on_each_fixed_graph_and_fixed_configuration",
+    "bootstrap": {
+      "method": "hierarchical_paired_percentile",
+      "levels": ["simulator_seed_block", "iteration_within_seed_block"],
+      "repetitions": 10000,
+      "validation_seed": 93001,
+      "final_test_seed": 94001,
+      "confidence_level": 0.95,
+      "selection_use": "descriptive_only_not_an_eligibility_threshold"
+    },
+    "effect_measures": [
+      "reference_minus_candidate_absolute_suppression",
+      "relative_suppression_eta",
+      "equivalent_agents"
+    ],
+    "relative_suppression_definition": "1 - candidate_mean_jcum / reference_mean_jcum",
+    "minimum_important_effect_threshold": null,
+    "multiplicity_policy": "Retain the previous frozen-candidate reporting policy. Do not treat unadjusted intervals across all candidates or methods as a search for a statistically proven winner."
+  },
+  "quality_and_resume_policy": {
+    "required_complete_evaluations_per_optimization_run": 50,
+    "required_complete_blocks_per_evaluation": 5,
+    "required_iterations_per_block": 100,
+    "allowed_failed_evaluations_at_acceptance": 0,
+    "allowed_pruned_evaluations_at_acceptance": 0,
+    "recalculate_objective_from_pop_arrow": true,
+    "numeric_tolerance": 1e-12,
+    "incomplete_block_policy": "Do not accept a partial mean or replace a failed block with a favorable or ordinary worst-case value.",
+    "resume_policy": "Reuse a completed block only after matching candidate coordinates, seed, all settings, and retained raw hashes; do not count it twice.",
+    "deduplication_policy": "Identical applied coordinates within the same phase may share verified block outputs, while preserving every logical condition and candidate provenance.",
+    "pilot_reuse_policy": "Pilot blocks can be reused only under the identical frozen specification, with their provenance recorded.",
+    "historical_data_policy": "Use a new experiment ID and stage directory; do not overwrite any previous experiment."
+  },
+  "output": {
+    "stage_directory": "multiseed_reoptimization",
+    "optimization_run_directory": "optimization/<network>/<method>/optseed_<optimizer_replicate>",
+    "evaluation_block_directory": "raw/trial_<trial_number>/simseed_<simulator_seed>",
+    "fixed_block_directory": "<exploration_references_or_validation_or_final_test>/<network>/<condition_id>/simseed_<simulator_seed>",
+    "execution_plan": "multiseed_reoptimization_execution_plan.json",
+    "analysis_directory": "<analysis_id>"
+  }
+}
